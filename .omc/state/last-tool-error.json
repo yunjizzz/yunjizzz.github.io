@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"mkdir -p /Users/hanwha/yunji.dev/claude/review-check && mv /Users/hanwha/yunji.dev/claude/app.js /Users/hanwha/yunji.dev/claude/data.js /Users/hanwha/yunji.dev/claude/styles.css /Users/han...",
-  "error": "Exit code 1\nmv: /Users/hanwha/yunji.dev/claude/app.js: No such file or directory\nmv: /Users/hanwha/yunji.dev/claude/data.js: No such file or directory\nmv: /Users/hanwha/yunji.dev/claude/styles.css: No such file or directory\n[rerun: b1]",
-  "timestamp": "2026-04-14T07:43:24.432Z",
-  "retry_count": 1
-}
