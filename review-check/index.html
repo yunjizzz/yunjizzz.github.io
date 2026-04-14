@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>이 집.. 진짜 맛집일까?</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1 class="title">이 집.. <span class="accent">진짜 맛집일까?</span></h1>
+      <p class="subtitle">리뷰 분석을 통해 내 소중한 한끼를 지켜봐요</p>
+
+      <form id="search-form" class="search" role="search">
+        <input id="q" type="text" placeholder="가게 이름이나 지역을 검색해보세요 (예: 칼국수, 망원)" autocomplete="off" />
+        <button type="submit">검색</button>
+      </form>
+
+      <div class="suggest">
+        <button class="chip" data-q="할매손칼국수">할매손칼국수</button>
+        <button class="chip" data-q="인스타감성 브런치카페">인스타감성 브런치카페</button>
+        <button class="chip" data-q="24시 골목분식">24시 골목분식</button>
+        <button class="chip" data-q="프리미엄 한우다이닝">프리미엄 한우다이닝</button>
+        <button class="chip" data-q="동네돈까스">동네돈까스</button>
+      </div>
+
+      <div class="hint">💡 <b>네이버 리뷰 크롤링 데이터</b> 기준으로 분석 — 현재는 샘플 5개 가게로 시연합니다</div>
+    </header>
+
+    <main id="result" class="result">
+      <div class="empty">위에서 가게를 검색하면 분석 결과가 나타납니다.</div>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

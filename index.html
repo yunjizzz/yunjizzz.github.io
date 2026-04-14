@@ -3,37 +3,99 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>이 집.. 진짜 맛집일까?</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>yunji.dev</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --bg-soft: #171a21;
+      --card: #1d2029;
+      --border: #262a36;
+      --text: #ececf1;
+      --muted: #8b90a0;
+      --accent: #ff6b4a;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 24px 120px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+    }
+    h1 span { color: var(--accent); }
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 0 48px;
+    }
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .project {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 150ms ease, transform 150ms ease;
+    }
+    .project:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .project .emoji {
+      font-size: 36px;
+      line-height: 1;
+    }
+    .project .info h2 {
+      margin: 0 0 4px;
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .project .info p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .project .arrow {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .project:hover .arrow { color: var(--accent); }
+  </style>
 </head>
 <body>
   <div class="wrap">
-    <header class="hero">
-      <h1 class="title">이 집.. <span class="accent">진짜 맛집일까?</span></h1>
-      <p class="subtitle">리뷰 분석을 통해 내 소중한 한끼를 지켜봐요</p>
+    <h1>yunji<span>.dev</span></h1>
+    <p class="subtitle">프로젝트 모음</p>
 
-      <form id="search-form" class="search" role="search">
-        <input id="q" type="text" placeholder="가게 이름이나 지역을 검색해보세요 (예: 칼국수, 망원)" autocomplete="off" />
-        <button type="submit">검색</button>
-      </form>
-
-      <div class="suggest">
-        <button class="chip" data-q="할매손칼국수">할매손칼국수</button>
-        <button class="chip" data-q="인스타감성 브런치카페">인스타감성 브런치카페</button>
-        <button class="chip" data-q="24시 골목분식">24시 골목분식</button>
-        <button class="chip" data-q="프리미엄 한우다이닝">프리미엄 한우다이닝</button>
-        <button class="chip" data-q="동네돈까스">동네돈까스</button>
-      </div>
-
-      <div class="hint">💡 <b>네이버 리뷰 크롤링 데이터</b> 기준으로 분석 — 현재는 샘플 5개 가게로 시연합니다</div>
-    </header>
-
-    <main id="result" class="result">
-      <div class="empty">위에서 가게를 검색하면 분석 결과가 나타납니다.</div>
-    </main>
+    <div class="projects">
+      <a class="project" href="/review-check/">
+        <div class="emoji">🍜</div>
+        <div class="info">
+          <h2>이 집.. 진짜 맛집일까?</h2>
+          <p>네이버 리뷰 분석으로 맛집 신뢰도를 판별하는 데모</p>
+        </div>
+        <div class="arrow">&rarr;</div>
+      </a>
+    </div>
   </div>
-
-  <script src="data.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
