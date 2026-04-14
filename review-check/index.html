@@ -4,9 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>이 집.. 진짜 맛집일까?</title>
+  <script>
+    // 플래시 방지 — 스타일시트 로드 전에 테마 속성 세팅
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환" title="라이트/다크 전환">☀️</button>
+
   <div class="wrap">
     <header class="hero">
       <h1 class="title">이 집.. <span class="accent">진짜 맛집일까?</span></h1>
@@ -33,6 +45,29 @@
     </main>
   </div>
 
+  <script>
+    // 테마 토글
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      function apply(theme) {
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          btn.textContent = '🌙';
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          btn.textContent = '☀️';
+        }
+      }
+      // 초기 아이콘 동기화
+      apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        var next = cur === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+  </script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
