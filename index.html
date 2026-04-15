@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <title>yunji.dev</title>
   <script>
-    // 플래시 방지 — 스타일 적용 전에 테마 속성 세팅
     (function () {
       try {
         if (localStorage.getItem('theme') === 'dark') {
@@ -15,7 +17,6 @@
     })();
   </script>
   <style>
-    /* 기본(light) */
     :root {
       --bg: #ffffff;
       --bg-soft: #f4f5f7;
@@ -24,116 +25,249 @@
       --text: #111418;
       --muted: #5f6673;
       --accent: #ff6b4a;
-      --shadow: 0 1px 2px rgba(15, 17, 21, 0.04), 0 1px 3px rgba(15, 17, 21, 0.06);
+      --accent2: #a78bfa;
+      --shadow: 0 2px 8px rgba(15, 17, 21, 0.06), 0 1px 3px rgba(15, 17, 21, 0.04);
+      --glow: rgba(255, 107, 74, 0.15);
+      --particle: rgba(255, 107, 74, 0.3);
     }
-    /* dark 오버라이드 */
     [data-theme="dark"] {
-      --bg: #0f1115;
-      --bg-soft: #171a21;
-      --card: #1d2029;
+      --bg: #0a0b0f;
+      --bg-soft: #12141a;
+      --card: #181a22;
       --border: #262a36;
       --text: #ececf1;
       --muted: #8b90a0;
       --accent: #ff6b4a;
-      --shadow: none;
+      --accent2: #a78bfa;
+      --shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+      --glow: rgba(255, 107, 74, 0.08);
+      --particle: rgba(255, 107, 74, 0.2);
     }
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0;
-      background: var(--bg); color: var(--text);
-      font-family: -apple-system, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
       -webkit-font-smoothing: antialiased;
-      transition: background-color 160ms ease, color 160ms ease;
+      overflow-x: hidden;
+      transition: background-color 300ms ease, color 300ms ease;
     }
-    .wrap {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 80px 24px 120px;
+
+    /* --- 파티클 캔버스 --- */
+    #particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
-    h1 {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin: 0 0 8px;
+
+    /* --- 히어로 --- */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: auto;
+      padding: 100px 24px 32px;
+      text-align: center;
     }
-    h1 span { color: var(--accent); }
-    .subtitle {
+
+    .hero h1 {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+    .hero h1 .dot { color: var(--accent); }
+    .hero h1 .dev {
+      display: inline-block;
+      padding-right: 4px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .subtitle {
+      font-size: 18px;
       color: var(--muted);
-      font-size: 14px;
-      margin: 0 0 48px;
+      margin-top: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
     }
+    .hero .chick {
+      display: inline-block;
+      animation: bounce 1.6s ease-in-out infinite;
+    }
+
+    .divider {
+      width: 48px;
+      height: 3px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      margin: 24px auto 0;
+      opacity: 0;
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    /* --- 프로젝트 섹션 --- */
+    .section {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .section-title.visible {
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
     .projects {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
+
     .project {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 20px;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 20px 22px;
+      border-radius: 20px;
+      padding: 24px 28px;
       text-decoration: none;
       color: var(--text);
       box-shadow: var(--shadow);
-      transition: border-color 150ms ease, transform 150ms ease;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
     }
+    .project.visible {
+      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .project::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 60%);
+      opacity: 0;
+      transition: opacity 300ms ease;
+    }
+    .project:hover::before { opacity: 1; }
     .project:hover {
       border-color: var(--accent);
-      transform: translateY(-2px);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow), 0 8px 32px rgba(255, 107, 74, 0.1);
     }
+
     .project .emoji {
-      font-size: 36px;
+      font-size: 42px;
       line-height: 1;
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+    .project:hover .emoji { transform: scale(1.2) rotate(-6deg); }
+
+    .project .info { flex: 1; position: relative; z-index: 1; }
     .project .info h2 {
-      margin: 0 0 4px;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
+      margin-bottom: 6px;
     }
     .project .info p {
-      margin: 0;
       color: var(--muted);
       font-size: 13px;
+      line-height: 1.5;
     }
-    .project .arrow {
-      margin-left: auto;
-      color: var(--muted);
-      font-size: 18px;
-    }
-    .project:hover .arrow { color: var(--accent); }
 
+    .project .arrow {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 20px;
+      transition: color 200ms ease, transform 200ms ease;
+    }
+    .project:hover .arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* --- 테마 토글 --- */
     .theme-toggle {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
+      top: 24px;
+      right: 24px;
+      z-index: 10;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: var(--card);
       border: 1px solid var(--border);
       color: var(--text);
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: var(--shadow);
-      transition: border-color 120ms ease, transform 120ms ease;
+      transition: border-color 200ms ease, transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.05); }
-    .theme-toggle:active { transform: scale(0.95); }
+    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.1) rotate(15deg); }
+    .theme-toggle:active { transform: scale(0.9); }
+
+    /* --- 애니메이션 --- */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* --- 반응형 --- */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 42px; }
+      .hero .subtitle { font-size: 15px; }
+      .project { padding: 18px 20px; gap: 14px; border-radius: 16px; }
+      .project .emoji { font-size: 34px; }
+      .project .info h2 { font-size: 16px; }
+    }
   </style>
 </head>
 <body>
-  <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환" title="라이트/다크 전환">☀️</button>
+  <canvas id="particles"></canvas>
 
-  <div class="wrap">
-    <h1>yunji<span>.dev</span></h1>
-    <p class="subtitle">프로젝트 모음</p>
+  <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">☀️</button>
 
+  <section class="hero">
+    <h1>yunji<span class="dot">.</span><span class="dev">dev</span></h1>
+    <p class="subtitle">하고 싶은건 다하는 놀이공간 <span class="chick">🐥</span></p>
+    <div class="divider"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-title">Projects</div>
     <div class="projects">
       <a class="project" href="/review-check/">
         <div class="emoji">🍜</div>
@@ -144,9 +278,10 @@
         <div class="arrow">&rarr;</div>
       </a>
     </div>
-  </div>
+  </section>
 
   <script>
+    // --- 테마 토글 ---
     (function () {
       var btn = document.getElementById('theme-toggle');
       function apply(theme) {
@@ -166,6 +301,115 @@
         try { localStorage.setItem('theme', next); } catch (e) {}
       });
     })();
+
+    // --- 파티클 배경 ---
+    (function () {
+      var canvas = document.getElementById('particles');
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      var mouse = { x: -1000, y: -1000 };
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      for (var i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2 + 1
+        });
+      }
+
+      document.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var style = getComputedStyle(document.documentElement);
+        var color = style.getPropertyValue('--particle').trim();
+
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.y > canvas.height) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+
+          // 마우스 근처 파티클끼리 선 연결
+          var dx = p.x - mouse.x;
+          var dy = p.y - mouse.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 160) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = color;
+            ctx.globalAlpha = 1 - dist / 160;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+
+          // 가까운 파티클끼리 연결
+          for (var j = i + 1; j < particles.length; j++) {
+            var q = particles[j];
+            var ddx = p.x - q.x;
+            var ddy = p.y - q.y;
+            var d = Math.sqrt(ddx * ddx + ddy * ddy);
+            if (d < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = color;
+              ctx.globalAlpha = 0.3 * (1 - d / 120);
+              ctx.lineWidth = 0.4;
+              ctx.stroke();
+              ctx.globalAlpha = 1;
+            }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // --- 카드 마우스 글로우 ---
+    document.querySelectorAll('.project').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+        card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+      });
+    });
+
+    // --- 스크롤 등장 애니메이션 ---
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.project, .section-title').forEach(function (el) {
+      observer.observe(el);
+    });
   </script>
 </body>
 </html>
