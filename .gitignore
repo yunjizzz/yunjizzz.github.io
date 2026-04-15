@@ -1,1 +1,4 @@
 .omc/
+move/node_modules/
+move/.next/
+move/out/
