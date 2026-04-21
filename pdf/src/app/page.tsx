@@ -102,7 +102,7 @@ export default function Home() {
           </div>
           <p className="mt-2 text-gray-600">
             회사에서 PDF 변환할 때마다 불편해서 직접 만든 사이트입니다.<br className="hidden sm:inline" />
-            회원가입도, 광고도 없으니 무료로 마음껏 쓰세요.
+            회원가입도 없고, 데이터도 따로 저장되지 않으니 무료로 마음껏 쓰세요.
           </p>
         </div>
       </header>
