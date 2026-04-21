@@ -72,3 +72,6 @@ move 프로젝트 빌드 후 `move/out/` 결과물을 `move/` 루트에 복사�
 - move 프로젝트: 체크리스트 항목은 priority 순 정렬 (high → medium → low). 이사일 기준 지난 섹션은 자동 접힘.
 - move 프로젝트: primary 색상은 파란색 (`oklch(0.546 0.245 262.881)`). 헤더 로고는 의도적으로 `text-foreground` 사용.
 - 새 프로젝트 추가: 루트에 폴더 생성 → `index.html` 배치 → 루트 `index.html`에 링크 카드 추가.
+- Google Analytics: 모든 페이지에 GA 태그 필수 적용. ID: `G-Y644EYN1VZ`
+  - 정적 HTML: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>` + gtag 초기화 스크립트를 `<head>`에 삽입
+  - Next.js: `next/script`의 `Script` 컴포넌트를 `layout.tsx`의 `<body>` 안에 `strategy="afterInteractive"`로 추가
