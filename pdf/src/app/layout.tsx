@@ -1,30 +1,40 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { metadata as i18nMeta, locales } from "@/lib/i18n";
 import "./globals.css";
 
+const meta = i18nMeta.ko;
+
+const alternateLanguages: Record<string, string> = {};
+alternateLanguages["ko"] = "https://yoginhae.com/pdf/";
+for (const l of locales) {
+  if (l !== "ko") alternateLanguages[l] = `https://yoginhae.com/pdf/${l}/`;
+}
+
 export const metadata: Metadata = {
-  title: "매일쓰는 PDF 도구 - 무료 온라인 PDF 변환기 | 브라우저에서 바로 처리",
-  description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 PDF 병합, 분할, 이미지 변환을 브라우저에서 바로 처리합니다. 서버 업로드 없이 안전하게.",
-  keywords: ["PDF 변환", "PDF 병합", "PDF 분할", "PDF to 이미지", "이미지 to PDF", "무료 PDF 도구", "온라인 PDF 편집"],
+  title: meta.title,
+  description: meta.description,
+  keywords: meta.keywords,
   openGraph: {
-    title: "매일쓰는 PDF 도구 - 무료 온라인 PDF 변환기",
-    description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 브라우저에서 PDF 병합, 분할, 이미지 변환을 바로 처리하세요.",
+    title: meta.ogTitle,
+    description: meta.ogDescription,
     type: "website",
     locale: "ko_KR",
-    url: "https://yunjizzz.github.io/pdf/",
+    url: "https://yoginhae.com/pdf/",
     siteName: "매일쓰는 PDF 도구",
   },
   twitter: {
     card: "summary_large_image",
-    title: "매일쓰는 PDF 도구 - 무료 온라인 PDF 변환기",
-    description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 브라우저에서 바로 처리하세요.",
+    title: meta.twitterTitle,
+    description: meta.twitterDescription,
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yunjizzz.github.io/pdf/",
+    canonical: "https://yoginhae.com/pdf/",
+    languages: alternateLanguages,
   },
 };
 
@@ -37,10 +47,11 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "매일쓰는 PDF 도구",
-    description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 브라우저에서 PDF 병합, 분할, 이미지 변환을 바로 처리합니다.",
-    url: "https://yunjizzz.github.io/pdf/",
+    description: meta.description,
+    url: "https://yoginhae.com/pdf/",
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
+    inLanguage: ["ko", "en", "es", "pt"],
     offers: {
       "@type": "Offer",
       price: "0",

@@ -6,8 +6,10 @@ import { FileList } from '@/components/FileList';
 import { ProcessingStatus } from '@/components/ProcessingStatus';
 import { ProcessingState } from '@/types';
 import { pdfToImages, downloadBlob, downloadAsZip } from '@/lib/pdf-utils';
+import { useTranslation } from '@/lib/i18n-context';
 
 export function PdfToImage() {
+  const { t } = useTranslation();
   const [files, setFiles] = useState<File[]>([]);
   const [state, setState] = useState<ProcessingState>({ status: 'idle' });
   const [results, setResults] = useState<{ blob: Blob; name: string }[]>([]);
@@ -68,7 +70,7 @@ export function PdfToImage() {
 
       {files.length > 0 && results.length === 0 && (
         <div className="mt-4 flex items-center gap-4">
-          <label className="text-sm text-gray-600">출력 형식:</label>
+          <label className="text-sm text-gray-600">{t('outputFormat')}</label>
           <select
             value={format}
             onChange={(e) => setFormat(e.target.value as 'png' | 'jpeg')}
@@ -85,12 +87,12 @@ export function PdfToImage() {
       {results.length > 0 && (
         <div className="mt-4">
           <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-medium text-gray-700">변환 결과 ({results.length}페이지)</p>
+            <p className="text-sm font-medium text-gray-700">{t('conversionResults')} ({results.length}{t('pages')})</p>
             <button
               onClick={handleDownloadAll}
               className="text-sm text-blue-600 hover:text-blue-800 font-medium"
             >
-              {results.length > 1 ? '전체 ZIP 다운로드' : '다운로드'}
+              {results.length > 1 ? t('downloadAllZip') : t('download')}
             </button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -106,9 +108,9 @@ export function PdfToImage() {
                   className="w-full h-32 object-cover"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 flex items-center justify-center transition-colors">
-                  <span className="text-white opacity-0 group-hover:opacity-100 text-xs font-medium">다운로드</span>
+                  <span className="text-white opacity-0 group-hover:opacity-100 text-xs font-medium">{t('download')}</span>
                 </div>
-                <p className="p-1 text-xs text-gray-500 truncate text-center">{index + 1}페이지</p>
+                <p className="p-1 text-xs text-gray-500 truncate text-center">{index + 1}{t('page')}</p>
               </div>
             ))}
           </div>
@@ -122,21 +124,21 @@ export function PdfToImage() {
             disabled={files.length === 0 || state.status === 'processing'}
             className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            이미지로 변환
+            {t('convertToImage')}
           </button>
         ) : (
           <button
             onClick={handleReset}
             className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
           >
-            새 파일 변환
+            {t('convertNewFile')}
           </button>
         )}
       </div>
 
       {files.length === 0 && state.status === 'idle' && (
         <p className="mt-4 text-sm text-gray-400">
-          PDF 파일을 업로드하면 각 페이지를 이미지(PNG/JPG)로 변환합니다.
+          {t('pdfToImageHelp')}
         </p>
       )}
     </div>

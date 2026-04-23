@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://yoginhae.com/</loc>
     <changefreq>monthly</changefreq>
@@ -11,13 +12,52 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yoginhae.com/pdf/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://yoginhae.com/review-check/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <!-- PDF Tool - Korean (default) -->
+  <url>
+    <loc>https://yoginhae.com/pdf/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://yoginhae.com/pdf/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoginhae.com/pdf/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yoginhae.com/pdf/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://yoginhae.com/pdf/pt/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoginhae.com/pdf/" />
+  </url>
+  <!-- PDF Tool - English -->
+  <url>
+    <loc>https://yoginhae.com/pdf/en/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://yoginhae.com/pdf/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoginhae.com/pdf/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yoginhae.com/pdf/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://yoginhae.com/pdf/pt/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoginhae.com/pdf/" />
+  </url>
+  <!-- PDF Tool - Spanish -->
+  <url>
+    <loc>https://yoginhae.com/pdf/es/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://yoginhae.com/pdf/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoginhae.com/pdf/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yoginhae.com/pdf/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://yoginhae.com/pdf/pt/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoginhae.com/pdf/" />
+  </url>
+  <!-- PDF Tool - Portuguese -->
+  <url>
+    <loc>https://yoginhae.com/pdf/pt/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://yoginhae.com/pdf/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://yoginhae.com/pdf/en/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://yoginhae.com/pdf/es/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://yoginhae.com/pdf/pt/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yoginhae.com/pdf/" />
   </url>
 </urlset>

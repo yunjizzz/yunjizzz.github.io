@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslation } from "@/lib/i18n-context";
+
 interface FileListProps {
   files: File[];
   onRemove: (index: number) => void;
@@ -13,12 +15,14 @@ function formatSize(bytes: number): string {
 }
 
 export function FileList({ files, onRemove }: FileListProps) {
+  const { t } = useTranslation();
+
   if (files.length === 0) return null;
 
   return (
     <div className="mt-4 space-y-2">
       <p className="text-sm font-medium text-gray-700">
-        선택된 파일 ({files.length}개)
+        {t('selectedFiles')} ({files.length}{t('fileUnit')})
       </p>
       <ul className="space-y-1">
         {files.map((file, index) => (

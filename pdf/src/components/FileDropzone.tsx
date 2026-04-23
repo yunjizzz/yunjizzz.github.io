@@ -2,6 +2,7 @@
 
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from "@/lib/i18n-context";
 
 interface FileDropzoneProps {
   onDrop: (files: File[]) => void;
@@ -11,6 +12,7 @@ interface FileDropzoneProps {
 }
 
 export function FileDropzone({ onDrop, accept, multiple = true, disabled = false }: FileDropzoneProps) {
+  const { t } = useTranslation();
   const acceptMap: Record<string, string[]> = {};
   accept.forEach((ext) => {
     if (ext === '.pdf') acceptMap['application/pdf'] = ['.pdf'];
@@ -51,14 +53,14 @@ export function FileDropzone({ onDrop, accept, multiple = true, disabled = false
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
         {isDragActive ? (
-          <p className="text-blue-600 font-medium">파일을 놓으세요</p>
+          <p className="text-blue-600 font-medium">{t('dropzoneActive')}</p>
         ) : (
           <>
             <p className="text-gray-600 font-medium">
-              파일을 드래그하거나 클릭하여 선택하세요
+              {t('dropzoneIdle')}
             </p>
             <p className="text-sm text-gray-400">
-              지원 형식: {acceptText} {multiple && '(여러 파일 가능)'}
+              {t('supportedFormats')} {acceptText} {multiple && t('multipleFiles')}
             </p>
           </>
         )}
