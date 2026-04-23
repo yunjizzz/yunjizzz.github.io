@@ -6,7 +6,42 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <title>yunji.dev</title>
+  <link rel="icon" href="/flat.png" type="image/png" />
+  <link rel="canonical" href="https://yoginhae.com/" />
+  <title>요긴해 - 무료 유틸 사이트</title>
+  <meta name="description" content="일상에서 요긴하게 쓰는 다양한 유틸리티를 만들어요. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등 무료 온라인 도구를 회원가입 없이 바로 사용하세요." />
+  <meta name="keywords" content="무료 유틸리티, 온라인 도구, PDF 변환, 맛집 분석, 이사 체크리스트, 직장인 도구, 생산성 도구" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="요긴해 - 일상에서 요긴하게 쓰는 무료 유틸리티" />
+  <meta property="og:description" content="일상에서 요긴하게 쓰는 다양한 유틸리티를 만들어요. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등." />
+  <meta property="og:url" content="https://yoginhae.com/" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:site_name" content="요긴해" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="요긴해 - 일상에서 요긴하게 쓰는 무료 유틸리티" />
+  <meta name="twitter:description" content="일상에서 요긴하게 쓰는 다양한 유틸리티를 만들어요. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등." />
+
+  <!-- JSON-LD 구조화 데이터 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "요긴해",
+    "url": "https://yoginhae.com/",
+    "description": "일상에서 요긴하게 쓰는 다양한 유틸리티를 만들어요.",
+    "author": { "@type": "Person", "name": "yunji" },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://yoginhae.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   <script>
     (function () {
       try {
@@ -81,18 +116,27 @@
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1.1;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      cursor: default;
+      transition: transform 0.3s ease;
     }
-    .hero h1 .dot { color: var(--accent); }
-    .hero h1 .dev {
+    .hero h1:hover {
+      transform: scale(1.05);
+    }
+    .hero h1 span {
       display: inline-block;
-      padding-right: 4px;
+      opacity: 0;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: letterPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero h1 span:nth-child(1) { animation-delay: 0.3s; }
+    .hero h1 span:nth-child(2) { animation-delay: 0.4s; }
+    .hero h1 span:nth-child(3) { animation-delay: 0.5s; }
+    @keyframes letterPop {
+      0% { opacity: 0; transform: translateY(20px) scale(0.8); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .hero .subtitle {
@@ -122,7 +166,7 @@
     .section {
       position: relative;
       z-index: 1;
-      max-width: 720px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 0 24px 80px;
     }
@@ -142,20 +186,20 @@
     }
 
     .projects {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
 
     .project {
       position: relative;
       display: flex;
-      align-items: center;
-      gap: 20px;
+      flex-direction: column;
+      gap: 16px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 24px 28px;
+      padding: 28px 24px;
       text-decoration: none;
       color: var(--text);
       box-shadow: var(--shadow);
@@ -204,12 +248,21 @@
     .project .arrow {
       position: relative;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-soft);
       color: var(--muted);
-      font-size: 20px;
-      transition: color 200ms ease, transform 200ms ease;
+      font-size: 14px;
+      transition: background 200ms ease, color 200ms ease, transform 200ms ease;
+      align-self: flex-end;
     }
     .project:hover .arrow {
-      color: var(--accent);
+      background: var(--accent);
+      color: #fff;
       transform: translateX(4px);
     }
 
@@ -246,10 +299,15 @@
     }
 
     /* --- 반응형 --- */
+    @media (max-width: 900px) {
+      .projects { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 640px) {
       .hero h1 { font-size: 42px; }
       .hero .subtitle { font-size: 15px; }
-      .project { padding: 18px 20px; gap: 14px; border-radius: 16px; }
+      .projects { grid-template-columns: 1fr; }
+      .project { padding: 18px 20px; gap: 14px; border-radius: 16px; flex-direction: row; align-items: center; }
+      .project .arrow { align-self: center; }
       .project .emoji { font-size: 34px; }
       .project .info h2 { font-size: 16px; }
     }
@@ -261,8 +319,8 @@
   <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">☀️</button>
 
   <section class="hero">
-    <h1>yunji<span class="dot">.</span><span class="dev">dev</span></h1>
-    <p class="subtitle">하고 싶은건 다하는 놀이공간 <span class="chick">🐥</span></p>
+    <h1><span>요</span><span>긴</span><span>해</span></h1>
+    <p class="subtitle">일상에서 요긴하게 쓰는 다양한 유틸리티를 만들어요. <span class="chick">🐥</span></p>
     <div class="divider"></div>
   </section>
 
@@ -275,7 +333,7 @@
           <h2>이 집.. 진짜 맛집일까?</h2>
           <p>네이버 리뷰 분석으로 맛집 신뢰도를 판별하는 데모</p>
         </div>
-        <div class="arrow">&rarr;</div>
+        <div class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
       </a>
       <a class="project" href="/move/">
         <div class="emoji">📦</div>
@@ -283,7 +341,7 @@
           <h2>이사 도우미</h2>
           <p>이사 날짜 기반 체크리스트 자동 생성 & 업체 링크 모음</p>
         </div>
-        <div class="arrow">&rarr;</div>
+        <div class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
       </a>
       <a class="project" href="/pdf/">
         <div class="emoji">📄</div>
@@ -291,7 +349,7 @@
           <h2>PDF 도구</h2>
           <p>브라우저에서 바로 PDF 병합, 분할, 이미지 변환</p>
         </div>
-        <div class="arrow">&rarr;</div>
+        <div class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
       </a>
     </div>
   </section>
