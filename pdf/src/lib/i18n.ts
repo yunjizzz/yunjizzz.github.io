@@ -14,7 +14,7 @@ export const translations = {
     privacyBanner: "모든 파일은 브라우저에서 처리되며 서버에 업로드되지 않습니다",
     // Header
     appTitle: "매일쓰는 PDF 도구",
-    appSubtitle: "회사에서 PDF 변환할 때마다 불편해서 직접 만든 사이트입니다. 회원가입도 없고, 데이터도 따로 저장되지 않으니 무료로 마음껏 쓰세요.",
+    appSubtitle: "회원가입도 없고 데이터도 따로 저장되지 않아요.\n안전하게 무료로 사용해보세요!",
     // Feature tabs
     pdfMerge: "PDF 병합",
     pdfMergeDesc: "여러 PDF 파일을 하나로 합칩니다",
