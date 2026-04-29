@@ -72,6 +72,14 @@ export const translations = {
     splitting: "PDF를 분할하는 중...",
     splitSuccess: "분할 완료! 다운로드가 시작됩니다.",
     splitHelp: "PDF 파일을 업로드하고 원하는 페이지 범위를 입력하면 해당 페이지만 추출합니다.",
+    // PdfToExcel
+    pdfToExcel: "PDF → Excel",
+    pdfToExcelDesc: "PDF의 표 데이터를 Excel로 변환합니다",
+    convertToExcel: "Excel로 변환",
+    convertingToExcel: "PDF를 Excel로 변환하는 중...",
+    pdfToExcelSuccess: "변환 완료! 다운로드가 시작됩니다.",
+    pdfToExcelError: "PDF 파일을 선택해주세요",
+    pdfToExcelHelp: "PDF 파일을 업로드하면 텍스트와 표 데이터를 Excel 파일로 변환합니다. 페이지별로 시트가 생성됩니다.",
   },
   en: {
     privacyBanner: "All files are processed in your browser and never uploaded to a server",
@@ -126,6 +134,13 @@ export const translations = {
     splitting: "Splitting PDF...",
     splitSuccess: "Split complete! Download will start.",
     splitHelp: "Upload a PDF and enter the page range to extract only those pages.",
+    pdfToExcel: "PDF → Excel",
+    pdfToExcelDesc: "Convert PDF table data to Excel",
+    convertToExcel: "Convert to Excel",
+    convertingToExcel: "Converting PDF to Excel...",
+    pdfToExcelSuccess: "Conversion complete! Download will start.",
+    pdfToExcelError: "Please select a PDF file",
+    pdfToExcelHelp: "Upload a PDF file to extract text and table data into an Excel file. Each page becomes a separate sheet.",
   },
   es: {
     privacyBanner: "Todos los archivos se procesan en tu navegador y nunca se suben a un servidor",
@@ -180,6 +195,13 @@ export const translations = {
     splitting: "Dividiendo PDF...",
     splitSuccess: "¡División completada! La descarga comenzará.",
     splitHelp: "Sube un PDF e ingresa el rango de páginas para extraer solo esas páginas.",
+    pdfToExcel: "PDF → Excel",
+    pdfToExcelDesc: "Convierte datos de tablas PDF a Excel",
+    convertToExcel: "Convertir a Excel",
+    convertingToExcel: "Convirtiendo PDF a Excel...",
+    pdfToExcelSuccess: "¡Conversión completada! La descarga comenzará.",
+    pdfToExcelError: "Selecciona un archivo PDF",
+    pdfToExcelHelp: "Sube un archivo PDF para extraer texto y datos de tablas en un archivo Excel. Cada página se convierte en una hoja separada.",
   },
   pt: {
     privacyBanner: "Todos os arquivos são processados no seu navegador e nunca são enviados a um servidor",
@@ -234,6 +256,13 @@ export const translations = {
     splitting: "Dividindo PDF...",
     splitSuccess: "Divisão concluída! O download começará.",
     splitHelp: "Envie um PDF e insira o intervalo de páginas para extrair apenas essas páginas.",
+    pdfToExcel: "PDF → Excel",
+    pdfToExcelDesc: "Converta dados de tabelas PDF para Excel",
+    convertToExcel: "Converter para Excel",
+    convertingToExcel: "Convertendo PDF para Excel...",
+    pdfToExcelSuccess: "Conversão concluída! O download começará.",
+    pdfToExcelError: "Selecione um arquivo PDF",
+    pdfToExcelHelp: "Envie um arquivo PDF para extrair texto e dados de tabelas em um arquivo Excel. Cada página se torna uma planilha separada.",
   },
 } as const;
 
@@ -241,9 +270,9 @@ export type TranslationKey = keyof (typeof translations)["ko"];
 
 export const metadata: Record<Locale, { title: string; description: string; keywords: string[]; ogTitle: string; ogDescription: string; twitterTitle: string; twitterDescription: string }> = {
   ko: {
-    title: "PDF 변환, 병합, 분할 | 해봄",
-    description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 PDF 병합, 분할, 이미지 변환을 브라우저에서 바로 처리합니다. 서버 업로드 없이 안전하게.",
-    keywords: ["PDF 변환", "PDF 병합", "PDF 분할", "PDF to 이미지", "이미지 to PDF", "무료 PDF 도구", "온라인 PDF 편집"],
+    title: "PDF 변환, 병합, 분할, Excel 변환 | 해봄",
+    description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 PDF 병합, 분할, 이미지 변환, Excel 변환을 브라우저에서 바로 처리합니다. 서버 업로드 없이 안전하게.",
+    keywords: ["PDF 변환", "PDF 병합", "PDF 분할", "PDF to 이미지", "이미지 to PDF", "PDF to Excel", "무료 PDF 도구", "온라인 PDF 편집"],
     ogTitle: "PDF 변환, 병합, 분할 | 해봄",
     ogDescription: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 브라우저에서 PDF 병합, 분할, 이미지 변환을 바로 처리하세요.",
     twitterTitle: "PDF 변환, 병합, 분할 | 해봄",

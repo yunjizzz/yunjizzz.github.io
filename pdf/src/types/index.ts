@@ -1,4 +1,4 @@
-export type FeatureType = 'pdf-merge' | 'pdf-to-image' | 'image-to-pdf' | 'pdf-split';
+export type FeatureType = 'pdf-merge' | 'pdf-to-image' | 'image-to-pdf' | 'pdf-split' | 'pdf-to-excel';
 
 export interface FeatureInfo {
   id: FeatureType;

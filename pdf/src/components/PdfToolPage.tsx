@@ -7,6 +7,7 @@ import { PdfMerge } from '@/features/pdf-merge/PdfMerge';
 import { PdfToImage } from '@/features/pdf-to-image/PdfToImage';
 import { ImageToPdf } from '@/features/image-to-pdf/ImageToPdf';
 import { PdfSplit } from '@/features/pdf-split/PdfSplit';
+import { PdfToExcel } from '@/features/pdf-to-excel/PdfToExcel';
 import { useTranslation } from '@/lib/i18n-context';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import type { TranslationKey } from '@/lib/i18n';
@@ -44,6 +45,18 @@ function ImageToPdfIcon({ className }: { className?: string }) {
   );
 }
 
+function PdfToExcelIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+      <path d="M6 4h8l4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
+      <path d="M14 4v4h4" />
+      <rect x="7" y="12" width="10" height="6" rx="0.5" strokeWidth={1} />
+      <line x1="7" y1="15" x2="17" y2="15" strokeWidth={1} />
+      <line x1="12" y1="12" x2="12" y2="18" strokeWidth={1} />
+    </svg>
+  );
+}
+
 function SplitIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
@@ -60,6 +73,7 @@ const featureIcons: Record<FeatureType, React.ReactNode> = {
   'pdf-to-image': <PdfToImageIcon className="w-7 h-7" />,
   'image-to-pdf': <ImageToPdfIcon className="w-7 h-7" />,
   'pdf-split': <SplitIcon className="w-7 h-7" />,
+  'pdf-to-excel': <PdfToExcelIcon className="w-7 h-7" />,
 };
 
 const featureKeys: Record<FeatureType, { title: TranslationKey; desc: TranslationKey }> = {
@@ -67,6 +81,7 @@ const featureKeys: Record<FeatureType, { title: TranslationKey; desc: Translatio
   'pdf-to-image': { title: 'pdfToImage', desc: 'pdfToImageDesc' },
   'image-to-pdf': { title: 'imageToPdf', desc: 'imageToPdfDesc' },
   'pdf-split': { title: 'pdfSplit', desc: 'pdfSplitDesc' },
+  'pdf-to-excel': { title: 'pdfToExcel', desc: 'pdfToExcelDesc' },
 };
 
 export default function PdfToolPage() {
@@ -83,6 +98,8 @@ export default function PdfToolPage() {
         return <ImageToPdf />;
       case 'pdf-split':
         return <PdfSplit />;
+      case 'pdf-to-excel':
+        return <PdfToExcel />;
     }
   };
 
@@ -120,7 +137,7 @@ export default function PdfToolPage() {
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         {/* Feature Tabs */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
           {features.map((feature) => (
             <button
               key={feature.id}

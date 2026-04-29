@@ -29,4 +29,11 @@ export const features: FeatureInfo[] = [
     acceptedFiles: ['.pdf'],
     multiple: false,
   },
+  {
+    id: 'pdf-to-excel',
+    title: 'PDF → Excel',
+    description: 'PDF의 표 데이터를 Excel 파일로 변환합니다',
+    acceptedFiles: ['.pdf'],
+    multiple: false,
+  },
 ];
