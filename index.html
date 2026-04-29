@@ -8,23 +8,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" type="image/svg+xml" />
   <link rel="canonical" href="https://yoginhae.com/" />
-  <title>해봄 - 무료 유틸 사이트</title>
-  <meta name="description" content="일상 업무에 필요한 다양한 무료 유틸리티 사이트. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등 회원가입 없이 바로 사용하세요." />
-  <meta name="keywords" content="무료 유틸리티, 온라인 도구, PDF 변환, 맛집 분석, 이사 체크리스트, 직장인 도구, 생산성 도구" />
+  <title>해봄 - 직장인 무료 꿀도구 모음</title>
+  <meta name="description" content="직장인이 매일 쓰는 무료 꿀도구 모음. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등 회원가입 없이 바로 사용하세요." />
+  <meta name="keywords" content="직장인 꿀도구, 무료 유틸리티, 온라인 도구, PDF 변환, 맛집 분석, 이사 체크리스트, 생산성 도구" />
   <meta name="robots" content="index, follow" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="해봄 - 일상 업무에 필요한 무료 유틸리티" />
-  <meta property="og:description" content="일상 업무에 필요한 다양한 무료 유틸리티 사이트. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등." />
+  <meta property="og:title" content="해봄 - 직장인 무료 꿀도구 모음" />
+  <meta property="og:description" content="직장인이 매일 쓰는 무료 꿀도구 모음. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등." />
   <meta property="og:url" content="https://yoginhae.com/" />
+  <meta property="og:image" content="https://yoginhae.com/haebom.png" />
   <meta property="og:locale" content="ko_KR" />
   <meta property="og:site_name" content="해봄" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="해봄 - 일상 업무에 필요한 무료 유틸리티" />
-  <meta name="twitter:description" content="일상 업무에 필요한 다양한 무료 유틸리티 사이트. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등." />
+  <meta name="twitter:title" content="해봄 - 직장인 무료 꿀도구 모음" />
+  <meta name="twitter:description" content="직장인이 매일 쓰는 무료 꿀도구 모음. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등." />
+  <meta name="twitter:image" content="https://yoginhae.com/haebom.png" />
 
   <!-- JSON-LD 구조화 데이터 -->
   <script type="application/ld+json">
@@ -33,14 +35,17 @@
     "@type": "WebSite",
     "name": "해봄",
     "url": "https://yoginhae.com/",
-    "description": "일상 업무에 필요한 다양한 무료 유틸리티 사이트.",
-    "author": { "@type": "Person", "name": "yunji" },
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://yoginhae.com/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "description": "직장인이 매일 쓰는 무료 꿀도구 모음.",
+    "author": { "@type": "Person", "name": "yunji" }
   }
+  </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
   </script>
   <script>
     (function () {
@@ -269,10 +274,69 @@
     .project:hover .emoji { transform: scale(1.15) rotate(-6deg); }
 
     .project .info { flex: 1; position: relative; z-index: 1; min-width: 0; }
+    .project .info .title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
     .project .info h2 {
       font-size: 15px;
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 0;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .status-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    .status-badge.live {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+    .status-badge.live .dot {
+      background: #10b981;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .status-badge.wip {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+    .status-badge.wip .dot {
+      background: #ef4444;
+    }
+    [data-theme="dark"] .status-badge.live {
+      background: rgba(52, 211, 153, 0.15);
+      color: #34d399;
+    }
+    [data-theme="dark"] .status-badge.live .dot {
+      background: #34d399;
+      box-shadow: 0 0 6px rgba(52, 211, 153, 0.6);
+    }
+    [data-theme="dark"] .status-badge.wip {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+    }
+    [data-theme="dark"] .status-badge.wip .dot {
+      background: #f87171;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
     .project .info p {
       color: var(--muted);
@@ -418,7 +482,10 @@
       <a class="project" href="/review-check/" data-category="daily">
         <div class="emoji">🍜</div>
         <div class="info">
-          <h2>이 집.. 진짜 맛집일까?</h2>
+          <div class="title-row">
+            <h2>이 집.. 진짜 맛집일까?</h2>
+            <span class="status-badge wip"><span class="dot"></span>개선중</span>
+          </div>
           <p>네이버 리뷰 분석으로 맛집 신뢰도를 판별하는 데모</p>
         </div>
         <div class="arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
@@ -426,7 +493,10 @@
       <a class="project" href="/move/" data-category="daily">
         <div class="emoji">📦</div>
         <div class="info">
-          <h2>이사 도우미</h2>
+          <div class="title-row">
+            <h2>이사 도우미</h2>
+            <span class="status-badge wip"><span class="dot"></span>개선중</span>
+          </div>
           <p>이사 날짜 기반 체크리스트 자동 생성 & 업체 링크 모음</p>
         </div>
         <div class="arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
@@ -434,7 +504,10 @@
       <a class="project" href="/pdf/" data-category="work">
         <div class="emoji">📄</div>
         <div class="info">
-          <h2>PDF 도구</h2>
+          <div class="title-row">
+            <h2>PDF 도구</h2>
+            <span class="status-badge live"><span class="dot"></span>LIVE</span>
+          </div>
           <p>브라우저에서 바로 PDF 병합, 분할, 이미지 변환</p>
         </div>
         <div class="arrow"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>

@@ -241,12 +241,12 @@ export type TranslationKey = keyof (typeof translations)["ko"];
 
 export const metadata: Record<Locale, { title: string; description: string; keywords: string[]; ogTitle: string; ogDescription: string; twitterTitle: string; twitterDescription: string }> = {
   ko: {
-    title: "매일쓰는 PDF 도구 - 무료 온라인 PDF 변환기 | 브라우저에서 바로 처리",
+    title: "PDF 변환, 병합, 분할 | 해봄",
     description: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 PDF 병합, 분할, 이미지 변환을 브라우저에서 바로 처리합니다. 서버 업로드 없이 안전하게.",
     keywords: ["PDF 변환", "PDF 병합", "PDF 분할", "PDF to 이미지", "이미지 to PDF", "무료 PDF 도구", "온라인 PDF 편집"],
-    ogTitle: "매일쓰는 PDF 도구 - 무료 온라인 PDF 변환기",
+    ogTitle: "PDF 변환, 병합, 분할 | 해봄",
     ogDescription: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 브라우저에서 PDF 병합, 분할, 이미지 변환을 바로 처리하세요.",
-    twitterTitle: "매일쓰는 PDF 도구 - 무료 온라인 PDF 변환기",
+    twitterTitle: "PDF 변환, 병합, 분할 | 해봄",
     twitterDescription: "직장인이 불편해서 직접 만든 무료 PDF 도구. 회원가입 없이 브라우저에서 바로 처리하세요.",
   },
   en: {
@@ -259,21 +259,21 @@ export const metadata: Record<Locale, { title: string; description: string; keyw
     twitterDescription: "Free PDF tools that work right in your browser. No sign-up, no server uploads.",
   },
   es: {
-    title: "Herramientas PDF - Convertidor PDF Gratuito Online | Procesa en el Navegador",
+    title: "Herramientas PDF Gratis Online | Haebom",
     description: "Herramientas PDF gratuitas que funcionan directamente en tu navegador. Combina, divide y convierte PDFs sin registro y sin subir archivos al servidor.",
     keywords: ["convertidor PDF", "unir PDF", "dividir PDF", "PDF a imagen", "imagen a PDF", "herramientas PDF gratis", "editor PDF online"],
-    ogTitle: "Herramientas PDF - Convertidor PDF Gratuito Online",
+    ogTitle: "Herramientas PDF Gratis Online | Haebom",
     ogDescription: "Herramientas PDF gratuitas directamente en tu navegador. Combina, divide y convierte PDFs sin registro.",
-    twitterTitle: "Herramientas PDF - Convertidor PDF Gratuito Online",
+    twitterTitle: "Herramientas PDF Gratis Online | Haebom",
     twitterDescription: "Herramientas PDF gratuitas directamente en tu navegador. Sin registro, sin subir archivos.",
   },
   pt: {
-    title: "Ferramentas PDF - Conversor PDF Gratuito Online | Processe no Navegador",
+    title: "Ferramentas PDF Gratis Online | Haebom",
     description: "Ferramentas PDF gratuitas que funcionam diretamente no seu navegador. Combine, divida e converta PDFs sem cadastro e sem enviar arquivos ao servidor.",
     keywords: ["conversor PDF", "unir PDF", "dividir PDF", "PDF para imagem", "imagem para PDF", "ferramentas PDF grátis", "editor PDF online"],
-    ogTitle: "Ferramentas PDF - Conversor PDF Gratuito Online",
+    ogTitle: "Ferramentas PDF Gratis Online | Haebom",
     ogDescription: "Ferramentas PDF gratuitas diretamente no seu navegador. Combine, divida e converta PDFs sem cadastro.",
-    twitterTitle: "Ferramentas PDF - Conversor PDF Gratuito Online",
+    twitterTitle: "Ferramentas PDF Gratis Online | Haebom",
     twitterDescription: "Ferramentas PDF gratuitas diretamente no seu navegador. Sem cadastro, sem enviar arquivos.",
   },
 };

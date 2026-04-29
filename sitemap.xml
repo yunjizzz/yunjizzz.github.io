@@ -12,6 +12,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yoginhae.com/move/checklist/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yoginhae.com/move/vendors/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://yoginhae.com/review-check/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

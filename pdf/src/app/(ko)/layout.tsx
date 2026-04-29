@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { metadata as i18nMeta, locales } from "@/lib/i18n";
-import "./globals.css";
+import "../globals.css";
 
 const meta = i18nMeta.ko;
 
@@ -21,12 +21,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: "https://yoginhae.com/pdf/",
-    siteName: "매일쓰는 PDF 도구",
+    images: ["https://yoginhae.com/haebom.png"],
+    siteName: "해봄",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: meta.twitterTitle,
     description: meta.twitterDescription,
+    images: ["https://yoginhae.com/haebom.png"],
   },
   robots: {
     index: true,
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default function KoLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -46,7 +48,7 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "매일쓰는 PDF 도구",
+    name: "해봄 - PDF 도구",
     description: meta.description,
     url: "https://yoginhae.com/pdf/",
     applicationCategory: "UtilitiesApplication",
