@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" type="image/svg+xml" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310b981'/><path d='M28 52l18 18 26-36' stroke='white' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" type="image/svg+xml" />
   <link rel="canonical" href="https://yoginhae.com/" />
   <title>해봄 - 직장인 무료 꿀도구 모음</title>
   <meta name="description" content="직장인이 매일 쓰는 무료 꿀도구 모음. PDF 변환, 맛집 리뷰 분석, 이사 체크리스트 등 회원가입 없이 바로 사용하세요." />
@@ -58,31 +58,42 @@
   </script>
   <style>
     :root {
-      --bg: #ffffff;
-      --bg-soft: #f0faf6;
+      --bg: #f7fdf9;
+      --bg-soft: #edf7f2;
+      --bg-hero: #f0faf5;
       --card: #ffffff;
-      --border: #d5e8e0;
-      --text: #111418;
-      --muted: #5f6673;
+      --border: #d0eadf;
+      --text: #111c16;
+      --muted: #607a6e;
       --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-light: #d1fae5;
       --accent2: #06b6d4;
       --shadow: 0 2px 8px rgba(15, 17, 21, 0.06), 0 1px 3px rgba(15, 17, 21, 0.04);
+      --shadow-md: 0 4px 20px rgba(16, 185, 129, 0.1), 0 2px 8px rgba(15, 17, 21, 0.06);
+      --shadow-lg: 0 8px 40px rgba(16, 185, 129, 0.15), 0 4px 16px rgba(15, 17, 21, 0.08);
       --glow: rgba(16, 185, 129, 0.15);
-      --particle: rgba(16, 185, 129, 0.3);
+      --particle: rgba(16, 185, 129, 0.25);
     }
     [data-theme="dark"] {
       --bg: #0a0f0d;
       --bg-soft: #111a16;
+      --bg-hero: #0d1a14;
       --card: #162019;
       --border: #243830;
       --text: #ececf1;
       --muted: #8b9f96;
       --accent: #34d399;
+      --accent-hover: #10b981;
+      --accent-light: rgba(52, 211, 153, 0.15);
       --accent2: #22d3ee;
       --shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.35);
       --glow: rgba(52, 211, 153, 0.1);
-      --particle: rgba(52, 211, 153, 0.25);
+      --particle: rgba(52, 211, 153, 0.2);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -103,76 +114,391 @@
       z-index: 0;
     }
 
-    /* --- 히어로 --- */
+    /* =====================
+       HERO SECTION
+    ===================== */
     .hero {
       position: relative;
       z-index: 1;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0 60px;
+      overflow: hidden;
+    }
+
+    /* subtle tinted background blob */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -5%;
+      width: 60%;
+      height: 130%;
+      background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    /* --- Hero Left --- */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .hero-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    .hero-logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    }
+    [data-theme="dark"] .hero-logo-icon {
+      box-shadow: 0 4px 12px rgba(52, 211, 153, 0.3);
+    }
+
+    .hero-logo-icon svg {
+      width: 22px;
+      height: 22px;
+      color: #fff;
+    }
+
+    .hero-logo-text {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .hero-tagline {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    .hero-headline {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.12;
+      color: var(--text);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    .hero-headline .line2 {
+      display: block;
+      color: var(--accent);
+    }
+
+    .hero-cta-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+    }
+
+    /* --- Feature badges --- */
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 16px;
+      border-radius: 50px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* --- Hero Right: Floating Cards --- */
+    .hero-right {
+      position: relative;
+      height: 420px;
+      opacity: 0;
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    }
+
+    /* central hub circle */
+    .hub-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #059669);
+      box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4), 0 0 0 16px rgba(16, 185, 129, 0.08), 0 0 0 30px rgba(16, 185, 129, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      animation: hubPulse 3s ease-in-out infinite;
+    }
+    [data-theme="dark"] .hub-circle {
+      box-shadow: 0 8px 32px rgba(52, 211, 153, 0.35), 0 0 0 16px rgba(52, 211, 153, 0.07), 0 0 0 30px rgba(52, 211, 153, 0.03);
+    }
+    .hub-circle svg {
+      width: 48px;
+      height: 48px;
+      color: #fff;
+    }
+
+    @keyframes hubPulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(16, 185, 129, 0.4), 0 0 0 16px rgba(16, 185, 129, 0.08), 0 0 0 30px rgba(16, 185, 129, 0.04); }
+      50% { box-shadow: 0 8px 40px rgba(16, 185, 129, 0.5), 0 0 0 22px rgba(16, 185, 129, 0.1), 0 0 0 38px rgba(16, 185, 129, 0.05); }
+    }
+    [data-theme="dark"] @keyframes hubPulse {
+      0%, 100% { box-shadow: 0 8px 32px rgba(52, 211, 153, 0.35), 0 0 0 16px rgba(52, 211, 153, 0.07), 0 0 0 30px rgba(52, 211, 153, 0.03); }
+      50% { box-shadow: 0 8px 40px rgba(52, 211, 153, 0.45), 0 0 0 22px rgba(52, 211, 153, 0.09), 0 0 0 38px rgba(52, 211, 153, 0.04); }
+    }
+
+    /* SVG connecting lines canvas */
+    .hub-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* individual floating tool cards */
+    .tool-card {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 12px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+      text-decoration: none;
+      color: var(--text);
+      min-width: 120px;
+      z-index: 3;
+      transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 250ms ease, border-color 250ms ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent);
+    }
+
+    .tool-card.is-placeholder {
+      opacity: 0.55;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .tool-card-icon {
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .tool-card-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .tool-card-desc {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /*
+      Card positions — arranged around hub center (50%, 50%)
+      hub center relative to .hero-right: ~50%, ~50%
+      Cards: top-right, right, bottom-right, bottom-left, top-left
+    */
+    .tool-card[data-pos="top-left"] {
+      top: 4%;
+      left: 5%;
+      animation: floatA 5s ease-in-out infinite;
+    }
+    .tool-card[data-pos="top-right"] {
+      top: 4%;
+      right: 2%;
+      animation: floatB 6s ease-in-out infinite;
+    }
+    .tool-card[data-pos="mid-right"] {
+      top: 42%;
+      right: 0%;
+      transform: translateY(-50%);
+      animation: floatC 4.5s ease-in-out infinite;
+    }
+    .tool-card[data-pos="bot-right"] {
+      bottom: 5%;
+      right: 4%;
+      animation: floatD 5.5s ease-in-out infinite;
+    }
+    .tool-card[data-pos="bot-left"] {
+      bottom: 5%;
+      left: 4%;
+      animation: floatA 6.5s ease-in-out 0.8s infinite;
+    }
+
+    @keyframes floatA {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes floatB {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes floatC {
+      0%, 100% { transform: translateY(-50%) translateX(0px); }
+      50% { transform: translateY(-50%) translateX(5px); }
+    }
+    @keyframes floatD {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+
+    /* override hover for mid-right to keep base translateY */
+    .tool-card[data-pos="mid-right"]:hover {
+      transform: translateY(-50%) translateY(-4px) scale(1.04);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* --- Scroll hint --- */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 0;
+      right: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: auto;
-      padding: 100px 24px 32px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 64px;
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.1;
-      cursor: default;
-      transition: transform 0.3s ease;
-    }
-    .hero h1:hover {
-      transform: scale(1.05);
-    }
-    .hero h1 span {
-      display: inline-block;
+      gap: 10px;
+      text-decoration: none;
       opacity: 0;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: letterPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeUp 0.8s ease 2s forwards;
+      z-index: 2;
     }
-    .hero h1 span:nth-child(1) { animation-delay: 0.3s; }
-    .hero h1 span:nth-child(2) { animation-delay: 0.45s; }
-    @keyframes letterPop {
-      0% { opacity: 0; transform: translateY(20px) scale(0.8); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .hero .subtitle {
-      font-size: 18px;
+    .scroll-hint-text {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       color: var(--muted);
-      margin-top: 16px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+      transition: color 200ms ease;
     }
-    .hero .chick {
-      display: inline-block;
-      animation: bounce 1.6s ease-in-out infinite;
+    .scroll-hint:hover .scroll-hint-text { color: var(--accent); }
+    .scroll-hint-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      background: var(--card);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      animation: bounceDown 2s ease-in-out infinite;
+      transition: border-color 300ms ease, color 300ms ease, box-shadow 300ms ease;
+      line-height: 0;
+    }
+    .scroll-hint:hover .scroll-hint-arrow {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
     }
 
-    .divider {
-      width: 48px;
-      height: 3px;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      margin: 24px auto 0;
-      opacity: 0;
-      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
-    }
-
-    /* --- 프로젝트 섹션 --- */
+    /* =====================
+       PROJECT SECTION
+    ===================== */
     .section {
       position: relative;
       z-index: 1;
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 0 24px 80px;
+      padding: 40px 48px 100px;
+      min-height: 100dvh;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .section-header.visible {
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .section-title {
@@ -181,12 +507,12 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--muted);
-      margin-bottom: 16px;
-      opacity: 0;
-      transform: translateY(16px);
     }
-    .section-title.visible {
-      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+    .section-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
     }
 
     /* --- 카테고리 탭 --- */
@@ -236,8 +562,8 @@
       gap: 14px;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px 18px;
+      border-radius: 16px;
+      padding: 18px 20px;
       text-decoration: none;
       color: var(--text);
       box-shadow: var(--shadow);
@@ -266,7 +592,7 @@
     }
 
     .project .emoji {
-      font-size: 30px;
+      font-size: 32px;
       line-height: 1;
       flex-shrink: 0;
       transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -278,7 +604,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
     .project .info h2 {
       font-size: 15px;
@@ -353,8 +679,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: var(--bg-soft);
       color: var(--muted);
@@ -368,7 +694,6 @@
       transform: translateX(4px);
     }
 
-    /* --- 테마 토글 --- */
     /* --- 오른쪽 상단 버튼 그룹 --- */
     .top-actions {
       position: fixed;
@@ -428,29 +753,56 @@
     .theme-toggle:hover { border-color: var(--accent); transform: scale(1.1) rotate(15deg); }
     .theme-toggle:active { transform: scale(0.9); }
 
-    /* --- 애니메이션 --- */
+    /* --- 공통 애니메이션 --- */
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+
+    /* =====================
+       RESPONSIVE
+    ===================== */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 0 32px;
+        gap: 48px;
+        padding-top: 20px;
+      }
+      .hero {
+        min-height: 100dvh;
+        padding: 90px 0 60px;
+      }
+      .hero-headline { font-size: 40px; }
+      .hero-right {
+        height: 320px;
+        max-width: 440px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .projects { grid-template-columns: repeat(2, 1fr); }
+      .section { padding: 0 32px 80px; }
     }
 
-    /* --- 반응형 --- */
-    @media (max-width: 900px) {
-      .projects { grid-template-columns: repeat(2, 1fr); }
-    }
     @media (max-width: 640px) {
       .suggest-btn span { display: none; }
       .suggest-btn { padding: 0; width: 44px; height: 44px; border-radius: 50%; justify-content: center; }
       .suggest-btn svg { margin: 0; }
-      .hero h1 { font-size: 42px; }
-      .hero .subtitle { font-size: 15px; }
+      .hero-headline { font-size: 32px; }
+      .hero-badges { gap: 8px; }
+      .hero-badge { font-size: 12px; padding: 7px 12px; }
+      .hero-right { height: 280px; }
+      .hub-circle { width: 82px; height: 82px; }
+      .hub-circle svg { width: 36px; height: 36px; }
+      .tool-card { padding: 9px 12px; min-width: 100px; }
+      .tool-card-name { font-size: 11px; }
+      .tool-card-desc { font-size: 10px; }
+      .tool-card-icon { font-size: 18px; }
       .projects { grid-template-columns: 1fr; }
-      .project { padding: 14px 16px; gap: 12px; border-radius: 12px; }
-      .project .emoji { font-size: 26px; }
+      .project { padding: 14px 16px; gap: 12px; border-radius: 14px; }
+      .project .emoji { font-size: 28px; }
       .project .info h2 { font-size: 14px; }
+      .section { padding: 0 20px 80px; }
+      .hero-inner { padding: 0 20px; }
     }
   </style>
 </head>
@@ -465,14 +817,112 @@
     <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">☀️</button>
   </div>
 
+  <!-- ===== HERO ===== -->
   <section class="hero">
-    <h1><span>해</span><span>봄</span></h1>
-    <p class="subtitle">하고싶은건 일단 해봄!<br/>일상에 필요한 다양한 기능을 만들어요. <span class="chick">🌱</span></p>
-    <div class="divider"></div>
+    <div class="hero-inner">
+
+      <!-- Left: text content -->
+      <div class="hero-left">
+        <!-- Logo -->
+        <div class="hero-logo" role="img" aria-label="해봄 로고">
+          <div class="hero-logo-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <span class="hero-logo-text">해봄</span>
+        </div>
+
+        <!-- Tagline -->
+        <p class="hero-tagline">일상에 필요한 모든 기능을, 해봄에서 한 번에</p>
+
+        <!-- Main headline -->
+        <h1 class="hero-headline">
+          간단한 도구부터<span class="line2">유용한 기능까지</span>
+        </h1>
+
+        <!-- CTA text -->
+        <p class="hero-cta-text">지금 바로 해보세요.</p>
+
+        <!-- Feature badges -->
+        <div class="hero-badges" role="list">
+          <div class="hero-badge" role="listitem">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            빠르고 간편하게
+          </div>
+          <div class="hero-badge" role="listitem">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            안전하고 손쉽게
+          </div>
+          <div class="hero-badge" role="listitem">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            다양한 무료 기능
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: floating tool cards -->
+      <div class="hero-right" aria-hidden="true">
+        <!-- SVG dashed lines connecting hub to cards -->
+        <svg class="hub-lines" id="hub-lines" viewBox="0 0 500 420" preserveAspectRatio="xMidYMid meet">
+          <!-- lines drawn by JS -->
+        </svg>
+
+        <!-- Hub circle -->
+        <div class="hub-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+
+        <!-- Tool cards (positioned via CSS) -->
+        <a class="tool-card" href="/pdf/" data-pos="top-left">
+          <span class="tool-card-icon">📄</span>
+          <span class="tool-card-name">PDF 도구</span>
+          <span class="tool-card-desc">병합·분할·변환</span>
+        </a>
+
+        <a class="tool-card" href="/review-check/" data-pos="top-right">
+          <span class="tool-card-icon">🍜</span>
+          <span class="tool-card-name">맛집 리뷰 분석</span>
+          <span class="tool-card-desc">신뢰도 판별</span>
+        </a>
+
+        <a class="tool-card" href="/move/" data-pos="mid-right">
+          <span class="tool-card-icon">📦</span>
+          <span class="tool-card-name">이사 도우미</span>
+          <span class="tool-card-desc">체크리스트</span>
+        </a>
+
+        <div class="tool-card is-placeholder" data-pos="bot-right">
+          <span class="tool-card-icon">🔐</span>
+          <span class="tool-card-name">비밀번호 생성기</span>
+          <span class="tool-card-desc">준비중</span>
+        </div>
+
+        <div class="tool-card is-placeholder" data-pos="bot-left">
+          <span class="tool-card-icon">#</span>
+          <span class="tool-card-name">텍스트 도구</span>
+          <span class="tool-card-desc">준비중</span>
+        </div>
+      </div>
+
+    </div>
+
+    <a href="#projects" class="scroll-hint" aria-label="프로젝트 목록으로 스크롤">
+      <span class="scroll-hint-text">모든 프로젝트 보기</span>
+      <div class="scroll-hint-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg>
+      </div>
+    </a>
   </section>
 
-  <section class="section">
-    <div class="section-title">Projects</div>
+  <!-- ===== PROJECTS SECTION ===== -->
+  <section class="section" id="projects">
+    <div class="section-header">
+      <div class="section-title">Projects</div>
+      <div class="section-divider"></div>
+    </div>
     <div class="category-tabs">
       <button class="category-tab active" data-filter="all">전체</button>
       <button class="category-tab" data-filter="daily">일상</button>
@@ -585,7 +1035,6 @@
           ctx.fillStyle = color;
           ctx.fill();
 
-          // 마우스 근처 파티클끼리 선 연결
           var dx = p.x - mouse.x;
           var dy = p.y - mouse.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
@@ -600,7 +1049,6 @@
             ctx.globalAlpha = 1;
           }
 
-          // 가까운 파티클끼리 연결
           for (var j = i + 1; j < particles.length; j++) {
             var q = particles[j];
             var ddx = p.x - q.x;
@@ -623,6 +1071,19 @@
       draw();
     })();
 
+    // --- 스크롤 힌트 클릭: 프로젝트가 화면 최상단에 오도록 ---
+    (function () {
+      var hint = document.querySelector('.scroll-hint');
+      var target = document.getElementById('projects');
+      if (hint && target) {
+        hint.addEventListener('click', function (e) {
+          e.preventDefault();
+          var top = target.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+      }
+    })();
+
     // --- 카드 마우스 글로우 ---
     document.querySelectorAll('.project').forEach(function (card) {
       card.addEventListener('mousemove', function (e) {
@@ -642,7 +1103,7 @@
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.project, .section-title, .category-tabs').forEach(function (el) {
+    document.querySelectorAll('.project, .section-header, .category-tabs').forEach(function (el) {
       observer.observe(el);
     });
 
@@ -665,6 +1126,49 @@
           });
         });
       });
+    })();
+
+    // --- Hub SVG 연결선 그리기 ---
+    (function () {
+      function drawLines() {
+        var heroRight = document.querySelector('.hero-right');
+        var svgEl = document.getElementById('hub-lines');
+        var hubEl = document.querySelector('.hub-circle');
+        if (!heroRight || !svgEl || !hubEl) return;
+
+        var rightRect = heroRight.getBoundingClientRect();
+        var hubRect = hubEl.getBoundingClientRect();
+
+        // hub center relative to hero-right
+        var hubCX = hubRect.left + hubRect.width / 2 - rightRect.left;
+        var hubCY = hubRect.top + hubRect.height / 2 - rightRect.top;
+
+        var cards = document.querySelectorAll('.tool-card');
+        var lines = '';
+
+        cards.forEach(function (card) {
+          var cardRect = card.getBoundingClientRect();
+          var cardCX = cardRect.left + cardRect.width / 2 - rightRect.left;
+          var cardCY = cardRect.top + cardRect.height / 2 - rightRect.top;
+
+          // scale to viewBox (500x420)
+          var scaleX = 500 / rightRect.width;
+          var scaleY = 420 / rightRect.height;
+
+          var x1 = hubCX * scaleX;
+          var y1 = hubCY * scaleY;
+          var x2 = cardCX * scaleX;
+          var y2 = cardCY * scaleY;
+
+          lines += '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + 'var(--border)' + '" stroke-width="1.5" stroke-dasharray="5 4" stroke-linecap="round"/>';
+        });
+
+        svgEl.innerHTML = lines;
+      }
+
+      // draw after layout settles
+      setTimeout(drawLines, 300);
+      window.addEventListener('resize', drawLines);
     })();
   </script>
 </body>
