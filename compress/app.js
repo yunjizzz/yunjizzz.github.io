@@ -26,6 +26,19 @@
   const processingFill = document.getElementById('processing-fill');
   const processingFileName = document.getElementById('processing-file-name');
 
+  // --- FFmpeg util helpers ---
+  async function toBlobURL(url, mimeType) {
+    const resp = await fetch(url);
+    const buf = await resp.arrayBuffer();
+    const blob = new Blob([buf], { type: mimeType });
+    return URL.createObjectURL(blob);
+  }
+
+  async function fetchFile(file) {
+    const buf = await file.arrayBuffer();
+    return new Uint8Array(buf);
+  }
+
   // --- Helpers ---
   function formatSize(bytes) {
     if (bytes >= 1024 * 1024 * 1024) {
@@ -73,11 +86,22 @@
       item.dataset.index = index;
       item.setAttribute('role', 'listitem');
       item.innerHTML = `
-        <div class="file-info">
-          <span class="file-name">${file.name}</span>
-          <span class="file-size">${formatSize(file.size)}</span>
+        <div class="file-item-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+          </svg>
         </div>
-        <button class="file-remove" data-index="${index}" aria-label="${file.name} 제거">&times;</button>
+        <div class="file-item-info">
+          <div class="file-item-name">${file.name}</div>
+          <div class="file-item-size">${formatSize(file.size)}</div>
+        </div>
+        <button class="file-item-remove" data-index="${index}" aria-label="${file.name} 제거">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       `;
       fileList.appendChild(item);
     });
@@ -164,7 +188,7 @@
 
   // --- File remove delegation ---
   fileList.addEventListener('click', (e) => {
-    const btn = e.target.closest('.file-remove');
+    const btn = e.target.closest('.file-item-remove');
     if (!btn) return;
     const index = parseInt(btn.dataset.index, 10);
     removeFile(index);
@@ -184,7 +208,6 @@
     processingFileName.textContent = '';
 
     const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
-    const { toBlobURL } = FFmpegUtil;
     await ff.load({
       coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
       wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
@@ -217,7 +240,6 @@
           const inputName = 'input_' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
           const outputName = 'output_' + Date.now() + '.mp4';
 
-          const { fetchFile } = FFmpegUtil;
           await ff.writeFile(inputName, await fetchFile(file));
 
           await ff.exec([
