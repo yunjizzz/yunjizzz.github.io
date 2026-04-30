@@ -183,8 +183,11 @@
     processingSub.textContent = 'FFmpeg 로딩 중...';
     processingFileName.textContent = '';
 
+    const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+    const { toBlobURL } = FFmpegUtil;
     await ff.load({
-      coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+      wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
     });
 
     state.ffmpeg = ff;
