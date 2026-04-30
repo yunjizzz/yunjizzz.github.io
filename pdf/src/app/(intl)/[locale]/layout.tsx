@@ -84,6 +84,7 @@ export default async function IntlLayout({
       price: "0",
       priceCurrency: "USD",
     },
+    featureList: ["PDF Merge", "PDF Split", "PDF to Image", "Image to PDF", "PDF to Excel"],
   };
 
   return (

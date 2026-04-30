@@ -59,7 +59,7 @@ export default function KoLayout({
       price: "0",
       priceCurrency: "KRW",
     },
-    featureList: ["PDF 병합", "PDF 분할", "PDF를 이미지로 변환", "이미지를 PDF로 변환"],
+    featureList: ["PDF 병합", "PDF 분할", "PDF를 이미지로 변환", "이미지를 PDF로 변환", "PDF를 Excel로 변환", "PDF 엑셀 변환"],
   };
 
   return (
