@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310b981'/><path d='M28 52l18 18 26-36' stroke='white' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" type="image/svg+xml" />
+  <link rel="canonical" href="https://yoginhae.com/compress/" />
+  <title>영상 압축 | 해봄</title>
+  <meta name="description" content="브라우저에서 직접 영상을 압축하세요. 서버 업로드 없이 MP4, WebM, MOV, AVI 파일을 최대 2GB까지 처리합니다." />
+  <meta name="keywords" content="영상 압축, 동영상 압축, 브라우저 압축, MP4 압축, 무료 압축" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="영상 압축 | 해봄" />
+  <meta property="og:description" content="브라우저에서 직접 영상을 압축하세요. 서버 업로드 없이 최대 2GB까지 처리합니다." />
+  <meta property="og:url" content="https://yoginhae.com/compress/" />
+  <meta property="og:image" content="https://yoginhae.com/haebom.png" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:site_name" content="해봄" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="영상 압축 | 해봄" />
+  <meta name="twitter:description" content="브라우저에서 직접 영상을 압축하세요. 서버 업로드 없이 최대 2GB까지 처리합니다." />
+  <meta name="twitter:image" content="https://yoginhae.com/haebom.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+
+  <!-- Flash-of-wrong-theme prevention -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* ==============================
+       DESIGN TOKENS
+    ============================== */
+    :root {
+      --bg: #f7fdf9;
+      --bg-soft: #edf7f2;
+      --card: #ffffff;
+      --border: #d0eadf;
+      --text: #111c16;
+      --muted: #607a6e;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-light: #d1fae5;
+      --accent2: #06b6d4;
+      --shadow: 0 2px 8px rgba(15, 17, 21, 0.06), 0 1px 3px rgba(15, 17, 21, 0.04);
+      --shadow-md: 0 4px 20px rgba(16, 185, 129, 0.1), 0 2px 8px rgba(15, 17, 21, 0.06);
+      --shadow-lg: 0 8px 40px rgba(16, 185, 129, 0.15), 0 4px 16px rgba(15, 17, 21, 0.08);
+      --glow: rgba(16, 185, 129, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0a0f0d;
+      --bg-soft: #111a16;
+      --card: #162019;
+      --border: #243830;
+      --text: #ececf1;
+      --muted: #8b9f96;
+      --accent: #34d399;
+      --accent-hover: #10b981;
+      --accent-light: rgba(52, 211, 153, 0.15);
+      --accent2: #22d3ee;
+      --shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.35);
+      --glow: rgba(52, 211, 153, 0.1);
+    }
+
+    /* ==============================
+       RESET & BASE
+    ============================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      transition: background-color 300ms ease, color 300ms ease;
+    }
+
+    /* ==============================
+       HEADER
+    ============================== */
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: background-color 300ms ease, border-color 300ms ease;
+    }
+
+    .header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 200ms ease;
+      flex-shrink: 0;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { flex-shrink: 0; }
+
+    .header-divider {
+      width: 1px;
+      height: 18px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      flex: 1;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+      transition: border-color 200ms ease, transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.1) rotate(15deg); }
+    .theme-toggle:active { transform: scale(0.9); }
+    .theme-toggle:focus { outline: none; }
+    .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ==============================
+       PRIVACY BANNER
+    ============================== */
+    .privacy-banner {
+      background: var(--accent-light);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      transition: background-color 300ms ease;
+    }
+
+    .privacy-banner-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .privacy-banner-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .privacy-banner-icon svg { color: #fff; }
+
+    .privacy-banner-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    [data-theme="dark"] .privacy-banner-text { color: var(--muted); }
+
+    /* ==============================
+       MAIN LAYOUT
+    ============================== */
+    .main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* ==============================
+       DROPZONE
+    ============================== */
+    .dropzone-section {
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 32px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--card);
+      transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dropzone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, var(--glow), transparent 70%);
+      opacity: 0;
+      transition: opacity 300ms ease;
+      pointer-events: none;
+    }
+
+    .dropzone:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+    .dropzone:hover::before { opacity: 1; }
+
+    .dropzone.dragover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      box-shadow: var(--shadow-md);
+      transform: scale(1.01);
+    }
+    .dropzone.dragover::before { opacity: 1; }
+
+    .dropzone.disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .dropzone.disabled:hover { border-color: var(--border); box-shadow: none; transform: none; }
+
+    .dropzone-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .dropzone:hover .dropzone-icon { transform: scale(1.08) translateY(-2px); }
+    .dropzone-icon svg { color: var(--accent); }
+
+    .dropzone-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .dropzone-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .dropzone-formats {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .format-chip {
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .dropzone-disabled-msg {
+      display: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    .dropzone.disabled .dropzone-disabled-msg { display: block; }
+    .dropzone.disabled .dropzone-normal-content { display: none; }
+
+    /* hidden file input */
+    #file-input { display: none; }
+
+    /* ==============================
+       CAPACITY BAR
+    ============================== */
+    .capacity-section {
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    .capacity-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .capacity-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .capacity-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .capacity-value.near-full { color: #f59e0b; }
+    .capacity-value.full { color: #ef4444; }
+
+    .capacity-bar {
+      height: 6px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .capacity-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: width 400ms cubic-bezier(0.16, 1, 0.3, 1), background-color 300ms ease;
+      width: 0%;
+    }
+    .capacity-fill.near-full { background: #f59e0b; }
+    .capacity-fill.full { background: #ef4444; }
+
+    /* ==============================
+       FILE LIST
+    ============================== */
+    .file-list-section {
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+    }
+
+    .file-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .file-list-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .file-list-total {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateX(-8px);
+      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .file-item:hover { border-color: var(--accent); }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .file-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .file-item-icon svg { color: var(--accent); }
+
+    .file-item-info { flex: 1; min-width: 0; }
+
+    .file-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .file-item-size {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .file-item-remove {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease;
+      line-height: 1;
+    }
+    .file-item-remove:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+      color: #ef4444;
+      transform: scale(1.1);
+    }
+    .file-item-remove:focus { outline: none; }
+    .file-item-remove:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ==============================
+       COMPRESS BUTTON
+    ============================== */
+    .compress-section {
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    .compress-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: -0.01em;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+      transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+    }
+    .compress-btn:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(16, 185, 129, 0.45);
+    }
+    .compress-btn:active:not(:disabled) { transform: scale(0.98); }
+    .compress-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .compress-btn:focus { outline: none; }
+    .compress-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    [data-theme="dark"] .compress-btn {
+      box-shadow: 0 4px 16px rgba(52, 211, 153, 0.25);
+    }
+
+    /* ==============================
+       PROCESSING STATE
+    ============================== */
+    .processing-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 48px 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .processing-overlay.active { display: flex; }
+
+    .processing-spinner {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .processing-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .processing-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .processing-progress {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .processing-bar {
+      height: 4px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .processing-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: width 300ms ease;
+      width: 0%;
+    }
+
+    .processing-file-name {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ==============================
+       RESULTS
+    ============================== */
+    .results-section {
+      display: none;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .results-section.active {
+      display: block;
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .results-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .download-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    }
+    .download-all-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+    .download-all-btn:active { transform: scale(0.97); }
+    .download-all-btn:focus { outline: none; }
+    .download-all-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .results-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .result-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .result-item:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+
+    .result-item-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .result-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .result-item-icon svg { color: var(--accent); }
+
+    .result-item-info { flex: 1; min-width: 0; }
+
+    .result-item-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .size-comparison {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .size-original { color: var(--muted); }
+    .size-arrow { color: var(--border); font-size: 14px; }
+    .size-compressed { color: var(--text); }
+
+    .size-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .size-badge.good { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .size-badge.ok { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+    .size-badge.poor { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    [data-theme="dark"] .size-badge.good { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease;
+    }
+    .download-btn:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .download-btn:active { transform: scale(0.97); }
+    .download-btn:focus { outline: none; }
+    .download-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Size comparison bar */
+    .size-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .size-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .size-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      width: 40px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .size-bar-track {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      overflow: hidden;
+    }
+
+    .size-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .size-bar-fill.original { background: var(--muted); opacity: 0.5; }
+    .size-bar-fill.compressed { background: var(--accent); }
+
+    .size-bar-value {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      width: 48px;
+      flex-shrink: 0;
+    }
+
+    /* ==============================
+       HELP TEXT
+    ============================== */
+    .help-section {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    }
+
+    .help-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .help-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .help-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .help-text strong { color: var(--text); font-weight: 700; }
+
+    /* ==============================
+       ANIMATIONS
+    ============================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+    @media (max-width: 640px) {
+      .header-inner { padding: 0 16px; }
+      .main { padding: 24px 16px 60px; }
+      .dropzone { padding: 36px 20px; }
+      .dropzone-title { font-size: 15px; }
+      .result-item { padding: 14px 16px; }
+      .results-header { flex-wrap: wrap; gap: 10px; }
+      .size-comparison { flex-wrap: wrap; gap: 6px; }
+      .result-item-top { flex-wrap: wrap; }
+      .download-btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 400px) {
+      .header-title { font-size: 14px; }
+      .back-link span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==============================
+       HEADER
+  ============================== -->
+  <header class="page-header">
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="해봄 홈으로">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+        <span>해봄</span>
+      </a>
+      <div class="header-divider" aria-hidden="true"></div>
+      <span class="header-title">영상 압축</span>
+      <button id="theme-toggle" class="theme-toggle" aria-label="테마 전환">☀️</button>
+    </div>
+  </header>
+
+  <!-- ==============================
+       PRIVACY BANNER
+  ============================== -->
+  <div class="privacy-banner" role="note" aria-label="개인정보 보호 안내">
+    <div class="privacy-banner-inner">
+      <div class="privacy-banner-icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <p class="privacy-banner-text">모든 파일은 브라우저에서 처리되며 서버에 업로드되지 않습니다</p>
+    </div>
+  </div>
+
+  <!-- ==============================
+       MAIN
+  ============================== -->
+  <main class="main" id="app">
+
+    <!-- Dropzone -->
+    <section class="dropzone-section" aria-label="파일 업로드">
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="영상 파일을 드래그하거나 클릭하여 선택">
+        <input type="file" id="file-input" multiple accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.webm,.mov,.avi" aria-label="영상 파일 선택" />
+
+        <!-- Normal content -->
+        <div class="dropzone-normal-content">
+          <div class="dropzone-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <p class="dropzone-title">영상 파일을 드래그하거나 클릭하여 선택하세요</p>
+          <p class="dropzone-sub">또는 파일을 여기에 끌어다 놓으세요</p>
+          <div class="dropzone-formats" role="list" aria-label="지원 형식">
+            <span class="format-chip" role="listitem">MP4</span>
+            <span class="format-chip" role="listitem">WebM</span>
+            <span class="format-chip" role="listitem">MOV</span>
+            <span class="format-chip" role="listitem">AVI</span>
+          </div>
+        </div>
+
+        <!-- Disabled message (shown when capacity full) -->
+        <p class="dropzone-disabled-msg" aria-live="polite">최대 용량에 도달했습니다</p>
+      </div>
+    </section>
+
+    <!-- Capacity Bar -->
+    <section class="capacity-section" aria-label="등록 용량">
+      <div class="capacity-header">
+        <span class="capacity-label">등록 용량</span>
+        <span class="capacity-value" id="capacity-value" aria-live="polite">0 MB / 2,048 MB (2GB)</span>
+      </div>
+      <div class="capacity-bar" role="progressbar" aria-label="용량 사용률" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="capacity-fill" id="capacity-fill"></div>
+      </div>
+    </section>
+
+    <!-- File List -->
+    <section class="file-list-section" id="file-list-section" aria-label="선택된 파일 목록" style="display:none;">
+      <div class="file-list-header">
+        <span class="file-list-title">선택된 파일</span>
+        <span class="file-list-total" id="file-list-total" aria-live="polite"></span>
+      </div>
+      <div class="file-list" id="file-list" role="list"></div>
+    </section>
+
+    <!-- Processing -->
+    <div class="processing-overlay" id="processing-overlay" aria-live="polite" aria-busy="true">
+      <div class="processing-spinner" aria-hidden="true"></div>
+      <p class="processing-title">압축 중입니다...</p>
+      <p class="processing-sub" id="processing-sub">잠시만 기다려주세요</p>
+      <div class="processing-progress" aria-label="압축 진행률">
+        <div class="processing-bar">
+          <div class="processing-fill" id="processing-fill"></div>
+        </div>
+        <p class="processing-file-name" id="processing-file-name" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <!-- Compress Button -->
+    <section class="compress-section">
+      <button class="compress-btn" id="compress-btn" disabled aria-label="압축 시작">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        압축 시작
+      </button>
+    </section>
+
+    <!-- Results -->
+    <section class="results-section" id="results-section" aria-label="압축 결과">
+      <div class="results-header">
+        <h2 class="results-title">압축 완료</h2>
+        <button class="download-all-btn" id="download-all-btn" style="display:none;" aria-label="전체 파일 다운로드">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          전체 다운로드
+        </button>
+      </div>
+      <div class="results-list" id="results-list" role="list"></div>
+    </section>
+
+    <!-- Help Text -->
+    <aside class="help-section" aria-label="도움말">
+      <div class="help-card">
+        <span class="help-icon" aria-hidden="true">💡</span>
+        <p class="help-text">
+          영상 파일을 업로드하면 브라우저에서 직접 압축합니다.
+          <strong>최대 2GB</strong>까지 등록할 수 있으며,
+          모든 처리는 내 기기에서만 이루어지므로 개인정보가 안전합니다.
+        </p>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ==============================
+       THEME TOGGLE SCRIPT (inline, no flash)
+  ============================== -->
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      function apply(theme) {
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          btn.textContent = '🌙';
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          btn.textContent = '☀️';
+        }
+      }
+      apply(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+      btn.addEventListener('click', function () {
+        var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        var next = cur === 'dark' ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+    })();
+  </script>
+
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/umd/ffmpeg.js"></script>
+  <script src="https://unpkg.com/@ffmpeg/util@0.12.3/dist/umd/util.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
