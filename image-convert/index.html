@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310b981'/><path d='M28 52l18 18 26-36' stroke='white' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" type="image/svg+xml" />
+  <link rel="canonical" href="https://yoginhae.com/image-convert/" />
+  <title>이미지 변환기 | 해봄</title>
+  <meta name="description" content="무료 온라인 이미지 변환기. 회원가입 없이 브라우저에서 JPG, PNG, WEBP 이미지를 원하는 포맷으로 변환합니다. 서버 업로드 없이 안전하게." />
+  <meta name="keywords" content="이미지 변환, 이미지 포맷 변환, JPG 변환, PNG 변환, WEBP 변환, 무료 이미지 변환, 온라인 이미지 변환, image converter, 브라우저 이미지 변환" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- JSON-LD 구조화 데이터 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "이미지 변환기 | 해봄",
+    "description": "무료 온라인 이미지 변환기. 브라우저에서 JPG, PNG, WEBP 이미지를 원하는 포맷으로 변환합니다.",
+    "url": "https://yoginhae.com/image-convert/",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "ko",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "KRW"
+    },
+    "featureList": ["JPG 변환", "PNG 변환", "WEBP 변환", "품질 조절", "브라우저 내 처리", "ZIP 다운로드", "무료 사용"]
+  }
+  </script>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="이미지 변환기 | 해봄" />
+  <meta property="og:description" content="무료 온라인 이미지 변환기. 회원가입 없이 브라우저에서 JPG, PNG, WEBP 이미지를 원하는 포맷으로 변환. 서버 업로드 없이 안전하게." />
+  <meta property="og:url" content="https://yoginhae.com/image-convert/" />
+  <meta property="og:image" content="https://yoginhae.com/haebom.png" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:site_name" content="해봄" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="이미지 변환기 | 해봄" />
+  <meta name="twitter:description" content="무료 온라인 이미지 변환기. 회원가입 없이 브라우저에서 JPG, PNG, WEBP 이미지를 원하는 포맷으로 변환." />
+  <meta name="twitter:image" content="https://yoginhae.com/haebom.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+
+  <style>
+    /* ==============================
+       DESIGN TOKENS
+    ============================== */
+    :root {
+      --bg: #f7fdf9;
+      --bg-soft: #edf7f2;
+      --card: #ffffff;
+      --border: #d0eadf;
+      --text: #111c16;
+      --muted: #607a6e;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --accent-light: #d1fae5;
+      --accent2: #06b6d4;
+      --shadow: 0 2px 8px rgba(15, 17, 21, 0.06), 0 1px 3px rgba(15, 17, 21, 0.04);
+      --shadow-md: 0 4px 20px rgba(16, 185, 129, 0.1), 0 2px 8px rgba(15, 17, 21, 0.06);
+      --shadow-lg: 0 8px 40px rgba(16, 185, 129, 0.15), 0 4px 16px rgba(15, 17, 21, 0.08);
+      --glow: rgba(16, 185, 129, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    /* ==============================
+       RESET & BASE
+    ============================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* ==============================
+       HEADER
+    ============================== */
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 200ms ease;
+      flex-shrink: 0;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { flex-shrink: 0; }
+
+    .header-divider {
+      width: 1px;
+      height: 18px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      flex: 1;
+    }
+
+    /* ==============================
+       PRIVACY BANNER
+    ============================== */
+    .privacy-banner {
+      background: var(--accent-light);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+    }
+
+    .privacy-banner-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .privacy-banner-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .privacy-banner-icon svg { color: #fff; }
+
+    .privacy-banner-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ==============================
+       MAIN LAYOUT
+    ============================== */
+    .main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    /* ==============================
+       DROPZONE
+    ============================== */
+    .dropzone-section {
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 32px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--card);
+      transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dropzone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, var(--glow), transparent 70%);
+      opacity: 0;
+      transition: opacity 300ms ease;
+      pointer-events: none;
+    }
+
+    .dropzone:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+    .dropzone:hover::before { opacity: 1; }
+
+    .dropzone.dragover {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      box-shadow: var(--shadow-md);
+      transform: scale(1.01);
+    }
+    .dropzone.dragover::before { opacity: 1; }
+
+    .dropzone-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .dropzone:hover .dropzone-icon { transform: scale(1.08) translateY(-2px); }
+    .dropzone-icon svg { color: var(--accent); }
+
+    .dropzone-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .dropzone-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .dropzone-formats {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .format-chip {
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    #file-input { display: none; }
+
+    /* ==============================
+       OPTIONS SECTION
+    ============================== */
+    .options-section {
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    .options-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .option-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .option-select {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--card);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 200ms ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23607a6e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .option-select:focus { outline: none; border-color: var(--accent); }
+
+    .quality-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .quality-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+    .quality-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+      cursor: pointer;
+      transition: transform 200ms ease;
+    }
+    .quality-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+    .quality-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.4);
+      cursor: pointer;
+    }
+
+    .quality-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .quality-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ==============================
+       FILE LIST
+    ============================== */
+    .file-list-section {
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+    }
+
+    .file-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .file-list-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .file-list-total {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateX(-8px);
+      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: border-color 200ms ease;
+    }
+    .file-item:hover { border-color: var(--accent); }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .file-item-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--bg-soft);
+      flex-shrink: 0;
+    }
+
+    .file-item-info { flex: 1; min-width: 0; }
+
+    .file-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .file-item-size {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .file-item-remove {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease;
+      line-height: 1;
+    }
+    .file-item-remove:hover {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+      color: #ef4444;
+      transform: scale(1.1);
+    }
+    .file-item-remove:focus { outline: none; }
+    .file-item-remove:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ==============================
+       CONVERT BUTTON
+    ============================== */
+    .convert-section {
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    .convert-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: -0.01em;
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+      transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease;
+    }
+    .convert-btn:hover:not(:disabled) {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(16, 185, 129, 0.45);
+    }
+    .convert-btn:active:not(:disabled) { transform: scale(0.98); }
+    .convert-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .convert-btn:focus { outline: none; }
+    .convert-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* ==============================
+       PROCESSING STATE
+    ============================== */
+    .processing-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 48px 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .processing-overlay.active { display: flex; }
+
+    .processing-spinner {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .processing-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .processing-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .processing-progress {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .processing-bar {
+      height: 4px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .processing-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: width 300ms ease;
+      width: 0%;
+    }
+
+    .processing-file-name {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ==============================
+       RESULTS
+    ============================== */
+    .results-section {
+      display: none;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .results-section.active {
+      display: block;
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .results-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .download-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+      transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    }
+    .download-all-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+    .download-all-btn:active { transform: scale(0.97); }
+    .download-all-btn:focus { outline: none; }
+    .download-all-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    .results-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .result-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+    }
+    .result-item:hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+
+    .result-item-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .result-preview-wrap {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .result-preview {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+    }
+
+    .result-preview-arrow {
+      display: flex;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .result-item-info { flex: 1; min-width: 0; }
+
+    .result-item-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .size-comparison {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .size-original { color: var(--muted); }
+    .size-arrow { color: var(--border); font-size: 14px; }
+    .size-compressed { color: var(--text); }
+
+    .size-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .size-badge.good { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .size-badge.ok { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+    .size-badge.poor { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease;
+    }
+    .download-btn:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .download-btn:active { transform: scale(0.97); }
+    .download-btn:focus { outline: none; }
+    .download-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Size comparison bar */
+    .size-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .size-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .size-bar-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      width: 40px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .size-bar-track {
+      flex: 1;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      overflow: hidden;
+    }
+
+    .size-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .size-bar-fill.original { background: var(--muted); opacity: 0.5; }
+    .size-bar-fill.compressed { background: var(--accent); }
+
+    .size-bar-value {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      width: 56px;
+      flex-shrink: 0;
+    }
+
+    /* ==============================
+       ERROR MESSAGE
+    ============================== */
+    .error-text {
+      color: #ef4444;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ==============================
+       HELP TEXT
+    ============================== */
+    .help-section {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    }
+
+    .help-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .help-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .help-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .help-text strong { color: var(--text); font-weight: 700; }
+
+    /* ==============================
+       WEBP WARNING
+    ============================== */
+    .webp-warning {
+      display: none;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #92400e;
+      font-weight: 600;
+    }
+
+    /* ==============================
+       ANIMATIONS
+    ============================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+    @media (max-width: 640px) {
+      .header-inner { padding: 0 16px; }
+      .main { padding: 24px 16px 60px; }
+      .dropzone { padding: 36px 20px; }
+      .dropzone-title { font-size: 15px; }
+      .options-row { grid-template-columns: 1fr; }
+      .result-item { padding: 14px 16px; }
+      .results-header { flex-wrap: wrap; gap: 10px; }
+      .size-comparison { flex-wrap: wrap; gap: 6px; }
+      .result-item-top { flex-wrap: wrap; }
+      .result-preview-wrap { width: 100%; justify-content: center; }
+      .download-btn { width: 100%; justify-content: center; }
+    }
+
+    @media (max-width: 400px) {
+      .header-title { font-size: 14px; }
+      .back-link span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==============================
+       HEADER
+  ============================== -->
+  <header class="page-header">
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="해봄 홈으로">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+        <span>해봄</span>
+      </a>
+      <div class="header-divider" aria-hidden="true"></div>
+      <span class="header-title">이미지 변환기</span>
+    </div>
+  </header>
+
+  <!-- ==============================
+       PRIVACY BANNER
+  ============================== -->
+  <div class="privacy-banner" role="note" aria-label="개인정보 보호 안내">
+    <div class="privacy-banner-inner">
+      <div class="privacy-banner-icon" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <p class="privacy-banner-text">모든 이미지는 브라우저에서 처리되며 서버에 업로드되지 않습니다</p>
+    </div>
+  </div>
+
+  <!-- ==============================
+       MAIN
+  ============================== -->
+  <main class="main" id="app">
+
+    <!-- WebP 미지원 경고 -->
+    <div class="webp-warning" id="webp-warning">
+      이 브라우저는 WEBP 변환을 지원하지 않습니다. Chrome, Edge, Firefox 등 최신 브라우저를 사용해주세요.
+    </div>
+
+    <!-- Dropzone -->
+    <section class="dropzone-section" aria-label="이미지 업로드">
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="이미지 파일을 드래그하거나 클릭하여 선택">
+        <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" aria-label="이미지 파일 선택" />
+        <div class="dropzone-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </div>
+        <p class="dropzone-title">이미지 파일을 드래그하거나 클릭하여 선택하세요</p>
+        <p class="dropzone-sub">JPG, PNG, WEBP 이미지를 원하는 포맷으로 변환하세요</p>
+        <div class="dropzone-formats" role="list" aria-label="지원 형식">
+          <span class="format-chip" role="listitem">JPG</span>
+          <span class="format-chip" role="listitem">JPEG</span>
+          <span class="format-chip" role="listitem">PNG</span>
+          <span class="format-chip" role="listitem">WEBP</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Options: format + quality -->
+    <section class="options-section" aria-label="변환 옵션">
+      <div class="options-row">
+        <div class="option-group">
+          <label class="option-label" for="format-select">변환 포맷</label>
+          <select class="option-select" id="format-select">
+            <option value="webp">WEBP</option>
+            <option value="jpeg">JPG</option>
+            <option value="png">PNG</option>
+          </select>
+        </div>
+        <div class="option-group">
+          <label class="option-label" for="quality-slider">품질</label>
+          <div class="quality-slider-wrap">
+            <input type="range" class="quality-slider" id="quality-slider" min="10" max="100" value="100" step="5" />
+            <span class="quality-value" id="quality-value">100%</span>
+          </div>
+          <p class="quality-note" id="quality-note">PNG는 무손실 포맷으로 품질 설정이 적용되지 않습니다</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- File List -->
+    <section class="file-list-section" id="file-list-section" aria-label="선택된 이미지 목록" style="display:none;">
+      <div class="file-list-header">
+        <span class="file-list-title">선택된 이미지</span>
+        <span class="file-list-total" id="file-list-total" aria-live="polite"></span>
+      </div>
+      <div class="file-list" id="file-list" role="list"></div>
+    </section>
+
+    <!-- Convert Button -->
+    <section class="convert-section">
+      <button class="convert-btn" id="convert-btn" disabled aria-label="변환 시작">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="16 3 21 3 21 8"/>
+          <line x1="4" y1="20" x2="21" y2="3"/>
+          <polyline points="21 16 21 21 16 21"/>
+          <line x1="15" y1="15" x2="21" y2="21"/>
+          <line x1="4" y1="4" x2="9" y2="9"/>
+        </svg>
+        변환 시작
+      </button>
+    </section>
+
+    <!-- Processing -->
+    <div class="processing-overlay" id="processing-overlay" aria-live="polite" aria-busy="true">
+      <div class="processing-spinner" aria-hidden="true"></div>
+      <p class="processing-title">변환 중입니다...</p>
+      <p class="processing-sub" id="processing-sub">잠시만 기다려주세요</p>
+      <div class="processing-progress" aria-label="변환 진행률">
+        <div class="processing-bar">
+          <div class="processing-fill" id="processing-fill"></div>
+        </div>
+        <p class="processing-file-name" id="processing-file-name" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <section class="results-section" id="results-section" aria-label="변환 결과">
+      <div class="results-header">
+        <h2 class="results-title">변환 완료</h2>
+        <button class="download-all-btn" id="download-all-btn" style="display:none;" aria-label="전체 파일 ZIP 다운로드">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          ZIP 다운로드
+        </button>
+      </div>
+      <div class="results-list" id="results-list" role="list"></div>
+    </section>
+
+    <!-- Help Text -->
+    <aside class="help-section" aria-label="도움말">
+      <div class="help-card">
+        <span class="help-icon" aria-hidden="true">💡</span>
+        <p class="help-text">
+          JPG, PNG, WEBP 이미지를 업로드하면 브라우저에서 직접 포맷을 변환합니다.
+          <strong>PNG에서 JPG로 변환</strong> 시 투명 배경은 흰색으로 처리됩니다.
+          대용량 이미지는 브라우저가 느려질 수 있으니 <strong>한 번에 20장 이내</strong>를 권장합니다.
+        </p>
+      </div>
+    </aside>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
