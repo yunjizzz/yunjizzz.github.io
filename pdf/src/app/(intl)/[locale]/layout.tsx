@@ -110,6 +110,7 @@ export default async function IntlLayout({
           `}
         </Script>
         {children}
+        <Script src="/footer.js" strategy="afterInteractive" />
       </body>
     </html>
   );

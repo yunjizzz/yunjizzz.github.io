@@ -87,11 +87,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        <footer className="border-t bg-white">
-          <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-            <p>이사 도우미 — 이사 준비를 더 쉽게</p>
-          </div>
-        </footer>
+        <Script src="/footer.js" strategy="afterInteractive" />
       </body>
     </html>
   );

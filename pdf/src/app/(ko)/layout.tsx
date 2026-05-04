@@ -85,6 +85,7 @@ export default function KoLayout({
           `}
         </Script>
         {children}
+        <Script src="/footer.js" strategy="afterInteractive" />
       </body>
     </html>
   );
