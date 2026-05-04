@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     title: "이사 도우미 | 해봄",
     description: "이사 준비를 체크리스트로 한눈에 관리하세요. D-30부터 D+7까지 시점별 할 일과 이사 업체 링크를 한곳에서.",
     type: "website",
-    url: "https://yoginhae.com/move/",
-    images: ["https://yoginhae.com/haebom.png"],
+    url: "https://haebom.app/move/",
+    images: ["https://haebom.app/haebom.png"],
     locale: "ko_KR",
     siteName: "해봄",
   },
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     card: "summary",
     title: "이사 도우미 | 해봄",
     description: "이사 준비를 체크리스트로 한눈에 관리하세요. D-30부터 D+7까지 시점별 할 일과 이사 업체 링크를 한곳에서.",
-    images: ["https://yoginhae.com/haebom.png"],
+    images: ["https://haebom.app/haebom.png"],
   },
   robots: { index: true, follow: true },
   alternates: {
-    canonical: "https://yoginhae.com/move/",
+    canonical: "https://haebom.app/move/",
   },
 };
 

@@ -6,9 +6,9 @@ import "../globals.css";
 const meta = i18nMeta.ko;
 
 const alternateLanguages: Record<string, string> = {};
-alternateLanguages["ko"] = "https://yoginhae.com/pdf/";
+alternateLanguages["ko"] = "https://haebom.app/pdf/";
 for (const l of locales) {
-  if (l !== "ko") alternateLanguages[l] = `https://yoginhae.com/pdf/${l}/`;
+  if (l !== "ko") alternateLanguages[l] = `https://haebom.app/pdf/${l}/`;
 }
 
 export const metadata: Metadata = {
@@ -20,22 +20,22 @@ export const metadata: Metadata = {
     description: meta.ogDescription,
     type: "website",
     locale: "ko_KR",
-    url: "https://yoginhae.com/pdf/",
-    images: ["https://yoginhae.com/haebom.png"],
+    url: "https://haebom.app/pdf/",
+    images: ["https://haebom.app/haebom.png"],
     siteName: "해봄",
   },
   twitter: {
     card: "summary",
     title: meta.twitterTitle,
     description: meta.twitterDescription,
-    images: ["https://yoginhae.com/haebom.png"],
+    images: ["https://haebom.app/haebom.png"],
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "https://yoginhae.com/pdf/",
+    canonical: "https://haebom.app/pdf/",
     languages: alternateLanguages,
   },
 };
@@ -50,7 +50,7 @@ export default function KoLayout({
     "@type": "WebApplication",
     name: "해봄 - PDF 도구",
     description: meta.description,
-    url: "https://yoginhae.com/pdf/",
+    url: "https://haebom.app/pdf/",
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     inLanguage: ["ko", "en", "es", "pt"],

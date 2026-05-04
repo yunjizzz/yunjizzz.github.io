@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-"해봄" — 무료 유틸리티 사이트 (https://yoginhae.com, GitHub Pages: https://yunjizzz.github.io). `main` 브랜치에 push하면 GitHub Actions(`static.yml`)가 자동 배포한다. UI 언어는 전체 한국어.
+"해봄" — 무료 유틸리티 사이트 (https://haebom.app, GitHub Pages: https://yunjizzz.github.io). `main` 브랜치에 push하면 GitHub Actions(`static.yml`)가 자동 배포한다. UI 언어는 전체 한국어.
 
 ## Development
 

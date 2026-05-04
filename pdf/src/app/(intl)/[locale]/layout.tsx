@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const loc = locale as Locale;
   const meta = i18nMeta[loc] ?? i18nMeta.ko;
-  const url = `https://yoginhae.com/pdf/${locale}/`;
+  const url = `https://haebom.app/pdf/${locale}/`;
 
   const alternateLanguages: Record<string, string> = {};
-  alternateLanguages["ko"] = "https://yoginhae.com/pdf/";
+  alternateLanguages["ko"] = "https://haebom.app/pdf/";
   for (const l of locales) {
-    if (l !== "ko") alternateLanguages[l] = `https://yoginhae.com/pdf/${l}/`;
+    if (l !== "ko") alternateLanguages[l] = `https://haebom.app/pdf/${l}/`;
   }
 
   return {
@@ -41,14 +41,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: "website",
       locale: localeToOgLocale[loc] ?? "ko_KR",
       url,
-      images: ["https://yoginhae.com/haebom.png"],
+      images: ["https://haebom.app/haebom.png"],
       siteName: "Haebom",
     },
     twitter: {
       card: "summary",
       title: meta.twitterTitle,
       description: meta.twitterDescription,
-      images: ["https://yoginhae.com/haebom.png"],
+      images: ["https://haebom.app/haebom.png"],
     },
     robots: { index: true, follow: true },
     alternates: {
@@ -75,7 +75,7 @@ export default async function IntlLayout({
     "@type": "WebApplication",
     name: meta.ogTitle,
     description: meta.description,
-    url: `https://yoginhae.com/pdf/${locale}/`,
+    url: `https://haebom.app/pdf/${locale}/`,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     inLanguage: locale,

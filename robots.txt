@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yoginhae.com/sitemap.xml
+Sitemap: https://haebom.app/sitemap.xml

@@ -1,8 +1,8 @@
-# 해봄 (yoginhae.com)
+# 해봄 (haebom.app)
 
 일상 업무에 필요한 다양한 무료 유틸리티 사이트입니다. 회원가입 없이 바로 사용할 수 있습니다.
 
-**사이트 주소:** https://yoginhae.com (GitHub Pages: https://yunjizzz.github.io)
+**사이트 주소:** https://haebom.app (GitHub Pages: https://yunjizzz.github.io)
 
 ## 구조
 
