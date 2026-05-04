@@ -94,7 +94,7 @@ export function PdfSplit() {
 
       <ProcessingStatus state={state} />
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex gap-3 justify-end">
         <button
           onClick={handleSplit}
           disabled={files.length === 0 || !pageRange.trim() || state.status === 'processing'}

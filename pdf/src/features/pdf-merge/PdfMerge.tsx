@@ -50,7 +50,7 @@ export function PdfMerge() {
       <FileList files={files} onRemove={handleRemove} />
       <ProcessingStatus state={state} />
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex gap-3 justify-end">
         <button
           onClick={handleMerge}
           disabled={files.length < 2 || state.status === 'processing'}
