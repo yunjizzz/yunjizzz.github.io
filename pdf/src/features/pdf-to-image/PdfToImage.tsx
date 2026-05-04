@@ -117,7 +117,7 @@ export function PdfToImage() {
         </div>
       )}
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex gap-3 justify-end">
         {results.length === 0 ? (
           <button
             onClick={handleConvert}

@@ -58,7 +58,7 @@ export function ImageToPdf() {
         </div>
       )}
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-6 flex gap-3 justify-end">
         <button
           onClick={handleConvert}
           disabled={files.length === 0 || state.status === 'processing'}
