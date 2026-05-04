@@ -27,9 +27,9 @@
 
   // --- Quality presets ---
   const qualityPresets = {
-    max:      { bitrateMultiplier: 0.25, label: '최대 압축' },
-    standard: { bitrateMultiplier: 0.5,  label: '일반 압축' },
-    high:     { bitrateMultiplier: 0.75, label: '고화질 압축' },
+    max:      { bitrateMultiplier: 0.25 },
+    standard: { bitrateMultiplier: 0.5 },
+    high:     { bitrateMultiplier: 0.75 },
   };
 
   function getSelectedQuality() {
@@ -54,7 +54,7 @@
   function updateCapacityUI() {
     var mb = state.totalSize / (1024 * 1024);
     var maxMb = MAX_TOTAL_SIZE / (1024 * 1024);
-    capacityValue.textContent = mb.toFixed(0) + ' MB / ' + maxMb.toLocaleString() + ' MB (2GB)';
+    capacityValue.textContent = mb.toFixed(0) + ' MB / ' + maxMb.toLocaleString() + ' MB (2 GB)';
     var pct = Math.min((state.totalSize / MAX_TOTAL_SIZE) * 100, 100);
     capacityFill.style.width = pct + '%';
 
@@ -75,7 +75,7 @@
     }
 
     fileListSection.style.display = '';
-    fileListTotal.textContent = state.files.length + '개 · ' + formatSize(state.totalSize);
+    fileListTotal.textContent = state.files.length + I18n.t('filelist.count') + ' · ' + formatSize(state.totalSize);
     compressBtn.disabled = false;
 
     state.files.forEach(function (file, index) {
@@ -94,7 +94,7 @@
           '<div class="file-item-name">' + file.name + '</div>' +
           '<div class="file-item-size">' + formatSize(file.size) + '</div>' +
         '</div>' +
-        '<button class="file-item-remove" data-index="' + index + '" aria-label="' + file.name + ' 제거">' +
+        '<button class="file-item-remove" data-index="' + index + '" aria-label="' + I18n.t('error.remove', { name: file.name }) + '">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
             '<line x1="18" y1="6" x2="6" y2="18"></line>' +
             '<line x1="6" y1="6" x2="18" y2="18"></line>' +
@@ -115,7 +115,7 @@
       if (allowed.indexOf(ext) === -1) continue;
 
       if (state.totalSize + file.size > MAX_TOTAL_SIZE) {
-        alert('용량 한도(2GB)를 초과하여 "' + file.name + '"을(를) 추가할 수 없습니다.');
+        alert(I18n.t('alert.capacityExceeded', { name: file.name }));
         continue;
       }
 
@@ -331,7 +331,7 @@
             feedNextChunk();
           }
         }).catch(function (err) {
-          doReject(new Error('파일 읽기 오류: ' + err.message));
+          doReject(new Error(I18n.t('error.fileRead', { message: err.message })));
         });
       }
 
@@ -375,7 +375,7 @@
             muxer.addVideoChunk(chunk, meta);
           },
           error: function (err) {
-            doReject(new Error('VideoEncoder 오류: ' + err.message));
+            doReject(new Error(I18n.t('error.encoderError', { message: err.message })));
           },
         });
 
@@ -395,7 +395,7 @@
           return support;
         }).then(function (support) {
           if (!support.supported) {
-            doReject(new Error('이 브라우저에서 지원하는 비디오 코덱을 찾을 수 없습니다.'));
+            doReject(new Error(I18n.t('error.noCodec')));
             return;
           }
 
@@ -412,7 +412,7 @@
               }
             },
             error: function (err) {
-              doReject(new Error('VideoDecoder 오류: ' + err.message));
+              doReject(new Error(I18n.t('error.decoderError', { message: err.message })));
             },
           });
 
@@ -423,7 +423,7 @@
 
           VideoDecoder.isConfigSupported(decoderConfig).then(function (decoderSupport) {
             if (!decoderSupport.supported) {
-              doReject(new Error('이 비디오 코덱은 디코딩할 수 없습니다: ' + decoderConfig.codec));
+              doReject(new Error(I18n.t('error.decoderUnsupported', { codec: decoderConfig.codec })));
               return;
             }
 
@@ -457,7 +457,7 @@
         }
 
         if (!videoTrack) {
-          doReject(new Error('비디오 트랙을 찾을 수 없습니다.'));
+          doReject(new Error(I18n.t('error.noVideoTrack')));
           return;
         }
 
@@ -517,7 +517,7 @@
     if (state.processing || state.files.length === 0) return;
 
     if (!isWebCodecsSupported()) {
-      alert('이 브라우저는 WebCodecs를 지원하지 않습니다. Chrome 94+ 또는 Edge 94+ 브라우저를 사용해주세요.');
+      alert(I18n.t('alert.webcodecs'));
       return;
     }
 
@@ -532,7 +532,7 @@
 
     for (var i = 0; i < total; i++) {
       var file = state.files[i];
-      processingSub.textContent = '압축 중... (' + (i + 1) + '/' + total + ')';
+      processingSub.textContent = I18n.t('processing.progress', { current: i + 1, total: total });
       processingFileName.textContent = file.name;
       processingFill.style.width = ((i / total) * 100) + '%';
 
@@ -552,7 +552,7 @@
         console.error('압축 실패:', file.name, err);
         state.results.push({
           name: file.name,
-          error: err.message || '압축 중 오류가 발생했습니다.',
+          error: err.message || I18n.t('error.compressFailed'),
           originalSize: file.size,
         });
       }
@@ -586,7 +586,7 @@
             '<div class="result-item-info">' +
               '<div class="result-item-name">' + result.name + '</div>' +
               '<div class="size-comparison">' +
-                '<span class="size-original" style="color:#ef4444;">오류: ' + result.error + '</span>' +
+                '<span class="size-original" style="color:#ef4444;">' + I18n.t('results.error') + ': ' + result.error + '</span>' +
               '</div>' +
             '</div>' +
           '</div>';
@@ -613,7 +613,7 @@
                 '<span class="size-original">' + formatSize(result.originalSize) + '</span>' +
                 '<span class="size-arrow">→</span>' +
                 '<span class="size-compressed">' + formatSize(result.compressedSize) + '</span>' +
-                '<span class="size-badge ' + badgeClass + '">' + (reductionPct >= 0 ? reductionPct : Math.abs(reductionPct)) + '% ' + (reductionPct >= 0 ? '감소' : '증가') + '</span>' +
+                '<span class="size-badge ' + badgeClass + '">' + (reductionPct >= 0 ? reductionPct : Math.abs(reductionPct)) + '% ' + (reductionPct >= 0 ? I18n.t('results.decreased') : I18n.t('results.increased')) + '</span>' +
               '</div>' +
             '</div>' +
             '<button class="download-btn" data-index="' + index + '">' +
@@ -622,17 +622,17 @@
                 '<polyline points="7 10 12 15 17 10"/>' +
                 '<line x1="12" y1="15" x2="12" y2="3"/>' +
               '</svg>' +
-              '다운로드' +
+              I18n.t('results.download') +
             '</button>' +
           '</div>' +
           '<div class="size-bar-wrap">' +
             '<div class="size-bar-row">' +
-              '<span class="size-bar-label">원본</span>' +
+              '<span class="size-bar-label">' + I18n.t('size.original') + '</span>' +
               '<div class="size-bar-track"><div class="size-bar-fill original" style="width:100%"></div></div>' +
               '<span class="size-bar-value">' + formatSize(result.originalSize) + '</span>' +
             '</div>' +
             '<div class="size-bar-row">' +
-              '<span class="size-bar-label">압축</span>' +
+              '<span class="size-bar-label">' + I18n.t('size.compressed') + '</span>' +
               '<div class="size-bar-track"><div class="size-bar-fill compressed" style="width:' + barWidth + '%"></div></div>' +
               '<span class="size-bar-value">' + formatSize(result.compressedSize) + '</span>' +
             '</div>' +
@@ -689,6 +689,15 @@
   });
 
   downloadAllBtn.addEventListener('click', downloadAll);
+
+  // --- i18n re-render hook ---
+  window.rerenderI18n = function () {
+    updateCapacityUI();
+    renderFileList();
+    if (state.results.length > 0) {
+      renderResults();
+    }
+  };
 
   // --- Init ---
   updateCapacityUI();
