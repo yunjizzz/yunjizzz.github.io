@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ambient TV 서버 개발 · 고윤지</title>
+  <meta name="description" content="자사가 개발한 OTT 솔루션 Ambient TV를 개선하고, 이를 기반으로 코로나 시국에 온라인으로 영화제를 상영하는 다큐멘터리 VODA 사이트를 개발 및 운영" />
+  <link rel="canonical" href="https://haebom.app/resume/projects/ambient-tv/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Ambient TV 서버 개발 · 고윤지" />
+  <meta property="og:description" content="자사가 개발한 OTT 솔루션 Ambient TV를 개선하고, 이를 기반으로 코로나 시국에 온라인으로 영화제를 상영하는 다큐멘터리 VODA 사이트를 개발 및 운영" />
+  <meta property="og:url" content="https://haebom.app/resume/projects/ambient-tv/" />
+  <meta property="og:locale" content="ko_KR" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="../project.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body style="--c: #f43f5e">
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="back" href="../../index.html#projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        이력서로
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">
+        <span class="emoji" aria-hidden="true">🚀</span>
+        <span class="pill c">알티캐스트</span>
+        <span class="pill">2021.01 — 2022.06</span>
+      </div>
+      <h1>Ambient TV 서버 개발</h1>
+      <p class="summary">자사가 개발한 OTT 솔루션 Ambient TV를 개선하고, 이를 기반으로 코로나 시국에 온라인으로 영화제를 상영하는 다큐멘터리 VODA 사이트를 개발 및 운영했습니다. Elasticsearch 로그에서 느린 API를 추출해 Kibana로 시각화하여 일일 점검 시 문제를 쉽게 파악할 수 있게 했습니다.</p>
+      <ul class="stack">
+        <li>Java 11</li><li>Spring Boot</li><li>Go</li><li>MySQL</li><li>MongoDB</li><li>Kafka</li><li>Cassandra</li><li>Kubernetes</li><li>Docker</li>
+      </ul>
+      <figure class="cover reveal">
+        <img src="cover.jpg" alt="Ambient TV 서비스 화면" width="1358" height="852" />
+      </figure>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc reveal" aria-label="프로젝트 목차">
+      <h2>프로젝트 목차</h2>
+      <ol>
+        <li><a href="#p1">자사 솔루션 Ambient TV 개선<span class="when">2021.01 ~ 2021.03</span></a></li>
+        <li><a href="#p2">다큐멘터리 VODA 프로젝트<span class="when">2021.04 ~ 2022.06</span></a></li>
+      </ol>
+    </nav>
+
+    <section class="part reveal" id="p1">
+      <div class="part-head">
+        <span class="num">01</span>
+        <div>
+          <h2>자사 솔루션 Ambient TV 개선</h2>
+          <span class="pill c">2021.01 ~ 2021.03 (3개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>자사 솔루션 Ambient TV를 개선해 상품화하는 작업입니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>통계 스케줄 서비스 개발 및 운영</li>
+          <li>연동 모듈 서비스 개발 및 운영</li>
+          <li>고객 서비스 모듈 개발 및 운영</li>
+          <li>전체 모듈 시나리오 테스트 작성 및 검증</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>기존 미완성 프로젝트를 외부에 납품 가능하도록 <strong>전체 모듈에 대한 시나리오 테스트를 작성</strong>하여 미완성 개발 부분을 처리했습니다. 작성한 시나리오 테스트를 <strong>일일 배치로 실행</strong>함으로써 서비스 장애 파악 및 서비스 안정에 기여했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p2">
+      <div class="part-head">
+        <span class="num">02</span>
+        <div>
+          <h2>다큐멘터리 VODA 프로젝트</h2>
+          <span class="pill c">2021.04 ~ 2022.06 (1년 2개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>OTT 솔루션 Ambient TV 서비스를 기반으로 다큐멘터리 VODA 영화제 사이트를 제작했습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>외부 연동 시스템 서비스 개발 및 운영</li>
+          <li>email, sms message 시스템 개발 및 운영</li>
+          <li>일별 서비스 리포트 담당</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>기존 연동 모듈에서 email, sms 발송 시 연동 모듈 서버가 다운되면 발송이 누락되던 문제를 <strong>Kafka 모듈로 분리</strong>하여, 기존 연동 서비스와 별도로 영향을 주지 않도록 개선했습니다.</p>
+        <p>고객사에 제공하는 일일 서비스 리포트 담당자로서 서비스 통계 및 리포트 가이드를 작성해 제공함으로써, 고객사에 안정적인 서비스를 제공하고 <strong>오류 발생 시 고객보다 선제적으로 발견·처리</strong>할 수 있도록 기여했습니다.</p>
+      </div>
+    </section>
+
+    <div class="pager">
+      <a class="prev" href="../idrive/index.html"><small>← 이전 프로젝트</small><span>iDrive BFF 서버</span></a>
+      <a class="next" href="../kt-olleh/index.html"><small>다음 프로젝트 →</small><span>KT olleh 미들웨어 서버</span></a>
+    </div>
+  </main>
+
+  <footer>© Yunji Go · 기록하는 개발자</footer>
+  <script src="../project.js"></script>
+</body>
+</html>

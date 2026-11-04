@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LGU+ 멤버십 서버 · 웹 개발 · 고윤지</title>
+  <meta name="description" content="가입자 500만명이 사용하는 통신사 대표 멤버십 앱(U+멤버스)의 서버·웹 개발" />
+  <link rel="canonical" href="https://haebom.app/resume/projects/lgu-members/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="LGU+ 멤버십 서버 · 웹 개발 · 고윤지" />
+  <meta property="og:description" content="가입자 500만명이 사용하는 통신사 대표 멤버십 앱(U+멤버스)의 서버·웹 개발" />
+  <meta property="og:url" content="https://haebom.app/resume/projects/lgu-members/" />
+  <meta property="og:locale" content="ko_KR" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👩‍💻</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="../project.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body style="--c: #10b981">
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="back" href="../../index.html#projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        이력서로
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">
+        <span class="emoji" aria-hidden="true">👩‍💻</span>
+        <span class="pill c">유비벨록스모바일</span>
+        <span class="pill">2017.04 — 2020.03</span>
+      </div>
+      <h1>LGU+ 멤버십 서버 · 웹 개발</h1>
+      <p class="summary">가입자 500만 명이 사용하는 통신사 대표 멤버십 앱 U+멤버스입니다. 각종 멤버십 카드, 소액결제, 광고 보기 적립금, 쿠폰 서비스를 한 번에 제공합니다.</p>
+      <ul class="stack">
+        <li>Java 1.6 · 1.8</li><li>Struts2</li><li>iBATIS</li><li>Oracle</li><li>JavaScript</li><li>JSP</li><li>Linux</li><li>Unix</li><li>SVN</li><li>Ant</li>
+      </ul>
+      <figure class="cover reveal">
+        <img src="cover.png" alt="U+멤버스 앱" width="630" height="583" />
+      </figure>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc reveal" aria-label="프로젝트 목차">
+      <h2>프로젝트 목차</h2>
+      <ol>
+        <li><a href="#p1">LGU+ 멤버스 제휴몰 연동 프로젝트<span class="when">2019.04 ~ 2019.07</span></a></li>
+        <li><a href="#p2">LGU+ 멤버스 개인화 프로젝트<span class="when">2018.12 ~ 2019.03</span></a></li>
+        <li><a href="#p3">LGU+ 멤버스 서버구조 고도화 프로젝트<span class="when">2018.07 ~ 2018.12</span></a></li>
+        <li><a href="#p4">LGU+ 멤버스 DB구조 고도화 프로젝트<span class="when">2018.06 ~ 2018.10</span></a></li>
+        <li><a href="#p5">LGU+ 멤버스 기능개선 프로젝트<span class="when">2018.03 ~ 2018.06</span></a></li>
+        <li><a href="#p6">LGU+ 멤버스 통합서버 프로젝트<span class="when">2017.06 ~ 2018.02</span></a></li>
+      </ol>
+    </nav>
+
+    <section class="part reveal" id="p1">
+      <div class="part-head">
+        <span class="num">01</span>
+        <div>
+          <h2>LGU+ 멤버스 제휴몰 연동 프로젝트</h2>
+          <span class="pill c">2019.04 ~ 2019.07 (4개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>멤버스 서비스 내에 제휴몰 연동 부분을 추가하여, 멤버스 이용 고객에게 제휴몰 서비스를 제공하는 기능을 추가했습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>각 제휴몰(파고다, 골프존, 기프티켓, 베베쿡, LF) 연동 가입 및 멤버십 발급 로직, 포인트 조회, 사용 내역 개발</li>
+          <li>제휴몰 관리자, CMS 페이지 개발</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>제휴몰 5개 담당 개발자와 원활한 소통을 위해 <strong>공통 API 규격을 제시</strong>하였고, 해당 규격으로 가입 및 멤버십 발급 로직, 포인트 조회, 사용 내역 개발을 진행하여 <strong>프로젝트 개발기간을 단축</strong>할 수 있었습니다. 단축한 개발기간만큼 검증 시간을 확보하여 안정적인 서비스 구현에 기여했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p2">
+      <div class="part-head">
+        <span class="num">02</span>
+        <div>
+          <h2>LGU+ 멤버스 개인화 프로젝트</h2>
+          <span class="pill c">2018.12 ~ 2019.03 (4개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>고객 분석 데이터를 이용하여 고객별 맞춤 메인 화면을 제공하는 서비스를 개발했습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>고객별 맞춤 배너 서비스 관리자 사이트 개발</li>
+          <li>고객별 맞춤 배너 조회 API 로직 개발</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>고객별 맞춤 배너 서비스의 연령별, 관심사별 전체 Test case를 검증할 수 있도록 <strong>모든 케이스에 대한 테스트 데이터 SQL 작성 및 TC를 미리 준비</strong>하여, 고객사 서비스 검증 시 <strong>검증 시간 단축</strong> 및 고객사의 개발 신뢰도 상승에 기여했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p3">
+      <div class="part-head">
+        <span class="num">03</span>
+        <div>
+          <h2>LGU+ 멤버스 서버구조 고도화 프로젝트</h2>
+          <span class="pill c">2018.07 ~ 2018.12 (6개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>서버 장비 교체, 주요 라이브러리 업그레이드 및 웹서버 구조 개선을 진행했습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>주요 라이브러리(Log4j) 및 JAVA 버전 업그레이드 (1.6 → 1.8)</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>팀 내 주요 라이브러리 업그레이드 적용 후 발생한 오류의 원인 파악에 어려움이 있었으나, 해당 부분을 먼저 발견하여 <strong>팀 내 개발시간 단축</strong>에 기여했습니다. 당시 오류는 특정 라이브러리가 또 다른 라이브러리의 특정 버전에 의존하고 있어 발생한 문제였으며, <strong>두 라이브러리 버전은 유지하는 것으로 처리</strong>했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p4">
+      <div class="part-head">
+        <span class="num">04</span>
+        <div>
+          <h2>LGU+ 멤버스 DB구조 고도화 프로젝트</h2>
+          <span class="pill c">2018.06 ~ 2018.10 (5개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>DB 버전 업그레이드 작업(Oracle 10g → Oracle 12c)을 진행했습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>과부하 쿼리 튜닝 및 성능 개선</li>
+          <li>기존 ORACLE 스케줄러에서 관리하던 파티션 테이블을 JAVA 배치를 이용한 파티션 테이블 관리 기능으로 추가 개발</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>서비스에서 사용 중인 <strong>모든 DB 쿼리를 추출하여 Query Plan을 확인</strong>함으로써 개인적으로 전체 서비스 구조 파악에도 도움이 되었고, LG CNS DBA와 함께 작업을 진행하며 Query 관련 정보를 많이 습득했습니다. 이후 팀 내 통계데이터 및 복잡한 구조의 SQL Query 개선을 담당하며 <strong>팀 내 통계 DB 담당자</strong>로 기여했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p5">
+      <div class="part-head">
+        <span class="num">05</span>
+        <div>
+          <h2>LGU+ 멤버스 기능개선 프로젝트</h2>
+          <span class="pill c">2018.03 ~ 2018.06 (3개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>통합 서버 오픈 후 개선 요구 사항에 대한 추가 개발을 진행했습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>가입자에 대한 통계 세분화(연령, 성별, 통신사 등) 수집 배치 프로그램 개발</li>
+          <li>관리자 및 제휴사 홈페이지 통계 세분화 페이지 추가 개발</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p6">
+      <div class="part-head">
+        <span class="num">06</span>
+        <div>
+          <h2>LGU+ 멤버스 통합서버 프로젝트</h2>
+          <span class="pill c">2017.06 ~ 2018.02 (7개월)</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>스마트월렛, 소액결제, U+멤버십, 통신료납부 4개의 앱을 U+멤버스라는 앱으로 통합하는 프로젝트입니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>관리자 사이트 공통 라이브러리 개발하여 코드 간결화 진행</li>
+          <li>고객 1:1 문의 API 기능 및 관리자 1:1 문의 답변 및 관리 기능 개발</li>
+          <li>제휴사 멤버십 및 쿠폰 연동 API 개발</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>기존 관리자 페이지 모든 파일에 동일한 코드가 존재하여, 하나의 코드를 수정할 때 모든 페이지를 수정해야 하던 부분을 <strong>하나의 페이지로 분리</strong>하고, 해당 페이지에서만 수정하면 전역으로 처리되도록 변경하여 <strong>개발 편의성</strong>에 기여했습니다.</p>
+      </div>
+    </section>
+
+    <div class="pager">
+      <a class="prev" href="../kt-olleh/index.html"><small>← 이전 프로젝트</small><span>KT olleh 미들웨어 서버</span></a>
+    </div>
+  </main>
+
+  <footer>© Yunji Go · 기록하는 개발자</footer>
+  <script src="../project.js"></script>
+</body>
+</html>
