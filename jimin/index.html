@@ -85,6 +85,12 @@
     .bar nav a { color: var(--sub); }
     .bar nav a:hover { color: var(--text); text-decoration: none; }
     .brand { font-weight: 700; color: var(--text); }
+    .bar-actions { display: flex; align-items: center; gap: 8px; }
+    .pdf-btn {
+      display: inline-flex; align-items: center; gap: 4px; height: 34px; padding: 0 14px; border-radius: 999px;
+      background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .02em;
+    }
+    .pdf-btn:hover { text-decoration: none; opacity: .88; }
     .theme-btn {
       border: 1px solid var(--line); background: var(--card); color: var(--text);
       width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 15px;
@@ -148,7 +154,7 @@
     .build.ok { color: #4cd964; }
     .build.ok .dot { background: #28c840; animation: none; }
     @keyframes pulse { 50% { opacity: .3; } }
-    @media (max-width: 820px) {
+    @media screen and (max-width: 820px) {
       .hero-grid { grid-template-columns: 1fr; gap: 28px; }
       .xc { transform: none; }
     }
@@ -163,7 +169,7 @@
     .story p { font-size: 14px; color: var(--sub); }
     .story p strong { color: var(--text); }
     .story-col + .story-col { border-left: 1px solid var(--line); padding-left: 24px; margin-left: 24px; }
-    @media (max-width: 720px) {
+    @media screen and (max-width: 720px) {
       .story { grid-template-columns: 1fr; }
       .story-col + .story-col { border-left: 0; padding-left: 0; margin-left: 0; border-top: 1px solid var(--line); padding-top: 16px; margin-top: 16px; }
     }
@@ -191,7 +197,7 @@
     .loop li:last-child b { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
     #play .fit { margin-top: 12px; }
     #play .fit .ic { background: var(--accent-soft); box-shadow: none; font-size: 17px; }
-    @media (max-width: 720px) { .play-hero { grid-template-columns: 1fr; } .play-text .play-quote br { display: none; } }
+    @media screen and (max-width: 720px) { .play-hero { grid-template-columns: 1fr; } .play-text .play-quote br { display: none; } }
 
     @media (prefers-reduced-motion: reduce) {
       .code, .xc { transition: none; }
@@ -272,7 +278,7 @@
     footer .cta { display: inline-block; margin-top: 12px; padding: 12px 22px; border-radius: 999px; background: var(--grad); color: #fff; font-weight: 600; box-shadow: 0 10px 24px -10px rgba(240, 81, 56, .7); }
     footer .cta:hover { text-decoration: none; opacity: .9; }
 
-    @media (max-width: 720px) {
+    @media screen and (max-width: 720px) {
       .stats { grid-template-columns: repeat(2, 1fr); }
       .fit { grid-template-columns: 1fr; }
       .grid2 { grid-template-columns: 1fr; gap: 2px; }
@@ -284,11 +290,36 @@
       .card { padding: 20px 18px; }
       .hero { padding-top: 40px; }
     }
+    @page { size: A4; margin: 12mm 10mm; }
     @media print {
-      .bar, .theme-btn, footer .cta { display: none; }
-      body { background: #fff; color: #000; font-size: 12.5px; }
-      .card, .stat { border: 1px solid #ddd; break-inside: avoid; }
+      :root, [data-theme="dark"] {
+        --bg: #f4f4f7; --card: #ffffff; --text: #1c1c1e; --sub: #48484a; --faint: #8e8e93; --line: #e5e5ea;
+        --accent: #e8452c; --accent-soft: rgba(240, 81, 56, .08);
+      }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html { zoom: .64; }
+      .wrap { max-width: none; padding: 0; }
+      body { background: #fff; }
+      .bar, .xc-replay { display: none; }
+      .hero { padding: 8px 0 8px; }
+      .xc { transform: none; box-shadow: none; }
       section { padding-top: 16px; }
+      .sec-head { margin-bottom: 12px; }
+      .skills > div { padding: 9px 0; }
+      footer { display: none; }
+      .card, .stat, .story { border: 1px solid var(--line); }
+      .stat, .story, .fit .card, .play-hero, #skills .card, .states tr, .grid2 li, .tags, .company, .company-desc, .note { break-inside: avoid; }
+      .case-top, .result, #side .case-top, #side .company-desc { break-after: avoid; }
+      .sec-title, .sec-head { break-after: avoid; page-break-after: avoid; }
+      footer { padding: 24px 0 0; }
+      footer .cta { box-shadow: none; }
+      *, *::before, *::after { box-shadow: none !important; text-shadow: none !important; }
+      .swift-num, .swift-word, .stat .n, .result b, .play-text .play-quote b, .loop li:last-child b {
+        background: none !important; color: #e8452c !important; -webkit-text-fill-color: #e8452c;
+      }
+      .fit .ic, footer .cta { background: #e8452c; }
+      #career .card + .card, .play-hero, #play .fit { break-inside: avoid; }
+      .orig-link { display: none; }
     }
   </style>
 </head>
@@ -304,7 +335,10 @@
       <a href="#side">사이드 프로젝트</a>
       <a href="#skills">기술</a>
     </nav>
-    <button class="theme-btn" id="themeBtn" aria-label="다크 모드 전환">◐</button>
+    <div class="bar-actions">
+      <a class="pdf-btn" href="resume.pdf" download="김지민_iOS_이력서.pdf" aria-label="PDF 이력서 다운로드">PDF <span aria-hidden="true">↓</span></a>
+      <button class="theme-btn" id="themeBtn" aria-label="다크 모드 전환">◐</button>
+    </div>
   </div>
 </header>
 
@@ -646,7 +680,8 @@
 <footer>
   <div>함께 일할 팀을 찾고 있습니다.</div>
   <a class="cta" href="mailto:jie88min@naver.com">jie88min@naver.com</a>
-  <div style="margin-top:14px"><a href="https://dev-jimin.github.io/" target="_blank" rel="noopener">원본 이력서</a></div>
+  <div style="margin-top:14px"><a href="resume.pdf" download="김지민_iOS_이력서.pdf">PDF로 받기 ↓</a></div>
+  <div class="orig-link" style="margin-top:14px"><a href="https://dev-jimin.github.io/" target="_blank" rel="noopener">원본 이력서</a></div>
 </footer>
 
 <script>
@@ -706,6 +741,8 @@
       }, 1600);
     }
     replay.addEventListener('click', run);
+    window.addEventListener('beforeprint', function () { clearTimeout(timer); cancelAnimationFrame(raf); finish(); });
+    if (/[?&]print\b/.test(location.search)) { reduce = true; }
     run();
   })();
 </script>
