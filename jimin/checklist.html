@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>이력서 보완 체크리스트</title>
+  <meta name="description" content="iOS 이력서에서 비어 있는 부분을 확인하는 체크리스트" />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+
+  <style>
+    :root {
+      --bg: #f4f4f7; --card: #fff; --text: #1c1c1e; --sub: #5c5c63; --faint: #8e8e93; --line: #e5e5ea;
+      --accent: #e8452c; --accent-soft: rgba(240, 81, 56, .09);
+      --yes: #1f9d55; --part: #d98a00; --no: #8e8e93;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e0e10; --card: #1c1c1e; --text: #f2f2f7; --sub: #b0b0b6; --faint: #8e8e93; --line: #2c2c2e;
+        --accent: #ff7a50; --accent-soft: rgba(255, 122, 80, .12);
+        --yes: #4cc38a; --part: #ffb340; --no: #8e8e93;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard Variable", -apple-system, system-ui, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15.5px;
+      word-break: keep-all; overflow-wrap: anywhere;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 16px 120px; }
+
+    header { padding: 44px 0 20px; }
+    h1 { font-size: 26px; letter-spacing: -0.03em; line-height: 1.3; }
+    .intro { color: var(--sub); margin-top: 10px; }
+    .how { margin-top: 16px; padding: 14px 16px; border-radius: 14px; background: var(--card); font-size: 14px; color: var(--sub); }
+    .how b { color: var(--text); }
+
+    .progress { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 12px 0; }
+    .progress-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--sub); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+    .track { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; }
+    .fill { height: 100%; width: 0; background: var(--accent); border-radius: 99px; transition: width .3s; }
+
+    h2 { font-size: 18px; letter-spacing: -0.02em; margin: 28px 2px 4px; }
+    .group-desc { font-size: 14px; color: var(--sub); margin: 0 2px 12px; }
+
+    .item { background: var(--card); border-radius: 16px; padding: 18px 18px 16px; margin-bottom: 10px; border: 1.5px solid transparent; transition: border-color .2s; }
+    .item.answered { border-color: var(--line); }
+    .item h3 { font-size: 16px; letter-spacing: -0.02em; display: flex; gap: 8px; align-items: baseline; }
+    .item h3 .n { color: var(--accent); font-size: 13px; font-weight: 700; flex: none; }
+    .why { font-size: 13.5px; color: var(--sub); margin: 6px 0 10px; }
+    .why b { color: var(--text); font-weight: 600; }
+    .ask { font-size: 14px; margin-bottom: 10px; }
+    .ask li { margin-left: 18px; margin-bottom: 2px; }
+    .ask li::marker { color: var(--faint); }
+
+    .choices { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .choices label { cursor: pointer; }
+    .choices input { position: absolute; opacity: 0; pointer-events: none; }
+    .choices span {
+      display: inline-block; padding: 7px 14px; border-radius: 99px; font-size: 14px; font-weight: 600;
+      border: 1.5px solid var(--line); color: var(--sub); transition: all .15s;
+    }
+    .choices input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .choices input[value="yes"]:checked + span { background: var(--yes); border-color: var(--yes); color: #fff; }
+    .choices input[value="part"]:checked + span { background: var(--part); border-color: var(--part); color: #fff; }
+    .choices input[value="no"]:checked + span { background: var(--no); border-color: var(--no); color: #fff; }
+
+    textarea {
+      width: 100%; min-height: 64px; resize: vertical; font: inherit; font-size: 14px; line-height: 1.55;
+      padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--text);
+    }
+    textarea:focus { outline: none; border-color: var(--accent); }
+
+    .done { margin-top: 32px; background: var(--card); border-radius: 16px; padding: 20px; }
+    .done h2 { margin: 0 0 6px; }
+    .done p { font-size: 14px; color: var(--sub); margin-bottom: 14px; }
+    .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; border-radius: 12px; padding: 12px 18px;
+      border: 1.5px solid var(--accent); background: var(--accent); color: #fff;
+    }
+    button.ghost { background: transparent; color: var(--sub); border-color: var(--line); font-weight: 600; }
+    .toast { margin-top: 10px; font-size: 14px; color: var(--yes); font-weight: 600; min-height: 1.4em; }
+    footer { margin-top: 28px; font-size: 12.5px; color: var(--faint); text-align: center; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>이력서 보완 체크리스트</h1>
+    <p class="intro">iOS 채용 공고에서 자주 보는 항목인데, 지금 이력서에는 안 보이는 부분입니다. 실제로 해 본 것만 이력서에 넣을 거라서, 편하게 체크해 주세요.</p>
+    <div class="how">
+      <b>이렇게 해 주세요.</b> 항목마다 <b>했음 / 조금 / 안 했음</b> 중 하나를 고르고, 했다면 어떤 도구로 무엇을 했는지 한두 줄 적어 주세요. 다 하면 맨 아래 <b>답변 복사하기</b>를 눌러 메시지로 보내 주면 됩니다. 입력한 내용은 이 기기에 자동 저장돼요.
+    </div>
+  </header>
+
+  <div class="progress" aria-live="polite">
+    <div class="progress-row"><span>진행 상황</span><span id="progText">0 / 0</span></div>
+    <div class="track"><div class="fill" id="progFill"></div></div>
+  </div>
+
+  <main id="list"></main>
+
+  <section class="done">
+    <h2>다 됐으면 보내 주세요</h2>
+    <p>버튼을 누르면 체크한 내용이 글로 정리돼 복사됩니다. 카카오톡이나 문자에 붙여 넣어 보내 주세요.</p>
+    <div class="btns">
+      <button type="button" id="copyBtn">답변 복사하기</button>
+      <button type="button" class="ghost" id="resetBtn">처음부터 다시</button>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+  </section>
+
+  <footer>체크한 내용은 이 브라우저에만 저장되고 어디로도 전송되지 않습니다.</footer>
+</div>
+
+<script>
+  var GROUPS = [
+    {
+      title: '꼭 확인할 것',
+      desc: '시니어 공고에서 거의 항상 보는 항목이라, 비어 있으면 서류에서 질문이 나옵니다.',
+      items: [
+        { id: 'test', title: '테스트 코드',
+          why: '이력서 본문에 <b>“회귀 테스트를 병행”</b>이라고 썼는데 도구가 없어서, 어떻게 테스트했는지 물어볼 가능성이 높아요.',
+          ask: ['XCTest 또는 Swift Testing으로 유닛 테스트를 작성했나요?', 'UI 테스트(XCUITest)나 스냅샷 테스트를 써 봤나요?', '어느 범위까지 테스트했나요? (예: ViewModel, 네트워크 파싱, 공통 모듈)'],
+          hint: '예) Swift 전환할 때 PriceUtil·MobileAPICommon에 XCTest 유닛 테스트 작성' },
+        { id: 'cicd', title: '빌드·배포 자동화 (CI/CD)',
+          why: '6년 동안 App Store 배포를 직접 했다면 쓴 도구가 있을 텐데 기술란에 없어요.',
+          ask: ['Fastlane, Jenkins, GitHub Actions, Bitrise, Xcode Cloud 중 써 본 것이 있나요?', '인증서·프로비저닝 프로파일 관리를 직접 했나요? (match 등)', 'TestFlight 배포를 자동화했나요?'],
+          hint: '예) Jenkins + Fastlane으로 QA 빌드 자동 배포, 인증서는 match로 관리' },
+        { id: 'rx', title: 'RxSwift / ReactorKit',
+          why: '국내 회사 상당수가 아직 Rx 기반이라, 써 봤다면 꼭 넣어야 하는 키워드예요.',
+          ask: ['RxSwift(RxCocoa)를 실무에서 썼나요?', 'ReactorKit을 써 봤나요?', 'Rx에서 Combine이나 async/await로 옮긴 경험이 있나요?'],
+          hint: '예) 검색 화면을 RxSwift + ReactorKit으로 구현' },
+        { id: 'concurrency', title: 'Swift Concurrency 심화',
+          why: '경력 휴식 기간과 겹쳐서 “최신 Swift를 따라가고 있나”라는 질문이 나올 수 있어요.',
+          ask: ['actor, @MainActor, Sendable을 직접 써 봤나요?', 'Swift 6 strict concurrency 경고를 정리해 본 적이 있나요?', '콜백 기반 코드를 async/await로 바꾼 경험이 있나요?'],
+          hint: '예) 네트워크 레이어를 completion handler에서 async/await로 전환' }
+      ]
+    },
+    {
+      title: '커머스 앱이라면 했을 법한 것',
+      desc: '실제로 했을 가능성이 높은데 이력서에 안 보여서 아까운 항목이에요.',
+      items: [
+        { id: 'push', title: '푸시 알림 (APNs)',
+          why: '커머스 앱의 핵심 기능이라 경험이 있으면 바로 어필돼요.',
+          ask: ['APNs·FCM 연동, 리치 푸시(이미지), Notification Service Extension을 다뤘나요?'],
+          hint: '예) FCM 연동, 이미지 리치 푸시용 Notification Service Extension 구현' },
+        { id: 'deeplink', title: '딥링크 / Universal Link',
+          why: '광고·푸시·공유 링크에서 앱 특정 화면으로 이동하는 흐름은 커머스에서 필수예요.',
+          ask: ['URL Scheme, Universal Link로 상품 상세 등 특정 화면 이동을 구현했나요?'],
+          hint: '예) Universal Link로 상품 상세·이벤트 페이지 진입 처리' },
+        { id: 'bridge', title: '웹뷰 ↔ 네이티브 브리지',
+          why: '신규 앱 WebView를 맡았으니 JS 브리지 경험이 있을 가능성이 높아요.',
+          ask: ['WKScriptMessageHandler 등으로 웹 ↔ 앱 통신(로그인, 공유, 결제 호출 등)을 구현했나요?'],
+          hint: '예) 웹에서 앱 로그인·공유·장바구니 호출하는 JS 브리지 설계' },
+        { id: 'payment', title: '결제 / 인앱 결제',
+          why: '결제 흐름을 다뤄 봤다면 안정성이 중요한 기능 경험으로 강하게 어필돼요.',
+          ask: ['PG 결제 연동이나 StoreKit 인앱 결제를 다뤘나요?'],
+          hint: '예) PG 결제창 웹뷰 연동 및 결제 완료 후 앱 복귀 처리' },
+        { id: 'perf', title: '성능 개선 · 크래시 대응',
+          why: '“숫자로 말하는 성과”를 만들기 가장 좋은 항목이에요.',
+          ask: ['Instruments로 메모리 누수, 앱 시작 시간, 스크롤 성능을 개선해 봤나요?', 'Crashlytics로 크래시를 추적해 줄인 경험이 있나요? 기억나는 수치가 있나요?'],
+          hint: '예) 이미지 캐시 개선으로 메모리 사용량 감소, 크래시 프리율 99.x% 유지' },
+        { id: 'network', title: '네트워크 · 데이터 저장',
+          why: '기술란에 네트워크·저장 관련 도구가 하나도 없어요.',
+          ask: ['Alamofire, Moya 같은 네트워크 라이브러리를 썼나요?', 'CoreData, Realm, SwiftData 같은 로컬 저장소를 썼나요?'],
+          hint: '예) Alamofire 기반 API 레이어, 최근 본 상품은 CoreData에 저장' }
+      ]
+    },
+    {
+      title: '이력서 정리용으로 확인할 것',
+      desc: '내용을 더 정확하고 강하게 쓰기 위한 확인 사항이에요.',
+      items: [
+        { id: 'other', title: '기술란 “그 외” 줄 정리',
+          why: 'TypeScript, NestJS, Spring, MariaDB가 iOS 이력서 첫 화면에 있으면 iOS 전문성이 흐려 보일 수 있어요.',
+          ask: ['이 기술들을 기술란에서 빼고 사이드 프로젝트 쪽에만 둬도 괜찮나요?', 'Flutter는 기술란에 남겨 둘까요?'],
+          hint: '예) 서버 기술은 빼고 Flutter만 남기기' },
+        { id: 'share', title: 'Swift 전환 중 본인 몫',
+          why: '면접에서 “98% 중 본인이 맡은 건 어느 정도냐”를 거의 반드시 물어봐요.',
+          ask: ['팀 몇 명이 전환했고, 본인이 맡은 화면·모듈은 어느 정도 비중이었나요?'],
+          hint: '예) 3명 중 핵심 화면 5개와 공통 모듈 4개 담당' },
+        { id: 'aes', title: 'Keychain + AES256 키 관리',
+          why: 'Keychain은 이미 암호화되는데 AES를 또 썼다면 “키는 어디에 뒀나”를 꼭 물어봐요.',
+          ask: ['AES 키는 어디에 보관했나요? 왜 한 번 더 암호화했나요?', '생체인증이 실패하면 기존 로그인으로 넘어가게 했나요?'],
+          hint: '예) 서버에서 받은 키 사용, 실패 시 ID/PW 로그인으로 자동 전환' },
+        { id: 'dnf', title: '던파OFF 시작 시점',
+          why: '던파OFF는 2019.02 시작인데 입사는 2019.05라서 “재직 중 병행”과 날짜가 안 맞아요.',
+          ask: ['실제 시작 시점이 언제인가요? 입사 전에 시작한 게 맞나요?'],
+          hint: '예) 입사 전 2019.02에 시작, 입사 후에도 계속 운영' }
+      ]
+    }
+  ];
+
+  var KEY = 'jimin-checklist-v1';
+  var LABEL = { yes: '했음', part: '조금', no: '안 했음' };
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var list = document.getElementById('list');
+  var total = 0, n = 0;
+
+  GROUPS.forEach(function (g) {
+    var h = document.createElement('h2'); h.textContent = g.title; list.appendChild(h);
+    var d = document.createElement('p'); d.className = 'group-desc'; d.textContent = g.desc; list.appendChild(d);
+    g.items.forEach(function (it) {
+      total++; n++;
+      var s = state[it.id] || {};
+      var el = document.createElement('article');
+      el.className = 'item'; el.dataset.id = it.id;
+      el.innerHTML =
+        '<h3><span class="n">' + String(n).padStart(2, '0') + '</span>' + it.title + '</h3>' +
+        '<p class="why">' + it.why + '</p>' +
+        '<ul class="ask">' + it.ask.map(function (a) { return '<li>' + a + '</li>'; }).join('') + '</ul>' +
+        '<div class="choices" role="radiogroup" aria-label="' + it.title + '">' +
+          ['yes', 'part', 'no'].map(function (v) {
+            return '<label><input type="radio" name="' + it.id + '" value="' + v + '"' + (s.v === v ? ' checked' : '') + '><span>' + LABEL[v] + '</span></label>';
+          }).join('') +
+        '</div>' +
+        '<textarea aria-label="' + it.title + ' 메모" placeholder="' + it.hint + '"></textarea>';
+      el.querySelector('textarea').value = s.note || '';
+      list.appendChild(el);
+      refreshItem(el);
+
+      el.addEventListener('change', function (e) {
+        if (e.target.type !== 'radio') return;
+        state[it.id] = state[it.id] || {}; state[it.id].v = e.target.value; save(); refreshItem(el); refresh();
+      });
+      el.querySelector('textarea').addEventListener('input', function (e) {
+        state[it.id] = state[it.id] || {}; state[it.id].note = e.target.value; save();
+      });
+    });
+  });
+
+  function refreshItem(el) { el.classList.toggle('answered', !!(state[el.dataset.id] && state[el.dataset.id].v)); }
+  function refresh() {
+    var done = Object.keys(state).filter(function (k) { return state[k] && state[k].v; }).length;
+    document.getElementById('progText').textContent = done + ' / ' + total;
+    document.getElementById('progFill').style.width = (done / total * 100) + '%';
+  }
+  refresh();
+
+  function buildText() {
+    var out = ['[이력서 보완 체크리스트 답변]'];
+    var i = 0;
+    GROUPS.forEach(function (g) {
+      out.push('', '■ ' + g.title);
+      g.items.forEach(function (it) {
+        i++;
+        var s = state[it.id] || {};
+        out.push(String(i).padStart(2, '0') + '. ' + it.title + ' — ' + (s.v ? LABEL[s.v] : '미응답'));
+        if (s.note && s.note.trim()) out.push('    ' + s.note.trim().replace(/\n/g, '\n    '));
+      });
+    });
+    return out.join('\n');
+  }
+
+  var toast = document.getElementById('toast');
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    var text = buildText();
+    function ok() { toast.textContent = '복사했어요. 메시지 창에 붙여 넣어 보내 주세요.'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); ok(); } catch (e) { toast.textContent = '복사하지 못했어요. 화면을 캡처해서 보내 주세요.'; }
+      document.body.removeChild(ta);
+    }
+  });
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (!confirm('체크한 내용과 메모를 모두 지울까요?')) return;
+    state = {}; save();
+    document.querySelectorAll('.item input').forEach(function (r) { r.checked = false; });
+    document.querySelectorAll('.item textarea').forEach(function (t) { t.value = ''; });
+    document.querySelectorAll('.item').forEach(refreshItem);
+    refresh(); toast.textContent = '';
+  });
+</script>
+</body>
+</html>
