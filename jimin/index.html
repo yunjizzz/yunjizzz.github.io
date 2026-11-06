@@ -454,6 +454,8 @@
         <div>async/await · Combine · MVVM · Clean Architecture · Tuist 모듈화</div>
         <div class="k">보안 · 인증</div>
         <div>LocalAuthentication (Face ID / Touch ID) · Keychain Access Group · AES256</div>
+        <div class="k">앱 기능</div>
+        <div>APNs 푸시 · 딥링크 / Universal Link · WKWebView ↔ 네이티브 브리지</div>
         <div class="k">빌드 · 배포</div>
         <div>Xcode · SPM · CocoaPods · App Store Connect · Firebase Crashlytics</div>
         <div class="k">그 외</div>
@@ -471,7 +473,7 @@
       <div class="card">
         <div class="ic ic-kw" title="Objective-C 코드를 Swift로 단계적 전환 (Swift 비중 5% → 98%+)">ObjC → Swift</div>
         <h3>레거시가 무거운 앱</h3>
-        <p>Objective-C·XIB가 남은 코드베이스를 기능 단위로 쪼개 Swift·코드 UI로 옮겼습니다. 기존 호출 관계를 유지하고 회귀 테스트를 병행해, 로그인·검색 같은 핵심 화면부터 공통 모듈까지 운영 중단 없이 전환을 마쳤습니다.</p>
+        <p>Objective-C·XIB가 남은 코드베이스를 기능 단위로 쪼개 Swift·코드 UI로 옮겼습니다. 기존 호출 관계를 유지하고 단계마다 회귀 QA를 거쳐, 로그인·검색 같은 핵심 화면부터 공통 모듈까지 운영 중단 없이 전환을 마쳤습니다.</p>
       </div>
       <div class="card">
         <div class="ic ic-kw" title="Tuist 모듈화 + Clean Architecture로 신규 앱 3종 공통 구조">Tuist 모듈화</div>
@@ -514,7 +516,7 @@
             <li>이미지검색 화면은 ViewController → SubView → Cell 단위로 쪼개 영향 범위를 줄이며 이관</li>
             <li>XIB 화면을 Auto Layout·SnapKit 코드 UI로 교체</li>
             <li>앱 전역에서 쓰이는 <code>MobileAPICommon</code>, <code>WebViewOptionManager</code>, <code>PriceUtil</code>, <code>BarManager</code>를 정리해 Swift로 이전</li>
-            <li>ObjC↔Swift 혼용 구간의 기존 호출 관계를 유지하고, 전환마다 회귀 테스트를 병행</li>
+            <li>ObjC↔Swift 혼용 구간의 기존 호출 관계를 유지하고, 전환마다 회귀 QA로 기존 기능 동작을 확인</li>
           </ul></dd>
           <dt>판단</dt>
           <dd>“언어만 바꾸는 작업”이 아니라 “영향 범위가 작은 것부터 옮기는 작업”으로 정의했습니다. 화면 → 공통 모듈 순으로 진행해 각 단계가 독립적으로 배포 가능하도록 했습니다.</dd>
