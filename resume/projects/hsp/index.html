@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HSP · 나의 FP 상담(D2F) · 고윤지</title>
+  <meta name="description" content="고객과 보험설계사(FP)를 잇는 상담 연결 서비스의 API·검증 계층과 코어 연동·알림톡 계층 백엔드를 개발했습니다." />
+  <link rel="canonical" href="https://haebom.app/resume/projects/hsp/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="HSP · 나의 FP 상담(D2F) · 고윤지" />
+  <meta property="og:description" content="고객과 보험설계사(FP)를 잇는 상담 연결 서비스의 API·검증 계층과 코어 연동·알림톡 계층 백엔드를 개발했습니다." />
+  <meta property="og:url" content="https://haebom.app/resume/projects/hsp/" />
+  <meta property="og:locale" content="ko_KR" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="../project.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body style="--c: #10b981">
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="back" href="../../index.html#projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        이력서로
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">
+        <span class="emoji" aria-hidden="true">💬</span>
+        <span class="pill c">한화생명</span>
+        <span class="pill">2025.09 — 2026.10</span>
+      </div>
+      <h1>HSP · 나의 FP 상담(D2F)</h1>
+      <p class="summary">고객과 보험설계사(FP)를 잇는 상담 연결 서비스입니다. FP 목록·카드, 전화 상담 신청, 담당 FP에게 바로 신청하는 D2F, 상담 신청 알림톡을 제공합니다. API·검증 계층과 코어 연동·알림톡 계층, 두 리액티브 서비스의 백엔드를 맡았습니다.</p>
+      <ul class="stack">
+        <li>Kotlin</li><li>Spring WebFlux</li><li>Coroutines</li><li>R2DBC</li><li>Redis</li><li>AWS SQS</li><li>DynamoDB</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc reveal" aria-label="프로젝트 목차">
+      <h2>프로젝트 목차</h2>
+      <ol>
+        <li><a href="#p1">상담 신청 흐름과 알림톡</a></li>
+        <li><a href="#p2">D2F 보안 강화</a></li>
+      </ol>
+    </nav>
+
+    <section class="shots-section reveal" id="screens">
+      <h2>화면으로 보는 상담 신청 흐름</h2>
+      <p>상담 예약 시작부터 신청 완료까지의 여섯 단계입니다.</p>
+      <div class="shots">
+      <figure class="shot"><img src="shots/hsp-01.jpg" alt="상담 예약 시작" width="516" height="784" loading="lazy" /><figcaption><b><span>01</span>상담 예약 시작</b>상담 예약을 시작하는 안내 화면.</figcaption></figure>
+      <figure class="shot"><img src="shots/hsp-02.jpg" alt="지역·날짜·시간 선택" width="516" height="784" loading="lazy" /><figcaption><b><span>02</span>지역·날짜·시간 선택</b>지난 시간은 서버 시각 기준으로 비활성화되고, "빠른상담"은 희망 일시 없이 신청됩니다.</figcaption></figure>
+      <figure class="shot"><img src="shots/hsp-03.jpg" alt="보험전문가 추천" width="516" height="784" loading="lazy" /><figcaption><b><span>03</span>보험전문가 추천</b>고른 지역·일시에 맞는 FP 목록에서 한 명을 고릅니다.</figcaption></figure>
+      <figure class="shot"><img src="shots/hsp-04.jpg" alt="고객 기본 정보" width="516" height="784" loading="lazy" /><figcaption><b><span>04</span>고객 기본 정보</b>휴대폰 번호는 안심번호로 바뀌어 FP에게 전달됩니다.</figcaption></figure>
+      <figure class="shot"><img src="shots/hsp-05.jpg" alt="추가 정보·약관 동의" width="516" height="784" loading="lazy" /><figcaption><b><span>05</span>추가 정보·약관 동의</b>필수 동의를 해야 신청할 수 있습니다.</figcaption></figure>
+      <figure class="shot"><img src="shots/hsp-06.jpg" alt="신청 완료" width="516" height="784" loading="lazy" /><figcaption><b><span>06</span>신청 완료</b>이 시점에 고객·FP·지점장에게 알림톡이 발송됩니다.</figcaption></figure>
+      </div>
+      <p class="shots-note">스테이징 환경의 테스트 데이터 화면입니다.</p>
+    </section>
+
+    <section class="part reveal" id="p1">
+      <div class="part-head">
+        <span class="num">01</span>
+        <div>
+          <h2>상담 신청 흐름과 알림톡</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>프론트·앱 진입점과 검증을 맡는 API 계층, 코어 시스템 연동과 알림톡·푸시를 맡는 연동 계층 두 서비스로 나뉜 구조입니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>FP·지점장 알림톡 템플릿 전면 교체 (일반 / 보험명 포함 / 보장분석 동의 + 리마인드 · 지점장 통보)</li>
+          <li>템플릿 변수 치환 공통화</li>
+          <li>FP 알림톡 버튼의 대체 이동 경로를 FP 카드로 지정</li>
+          <li>그 밖에 상담 희망시각 검증, 상담 우수 FP 배지 노출 등 신청 화면 기능 개선</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>템플릿 종류가 늘어나도 <strong>변수 치환을 한 곳에서 관리</strong>할 수 있게 정리했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p2">
+      <div class="part-head">
+        <span class="num">02</span>
+        <div>
+          <h2>D2F 보안 강화</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>담당 FP에게 바로 상담을 신청하는 D2F 경로에서, 요청 본문의 고객번호를 바꾸면 다른 사람의 휴대폰·계약 정보가 보이는 IDOR 취약점이 보안 점검에서 지적됐습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>고객 식별을 요청 본문이 아니라 로그인 토큰으로 하는 API로 전환 (조회 요청 본문은 비우고, 상담 요청 본문은 FP·희망 일시·상담 내용만)</li>
+          <li>프론트 배포 후 백엔드에서 구 API 차단</li>
+          <li>담당 FP 유무·소속 등으로 상담 노출 대상 판정</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>2026.10.19 배포로 <strong>취약점을 해소</strong>했습니다.</p>
+      </div>
+    </section>
+
+    <div class="pager">
+      <a class="prev" href="../guarantee-analysis/index.html"><small>← 이전 프로젝트</small><span>다이렉트 보장분석 고도화</span></a>
+      <a class="next" href="../fp-portal/index.html"><small>다음 프로젝트 →</small><span>FP포털 (FP WORLD)</span></a>
+    </div>
+  </main>
+
+  <footer>© Yunji Go · 기록하는 개발자</footer>
+  <script src="../project.js"></script>
+</body>
+</html>

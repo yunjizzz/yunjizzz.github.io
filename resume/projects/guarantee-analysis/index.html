@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>다이렉트 보장분석 고도화 · 고윤지</title>
+  <meta name="description" content="신용정보원 데이터로 5대 보장의 준비 상태를 진단하고 부족한 보장에 맞는 상품을 추천하는 보장분석 서비스의 백엔드를 혼자 맡아 개발했습니다." />
+  <link rel="canonical" href="https://haebom.app/resume/projects/guarantee-analysis/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="다이렉트 보장분석 고도화 · 고윤지" />
+  <meta property="og:description" content="신용정보원 데이터로 5대 보장의 준비 상태를 진단하고 부족한 보장에 맞는 상품을 추천하는 보장분석 서비스의 백엔드를 혼자 맡아 개발했습니다." />
+  <meta property="og:url" content="https://haebom.app/resume/projects/guarantee-analysis/" />
+  <meta property="og:locale" content="ko_KR" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="../project.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body style="--c: #6d5dfc">
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="back" href="../../index.html#projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        이력서로
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">
+        <span class="emoji" aria-hidden="true">🛡️</span>
+        <span class="pill c">한화생명</span>
+        <span class="pill">2025.09 — 2026.10</span>
+        <span class="pill">백엔드 단독</span>
+      </div>
+      <h1>다이렉트 보장분석 고도화</h1>
+      <p class="summary">신용정보원 데이터로 고객이 가입한 모든 보험을 모아 암·뇌심·사망·간병·실손 5대 보장의 준비 상태를 진단하고, 부족한 보장에 맞는 상품을 추천하는 서비스입니다. 원천 시스템이 새 시스템으로 바뀌면서 리포트 구조와 보장 코드 체계가 전부 달라졌고, 웹·앱·FP 세 채널의 백엔드를 혼자 맡아 2026.10.19 오픈과 안정화까지 마쳤습니다.</p>
+      <ul class="stack">
+        <li>Java 17</li><li>Spring Boot 3</li><li>Spring Data JPA</li><li>Redis</li><li>OpenFeign</li><li>MySQL</li><li>GitLab CI</li><li>ArgoCD</li><li>Jennifer APM</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc reveal" aria-label="프로젝트 목차">
+      <h2>프로젝트 목차</h2>
+      <ol>
+        <li><a href="#p1">원천 시스템 전환 — 무배포 컷오버·롤백</a></li>
+        <li><a href="#p2">신규 산출 오케스트레이션</a></li>
+        <li><a href="#p3">트러블슈팅 — 같은 고객 산출이 4번 돌던 문제</a></li>
+        <li><a href="#p4">캐시와 외부 호출량 관리</a></li>
+        <li><a href="#p5">판정·추천 규칙</a></li>
+        <li><a href="#p6">보안과 오픈 전 검증</a></li>
+      </ol>
+    </nav>
+
+    <section class="shots-section reveal" id="screens">
+      <h2>화면으로 보는 흐름</h2>
+      <p>진입부터 본인인증, 분석, 리포트, 상품 추천까지 이어지는 고객 화면입니다.</p>
+      <div class="shots">
+        <figure class="shot"><img src="shots/ga-01.jpg" alt="내 보험 분석해보기 시작 화면" width="516" height="784" loading="lazy" /><figcaption><b><span>01</span>시작</b>"내 보험 분석해보기"로 진입합니다.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-03.jpg" alt="본인인증 화면" width="516" height="784" loading="lazy" /><figcaption><b><span>02</span>본인인증</b>이름·주민번호(보안 키패드)·통신사·휴대폰을 입력하고 문자로 인증합니다.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-06.jpg" alt="분석 중 화면" width="696" height="748" loading="lazy" /><figcaption><b><span>03</span>분석 중</b>가입한 보험을 모아 산출합니다. 최대 90초 안에 끝나도록 데드라인으로 관리합니다.</figcaption></figure>
+        <figure class="shot wide"><img src="shots/ga-07.jpg" alt="리포트 홈 화면" width="1040" height="748" loading="lazy" /><figcaption><b><span>04</span>리포트 홈</b>보험 준비 유형(전문가 타입)과 가입 현황을 요약합니다.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-09.jpg" alt="대분류 상세 화면" width="516" height="748" loading="lazy" /><figcaption><b><span>05</span>대분류 상세</b>항목별 보유·필요 금액과 양호·부족 판정.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-10.jpg" alt="실손 화면" width="516" height="748" loading="lazy" /><figcaption><b><span>06</span>실손</b>금액이 아니라 가입 여부로 판정합니다.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-11.jpg" alt="사망 화면" width="516" height="748" loading="lazy" /><figcaption><b><span>07</span>사망</b>추천은 질병사망 기준. 암사망만 부족하면 상품 대신 상담으로 연결합니다.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-12.jpg" alt="항목 상세 화면" width="516" height="748" loading="lazy" /><figcaption><b><span>08</span>항목 상세</b>필요 금액 구성과 보유 계약.</figcaption></figure>
+        <figure class="shot"><img src="shots/ga-13.jpg" alt="부족한 보장 채우기 화면" width="516" height="748" loading="lazy" /><figcaption><b><span>09</span>부족한 보장 채우기</b>다이렉트 상품 추천 또는 보험 전문가 상담(HSP) 중 선택합니다.</figcaption></figure>
+        <figure class="shot wide"><img src="shots/ga-14.jpg" alt="상품 추천 화면" width="1040" height="748" loading="lazy" /><figcaption><b><span>10</span>상품 추천</b>부족한 보장 기준으로 상품과 보험료를 계산합니다.</figcaption></figure>
+      </div>
+      <p class="shots-note">스테이징 환경의 테스트 데이터 화면입니다.</p>
+    </section>
+
+    <section class="part reveal" id="p1">
+      <div class="part-head">
+        <span class="num">01</span>
+        <div>
+          <h2>원천 시스템 전환 — 무배포 컷오버·롤백</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>보장분석 원천 데이터를 제공하던 기존 시스템이 종료되고 새 시스템으로 바뀌면서 리포트 구조(3단 → 2단 트리), 보장 코드 체계, 실손 항목 통합까지 달라졌습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>신·구 원천을 Strategy 패턴으로 이원화하고 분기는 한 곳에서만 수행</li>
+          <li>컷오버 시각 설정값 하나로 전환·롤백</li>
+          <li>캐시 키에 모드·코드 버전을 넣어 전환 시 자동 분리</li>
+          <li>롤백해도 동작하도록 구 시스템 경로 보전(구 필드명 허용, 구 실손 코드 정규화)</li>
+          <li>앱 API v1·v2 이원화로 구버전 앱 하위 호환</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p><strong>코드 배포 없이 설정값만으로 전환·롤백</strong>할 수 있고, 전환·롤백 때 캐시를 수동으로 정리할 필요가 없습니다. 2026.10.19 오픈.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p2">
+      <div class="part-head">
+        <span class="num">02</span>
+        <div>
+          <h2>신규 산출 오케스트레이션</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>보험 산출은 기본정보 생성 → 필요금액 저장 → 자사·타사 계약 산출 → 결과 조회로 이어지는 여러 단계의 외부 호출입니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>자사·타사 산출 체인 병렬 실행</li>
+          <li>계약이 많은 고객은 배치(기본 5건)로 나눠 호출</li>
+          <li>시작 기준 90초 데드라인으로 새 호출 차단</li>
+          <li>전용 스레드풀로 다른 API와 격리</li>
+          <li>산출이 시작됐으면 결과 조회는 반드시 수행(부분 실패여도 만든 결과는 읽음)</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>일부 체인이 실패해도 결과를 응답하고, 계약이 잡힌 부분 결과는 캐시해 <strong>실패가 구조적인 고객이 매번 90초 재산출을 반복하는 루프를 차단</strong>했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p3">
+      <div class="part-head">
+        <span class="num">03</span>
+        <div>
+          <h2>같은 고객 산출이 4번 돌던 문제</h2>
+          <span class="pill c">Troubleshooting</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">증상</p>
+        <p>스테이징에서 산출 요청 1건이 <strong>정확히 240초</strong> 만에 500으로 끝났고, 그 사이 같은 고객의 산출이 원천 시스템에서 여러 번 실행됐습니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">원인 분석</p>
+        <p>240초 = 60초 × 4. 앞단 게이트웨이가 60초 동안 응답이 없으면 같은 요청을 다시 보내고 있었습니다. 산출은 최대 90초까지 걸리기 때문에 재시도가 도착할 때 첫 산출은 아직 진행 중이었고, 서버는 이를 새 요청으로 보고 <strong>재시도마다 산출을 처음부터 다시 시작</strong>했습니다.</p>
+        <ol class="ts-timeline" aria-label="재시도 타임라인">
+          <li><b>0초</b>요청 → 산출 ①</li>
+          <li><b>60초</b>재시도 → 산출 ②</li>
+          <li><b>120초</b>재시도 → 산출 ③</li>
+          <li><b>180초</b>재시도 → 산출 ④</li>
+          <li class="bad"><b>240초</b>게이트웨이 500</li>
+        </ol>
+      </div>
+      <div class="field">
+        <p class="label">해결</p>
+        <ul class="list">
+          <li>먼저 온 요청이 Redis <strong>SET NX</strong>로 '진행 중' 표시(소유자 토큰 + TTL)를 잡고 산출</li>
+          <li>나중 요청(재시도·연타·앱/웹 동시 진입)은 산출하지 않고 기다렸다가, <strong>그 소유자가 남긴 결과</strong>만 받아 응답 — 기다리기 전부터 있던 낡은 캐시는 받지 않음</li>
+          <li>표시 해제는 Lua 스크립트로 값을 비교해 삭제 — 다른 요청의 표시를 지우지 않음</li>
+          <li>소유자가 결과 없이 끝나거나 Redis에 장애가 나면 대기 요청이 직접 산출(fail-open) — 가드 때문에 사용자가 실패를 받지 않게 함</li>
+          <li>알림톡·쿨다운 마커는 소유자만 남기도록 해, 코드리뷰에서 찾은 중복 발송·마커 덮어쓰기 문제까지 막음</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">결과</p>
+        <p><strong>같은 고객 산출 4회 → 1회</strong>로 줄어 원천 시스템 부하가 줄었습니다. 60초에 도착한 재시도가 70~90초에 끝난 산출 결과를 받아 응답하므로, <strong>예전엔 버려지던 느린 산출도 사용자에게 전달</strong>됩니다.</p>
+        <p>배운 점 — 타임아웃은 우리 서버 하나가 아니라 <strong>게이트웨이 → 서버 → 원천 시스템 체인 전체</strong>로 맞춰 봐야 합니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p4">
+      <div class="part-head">
+        <span class="num">04</span>
+        <div>
+          <h2>캐시와 외부 호출량 관리</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>리포트 1시간 캐시, 장애로 생긴 빈 결과는 캐시하지 않음</li>
+          <li>계약 0건 고객 10분 재산출 쿨다운</li>
+          <li>상품 판매여부를 상품코드 단위 공유 캐시 + 매시 정각 갱신(장애 응답은 저장하지 않음)</li>
+          <li>앱 진입 시 이력조회 중복 제거</li>
+          <li>'이력 없음' 60초 단기 표시</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>판매여부 조회는 <strong>고객 수와 무관하게 상품당 시간당 1회</strong>, 앱 진입 이력조회는 <strong>2회 → 1회</strong>로 줄었습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p5">
+      <div class="part-head">
+        <span class="num">05</span>
+        <div>
+          <h2>판정·추천 규칙</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>5대 보장 준비율로 양호·부족 판정, 실손은 가입 여부로 판정</li>
+          <li>보험 준비 유형(A·B·C) 판정에서 실손 제외</li>
+          <li>상품 추천은 판매중이 확인될 때만 생성(fail-closed)</li>
+          <li>사망 추천은 질병사망 기준</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>기획 확정 사항을 날짜·이유와 함께 코드와 문서에 남겨 <strong>같은 논의가 반복되지 않게</strong> 했습니다.</p>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p6">
+      <div class="part-head">
+        <span class="num">06</span>
+        <div>
+          <h2>보안과 오픈 전 검증</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>다른 사람에게 재배정될 수 있는 비회원 고객번호는 이력 재사용 금지</li>
+          <li>조회 경로의 회원 판정을 한 곳으로 통일(토큰과 세션의 고객번호 일치까지 확인)</li>
+          <li>인증 토큰 전환기(구형·신형 토큰) 이원화 대응</li>
+          <li>토큰 원문 로그 차단</li>
+        </ul>
+      </div>
+      <div class="impact">
+        <p class="label">주요 성과</p>
+        <p>오픈 전 브랜치 전체를 <strong>4개 관점의 AI 코드리뷰로 병렬 점검</strong>해 HIGH 6건을 포함한 30여 건을 해소했습니다.</p>
+      </div>
+    </section>
+
+    <div class="pager">
+      <a class="next" href="../hsp/index.html"><small>다음 프로젝트 →</small><span>HSP · 나의 FP 상담</span></a>
+    </div>
+  </main>
+
+  <footer>© Yunji Go · 기록하는 개발자</footer>
+  <script src="../project.js"></script>
+</body>
+</html>

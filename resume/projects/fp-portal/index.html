@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FP포털 (FP WORLD) · 고윤지</title>
+  <meta name="description" content="전국 보험설계사(FP)가 고객관리·영업 업무를 처리하는 영업지원 포털의 홈 대시보드, 고객 메시지 전송, 영업 지원 화면을 개발했습니다." />
+  <link rel="canonical" href="https://haebom.app/resume/projects/fp-portal/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="FP포털 (FP WORLD) · 고윤지" />
+  <meta property="og:description" content="전국 보험설계사(FP)가 고객관리·영업 업무를 처리하는 영업지원 포털의 홈 대시보드, 고객 메시지 전송, 영업 지원 화면을 개발했습니다." />
+  <meta property="og:url" content="https://haebom.app/resume/projects/fp-portal/" />
+  <meta property="og:locale" content="ko_KR" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="../project.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add('js');
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          root.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body style="--c: #f59e0b">
+
+  <nav>
+    <div class="container nav-inner">
+      <a class="back" href="../../index.html#projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        이력서로
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">
+        <span class="emoji" aria-hidden="true">🗂️</span>
+        <span class="pill c">한화생명</span>
+        <span class="pill">2023.04 — 2025.08</span>
+      </div>
+      <h1>FP포털 (FP WORLD)</h1>
+      <p class="summary">전국 보험설계사(FP)가 고객관리부터 보장분석, 가입설계, 청약까지 영업 업무를 처리하는 영업지원 포털입니다. 메뉴를 탭으로 여러 개 열어 두고 쓰는 업무 시스템에서 FP 홈 대시보드, 고객 메시지 전송, 공지 · 택배 · 통합 고객정보 화면을 개발 · 운영했습니다.</p>
+      <ul class="stack">
+        <li>Java</li><li>Spring</li><li>WebSquare</li><li>JEUS</li><li>Oracle</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc reveal" aria-label="프로젝트 목차">
+      <h2>프로젝트 목차</h2>
+      <ol>
+        <li><a href="#p1">FP 홈 대시보드</a></li>
+        <li><a href="#p2">고객 메시지 전송</a></li>
+        <li><a href="#p3">영업 지원 화면</a></li>
+      </ol>
+    </nav>
+
+    <section class="shots-section reveal" id="screens">
+      <h2>화면으로 보는 FP포털</h2>
+      <p>FP가 로그인하면 가장 먼저 보는 홈과, 고객에게 문자를 보내는 메시지 전송 화면입니다.</p>
+      <div class="shots">
+      <figure class="shot full"><img src="shots/fp-01.jpg" alt="FP 홈 대시보드" width="1600" height="888" loading="lazy" /><figcaption><b><span>01</span>FP 홈 대시보드</b>고객 통합조회, 업무 바로가기, 담당 고객 현황, 최근 설계 · 전자청약 · 신계약 모니터링, 이번 달 고객 방문 이슈(생일 · 상령일 · 만기)를 한 화면에 모았습니다.</figcaption></figure>
+      <figure class="shot full"><img src="shots/fp-02.jpg" alt="고객 메시지 전송" width="1600" height="789" loading="lazy" /><figcaption><b><span>02</span>고객 메시지 전송</b>휴대폰 미리보기로 문구를 작성하고, 관리고객 · 최근 발신번호에서 수신자를 골라 SMS · LMS · MMS를 보냅니다. 문자 종류별 포인트가 차감됩니다.</figcaption></figure>
+      </div>
+      <p class="shots-note">운영 화면이라 개인정보(휴대폰 번호)는 가렸습니다.</p>
+    </section>
+
+    <section class="part reveal" id="p1">
+      <div class="part-head">
+        <span class="num">01</span>
+        <div>
+          <h2>FP 홈 대시보드</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>FP가 로그인 후 가장 먼저 보는 화면으로, 그날 챙겨야 할 고객과 업무를 바로 확인하고 주요 메뉴로 이동하는 시작점입니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>담당 고객 현황(본인모집 · 수금이관 · 미유지 고객)과 계약 조회 바로가기</li>
+          <li>이번 달 고객 방문 이슈 — 생일 · 상령일 · 만기 · 완납 도래 고객 집계</li>
+          <li>최근 설계 이력 · 전자청약 · 신계약 모니터링 · 보완처리 현황</li>
+          <li>가망고객 등록, 고객동의 SMS 인증, 보장분석, 가입설계 등 업무 바로가기</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p2">
+      <div class="part-head">
+        <span class="num">02</span>
+        <div>
+          <h2>고객 메시지 전송</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">개요</p>
+        <p>FP가 담당 고객에게 안내 · 영업 문자를 보내는 화면입니다. 문자 발송에는 FP 개인 포인트가 쓰이고, 광고성 문자에는 법적 표기 의무가 따릅니다.</p>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>SMS · MMS/LMS · 다건 개별 전송, 예약 전송과 전송 내역 조회</li>
+          <li>문자 종류별 포인트 차감과 가용 포인트 표시</li>
+          <li>광고 문구 · 수신거부 번호 자동 표기, 50byte 초과 시 LMS 전환</li>
+          <li>고객명 · FP명 자동 치환, 메시지함 · 나의 메시지 · 인기 컨텐츠 불러오기</li>
+          <li>수신번호 검색 — 표준 · 간편 관리고객, 최근 발신번호</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="part reveal" id="p3">
+      <div class="part-head">
+        <span class="num">03</span>
+        <div>
+          <h2>영업 지원 화면</h2>
+        </div>
+      </div>
+      <div class="field">
+        <p class="label">담당 업무</p>
+        <ul class="list">
+          <li>공지사항 등록 · 조회</li>
+          <li>택배 신청</li>
+          <li>통합 고객정보</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="pager">
+      <a class="prev" href="../hsp/index.html"><small>← 이전 프로젝트</small><span>HSP · 나의 FP 상담(D2F)</span></a>
+      <a class="next" href="../idrive/index.html"><small>다음 프로젝트 →</small><span>iDrive BFF 서버</span></a>
+    </div>
+  </main>
+
+  <footer>© Yunji Go · 기록하는 개발자</footer>
+  <script src="../project.js"></script>
+</body>
+</html>

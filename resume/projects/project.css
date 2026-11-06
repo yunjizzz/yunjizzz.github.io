@@ -196,3 +196,34 @@ footer { text-align: center; color: var(--muted); font-size: 13px; padding: 32px
   .js .reveal { opacity: 1; transform: none; }
   .part { break-inside: avoid; box-shadow: none; }
 }
+
+/* ---------- Screenshots (보장분석 · HSP 상세) ---------- */
+.shots-section { margin-top: 28px; }
+.shots-section > h2 { font-size: clamp(20px, 3vw, 24px); letter-spacing: -.025em; margin: 0 0 6px; }
+.shots-section > p { color: var(--sub); margin: 0 0 20px; }
+.shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 22px 18px; }
+.shot { margin: 0; }
+.shot.wide { grid-column: span 2; }
+.shot.full { grid-column: 1 / -1; }
+.shot img {
+  display: block; width: 100%; height: auto; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--card); box-shadow: var(--shadow);
+}
+.shot figcaption { margin-top: 10px; font-size: 13.5px; line-height: 1.55; color: var(--sub); }
+.shot figcaption b { display: block; color: var(--text); font-size: 14px; margin-bottom: 2px; }
+.shot figcaption b span { color: var(--c); margin-right: 6px; font-variant-numeric: tabular-nums; }
+.shots-note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+@media (max-width: 640px) {
+  .shots { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
+}
+
+/* ---------- Troubleshooting timeline ---------- */
+.ts-timeline { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.ts-timeline li {
+  padding: 10px 12px; border-radius: 12px; font-size: 13.5px; line-height: 1.45; color: var(--sub);
+  background: var(--bg-soft); border: 1px solid var(--border);
+}
+.ts-timeline li b { display: block; color: var(--c); font-size: 13px; font-variant-numeric: tabular-nums; }
+.ts-timeline li.bad { border-color: color-mix(in srgb, #ef4444 45%, var(--border)); background: color-mix(in srgb, #ef4444 8%, var(--bg-soft)); }
+.ts-timeline li.bad b { color: #ef4444; }
+@media (max-width: 640px) { .ts-timeline { grid-template-columns: 1fr 1fr; } }

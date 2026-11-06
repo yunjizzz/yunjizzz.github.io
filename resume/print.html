@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>고윤지 이력서</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  /* PDF 전용 이력서 — resume.pdf 를 이 파일에서 생성한다 */
+  @page { size: A4; margin: 14mm 15mm; }
+  :root { --text: #14161d; --sub: #444b5b; --muted: #80879a; --line: #e3e6ee; --accent: #5b4ce6; --soft: #f3f2fe; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { margin: 0; background: #fff; }
+  body { font-family: "Pretendard Variable", Pretendard, sans-serif; color: var(--text); font-size: 9.8pt; line-height: 1.58; word-break: keep-all; }
+  .page { width: 180mm; margin: 0 auto; }
+  a { color: inherit; text-decoration: none; }
+
+  header { display: grid; grid-template-columns: 1fr 30mm; gap: 8mm; align-items: center; padding-bottom: 5mm; border-bottom: 2px solid var(--text); }
+  h1 { font-size: 22pt; letter-spacing: -.03em; margin: 0; line-height: 1.2; }
+  h1 small { font-size: 11pt; font-weight: 600; color: var(--accent); margin-left: 3mm; letter-spacing: 0; }
+  .tagline { font-size: 11pt; font-weight: 650; margin: 2mm 0 2.5mm; }
+  .contact { display: flex; flex-wrap: wrap; gap: 1mm 5mm; font-size: 8.8pt; color: var(--sub); }
+  .contact b { color: var(--muted); font-weight: 600; margin-right: 1.5mm; }
+  .photo { width: 30mm; height: 30mm; border-radius: 4mm; object-fit: cover; }
+
+  .summary { margin: 4.5mm 0 0; color: var(--sub); }
+  .summary strong { color: var(--text); }
+  .next { margin-top: 2.5mm; padding: 2.2mm 3.5mm; border-radius: 2mm; background: var(--soft); font-size: 9pt; }
+  .next b { color: var(--accent); margin-right: 2mm; letter-spacing: .06em; font-size: 8pt; }
+
+  section { margin-top: 5.5mm; }
+  h2 { font-size: 10.5pt; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 2.5mm; padding-bottom: 1.5mm; border-bottom: 1px solid var(--line); break-after: avoid; }
+
+  .strengths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+  .strengths div { border: 1px solid var(--line); border-radius: 2mm; padding: 2.5mm 3mm; }
+  .strengths h3 { font-size: 9.8pt; margin: 0 0 1mm; }
+  .strengths p { margin: 0; font-size: 8.6pt; color: var(--sub); line-height: 1.5; }
+
+  .job { margin-top: 5mm; }
+  .job-head {
+    display: flex; justify-content: space-between; align-items: center; gap: 4mm; break-after: avoid;
+    padding: 2mm 3.5mm; border-radius: 1.8mm; background: linear-gradient(90deg, #ebe8ff, #f6f5ff 70%, #fff); border-left: 3px solid var(--accent);
+  }
+  .job-head h3 { font-size: 11.5pt; margin: 0; color: var(--text); }
+  .job-head h3 span { font-size: 8.8pt; font-weight: 500; color: var(--muted); margin-left: 2mm; }
+  .job-head .period { color: var(--accent); font-weight: 700; }
+  .period { font-size: 8.8pt; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .proj { margin: 3.2mm 0 0 1.5mm; padding-left: 4mm; border-left: 2px solid #d9d4fb; break-inside: avoid; }
+  .proj-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  .proj-head h4 { position: relative; font-size: 10.4pt; margin: 0; color: var(--accent); }
+  .proj-head h4::before {
+    content: ""; position: absolute; left: -5.75mm; top: .55em; width: 2.6mm; height: 2.6mm;
+    border-radius: 50%; background: #fff; border: 2px solid var(--accent); box-sizing: border-box;
+  }
+  .more-link { font-size: 8.2pt; font-weight: 700; color: var(--accent); white-space: nowrap; padding: .3mm 2mm; border-radius: 1.2mm; background: var(--soft); }
+  .proj-head .right { display: flex; align-items: baseline; gap: 2.5mm; white-space: nowrap; }
+  .contact a { color: var(--sub); }
+  .proj .desc { margin: 1mm 0 1.5mm; color: var(--sub); font-size: 9pt; }
+  .proj .stack { font-size: 8pt; color: var(--muted); margin-top: 1.5mm; }
+  ul { margin: 0; padding-left: 4mm; }
+  li { margin: .7mm 0; color: var(--sub); }
+  li strong { color: var(--text); font-weight: 650; }
+  li::marker { color: var(--accent); }
+
+  .ts { margin: 2mm 0 0; padding: 2mm 3mm; border-radius: 1.6mm; background: #fff7ed; border: 1px solid #fed7aa; break-inside: avoid; }
+  .ts p { margin: .6mm 0; font-size: 8.6pt; color: var(--sub); }
+  .ts p b { display: inline-block; width: 9mm; color: #c2410c; font-weight: 700; }
+  .ts p strong { color: var(--text); }
+  .ts .ts-title { font-size: 8.8pt; font-weight: 700; color: #c2410c; margin: 0 0 1mm; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 8mm; }
+  dl { display: grid; grid-template-columns: 22mm 1fr; gap: 1.2mm 3mm; margin: 0; }
+  dt { font-weight: 700; font-size: 9pt; }
+  dd { margin: 0; color: var(--sub); font-size: 9pt; }
+  .more p { margin: 0 0 1.2mm; color: var(--sub); }
+  .more p strong { color: var(--text); }
+</style>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <h1>고윤지 <small>Backend Developer</small></h1>
+      <p class="tagline">버티는 구조를 만들고, 그 이유를 기록하는 9년 차 백엔드 개발자</p>
+      <div class="contact">
+        <span><b>Email</b><a href="mailto:yunjigo92@gmail.com">yunjigo92@gmail.com</a></span>
+        <span><b>Web</b><a href="https://haebom.app/resume/">haebom.app/resume</a></span>
+        <span><b>GitHub</b><a href="https://github.com/yunjizzz">github.com/yunjizzz</a></span>
+        <span><b>Blog</b><a href="https://goyunji.tistory.com">goyunji.tistory.com</a></span>
+      </div>
+    </div>
+    <img class="photo" src="profile.jpg" alt="" />
+  </header>
+
+  <p class="summary">
+    통신, OTT, 모빌리티, 보험까지 여러 도메인을 거치며 제가 가장 잘하는 일을 찾았습니다.
+    외부 시스템이 느려지거나 멈춰도 <strong>서비스가 버티는 구조</strong>를 만드는 일,
+    그리고 그 구조를 왜 그렇게 만들었는지 <strong>다음 사람이 읽을 수 있게</strong> 남기는 일입니다.
+  </p>
+  <div class="next"><b>NEXT</b>백엔드 아키텍처를 넘어 인프라 구축까지 직접 해 보고, 대용량 트래픽을 다루는 환경에서 성장하고 싶습니다.</div>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="grid2">
+      <dl>
+        <dt>Language</dt><dd>Java, Kotlin, TypeScript</dd>
+        <dt>Backend</dt><dd>Spring Boot, WebFlux, JPA, OpenFeign, NestJS</dd>
+        <dt>Data · MQ</dt><dd>MySQL, Redis, Oracle, MongoDB, Cassandra, Elasticsearch, Kafka</dd>
+      </dl>
+      <dl>
+        <dt>Infra · Ops</dt><dd>Docker, AWS, Kubernetes, GitLab CI, ArgoCD, Jennifer APM, Kibana</dd>
+        <dt>WAS · Web</dt><dd>WAS: Tomcat, JEUS / Web: Apache, WebtoB</dd>
+        <dt>Front · App</dt><dd>React, React Native, Next.js, JSP</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <h2>Core Strengths</h2>
+    <div class="strengths">
+      <div><h3>외부 연동 설계</h3><p>제휴몰 공통 API 규격(통신), 고객사별 BFF 게이트웨이(모빌리티), 자사·타사 산출 체인 병렬화(보험)</p></div>
+      <div><h3>장애에 버티는 구조</h3><p>Kafka로 발송 분리(OTT), 협력사 솔루션 결함 규명(미들웨어), 데드라인·중복 산출 가드(보험)</p></div>
+      <div><h3>설계를 기록으로 남기기</h3><p>시나리오 테스트·리포트 가이드(OTT), 예제 코드 가이드라인(모빌리티), 설계 결정 문서화(보험)</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="job-head"><h3>한화생명<span>디지털 채널 백엔드</span></h3><span class="period">2023.04 – 현재</span></div>
+
+      <div class="proj">
+        <div class="proj-head"><h4>다이렉트 보장분석 고도화 · 백엔드 단독</h4><span class="right"><span class="period">2025.09 – 2026.10</span><a class="more-link" href="https://haebom.app/resume/projects/guarantee-analysis/">상세 보기 ↗</a></span></div>
+        <p class="desc">가입한 모든 보험으로 5대 보장 준비 상태를 진단하고 상품을 추천하는 서비스. 원천 시스템 전환에 맞춰 웹·앱·FP 백엔드를 혼자 맡아 오픈</p>
+        <ul>
+          <li><strong>무배포 전환·롤백</strong> — Strategy 패턴 + 설정값 컷오버로 신·구 원천 이원화, 배포 없이 설정만으로 전환·롤백</li>
+          <li><strong>산출 오케스트레이션</strong> — 자사∥타사 체인 병렬·배치 분할, 90초 데드라인, 파드당 동시 150건 전용 풀로 격리</li>
+          <li><strong>외부 호출 절감</strong> — 상품 판매여부 공유 캐시로 상품당 시간당 1회, 앱 진입 이력조회 2회 → 1회</li>
+        </ul>
+        <div class="ts">
+          <p class="ts-title">Troubleshooting · 같은 고객 산출이 4번 돌던 문제</p>
+          <p><b>원인</b>요청 1건이 정확히 240초(60초 × 4) 만에 500 — 게이트웨이의 60초 무응답 재시도가 최대 90초 걸리는 산출을 매번 새로 시작</p>
+          <p><b>해결</b>Redis SET NX 진행 중 표시 + 소유자 결과 공유, Lua 비교 삭제, 결과 없거나 Redis 장애 시 fail-open</p>
+          <p><b>결과</b>산출 <strong>4회 → 1회</strong>, 60~90초에 끝난 산출도 재시도 요청이 받아 사용자에게 전달</p>
+        </div>
+        <p class="stack">Java 17 · Spring Boot 3 · JPA · Redis · OpenFeign · MySQL · ArgoCD</p>
+      </div>
+
+      <div class="proj" style="break-inside: auto">
+        <div class="proj-head"><h4>HSP · 나의 FP 상담(D2F)</h4><span class="right"><span class="period">2025.09 – 2026.10</span><a class="more-link" href="https://haebom.app/resume/projects/hsp/">상세 보기 ↗</a></span></div>
+        <p class="desc">고객과 보험설계사(FP)를 잇는 상담 연결 서비스. Kotlin Coroutines 기반 리액티브 서비스 2종 백엔드</p>
+        <div style="break-inside: avoid">
+        <ul>
+          <li><strong>IDOR 취약점 해소</strong> — 요청 본문 대신 로그인 토큰으로 고객을 식별하도록 API 전환</li>
+          <li><strong>상담 신청 알림톡</strong> — FP·지점장 템플릿 전면 교체, 변수 치환 공통화로 템플릿 관리 일원화</li>
+        </ul>
+        <p class="stack">Kotlin · Spring WebFlux · Coroutines · R2DBC · Redis · AWS SQS</p>
+        </div>
+      </div>
+
+      <div class="proj" style="break-inside: auto">
+        <div class="proj-head"><h4>FP포털</h4><span class="right"><span class="period">2023.04 – 2025.08</span><a class="more-link" href="https://haebom.app/resume/projects/fp-portal/">상세 보기 ↗</a></span></div>
+        <p class="desc">전국 보험설계사(FP)가 고객관리부터 청약까지 처리하는 영업지원 포털 (FP WORLD)</p>
+        <div style="break-inside: avoid">
+        <ul>
+          <li><strong>FP 홈 대시보드</strong> — 담당 고객 현황과 생일·상령일·만기 도래 고객을 모아 영업 기회를 한 화면에</li>
+          <li><strong>고객 메시지 발송</strong> — SMS·LMS·MMS·다건·예약 전송, 포인트 차감, 광고 문구·수신거부 표기 자동화</li>
+        </ul>
+        <p class="stack">Java · Spring · WebSquare · JEUS · Oracle</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-head"><h3>알티모빌리티 · 알티캐스트</h3><span class="period">2020.04 – 2023.03</span></div>
+
+      <div class="proj">
+        <div class="proj-head"><h4>iDrive BFF 서버</h4><span class="right"><span class="period">2022.06 – 2023.03</span><a class="more-link" href="https://haebom.app/resume/projects/idrive/">상세 보기 ↗</a></span></div>
+        <p class="desc">사우디 최초 렌터카·공유 앱에 고객사별 BFF(Backend For Frontend) 개발·적용</p>
+        <ul>
+          <li>대여·이용·반납 예약 API를 BFF로 개발, NestJS 예제 코드로 <strong>팀 개발 가이드라인</strong> 마련</li>
+          <li>React Native를 익혀 앱 요청부를 직접 수정, 추가 인력 없이 적용</li>
+        </ul>
+        <p class="stack">TypeScript · NestJS · React Native · AWS</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head"><h4>Ambient TV 서버</h4><span class="right"><span class="period">2021.01 – 2022.06</span><a class="more-link" href="https://haebom.app/resume/projects/ambient-tv/">상세 보기 ↗</a></span></div>
+        <p class="desc">자체 OTT 솔루션 상품화와 다큐멘터리 VODA 영화제 사이트 개발·운영</p>
+        <ul>
+          <li>이메일·SMS 발송을 <strong>Kafka로 분리</strong>해 연동 서버 장애 시 누락 방지</li>
+          <li>전체 모듈 시나리오 테스트를 일일 배치로 돌려 장애 조기 파악</li>
+        </ul>
+        <p class="stack">Java 11 · Spring Boot · Kafka · MongoDB · Cassandra · Kubernetes</p>
+      </div>
+
+      <div class="proj">
+        <div class="proj-head"><h4>KT olleh 미들웨어 서버</h4><span class="right"><span class="period">2020.04 – 2020.12</span><a class="more-link" href="https://haebom.app/resume/projects/kt-olleh/">상세 보기 ↗</a></span></div>
+        <p class="desc">KT olleh 셋톱박스 탑재 솔루션의 고도화 개발과 고객사 대응</p>
+        <ul>
+          <li>JEUS 업그레이드 중 협력사 솔루션 결함을 규명해 <strong>페널티 비용을 협력사 부담</strong>으로 정리</li>
+          <li>이력 관리를 Oracle DB에서 파일 시스템으로 전환해 DB 비용 절감</li>
+        </ul>
+        <p class="stack">Java 1.5 · Oracle · JEUS · WebtoB</p>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-head"><h3>유비벨록스모바일</h3><span class="period">2017.04 – 2020.03</span></div>
+
+      <div class="proj">
+        <div class="proj-head"><h4>LGU+ 멤버십(U+멤버스) 서버·웹</h4><span class="right"><span class="period">2017.04 – 2020.03</span><a class="more-link" href="https://haebom.app/resume/projects/lgu-members/">상세 보기 ↗</a></span></div>
+        <p class="desc">가입자 500만 명 통신사 멤버십 앱의 서버와 관리자·CMS 사이트</p>
+        <ul>
+          <li>제휴몰 연동에 <strong>공통 API 규격</strong>을 제시해 개발 기간 단축</li>
+          <li>전체 쿼리·실행 계획을 DBA와 함께 정리하며 튜닝 → 팀 내 <strong>통계 DB 담당</strong></li>
+        </ul>
+        <p class="stack">Java · Struts2 · Spring · iBATIS · Oracle · JSP</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2>Side Project · Activities · Education</h2>
+    <p><strong><a href="https://haebom.app">해봄 (haebom.app)</a></strong> — Claude Code와 함께 만든 무료 브라우저 도구 사이트. PDF·영상 압축·이미지 변환 등 6개 도구를 기획·배포·운영</p>
+    <p><strong>스프링캠프 스태프</strong> — 2019, 2020, 2023 / 2023년 행사 페이지 React로 개발</p>
+    <p><strong>한성대학교</strong> 의생활학부 졸업 · <strong>SQLD</strong></p>
+  </section>
+
+</div>
+</body>
+</html>
