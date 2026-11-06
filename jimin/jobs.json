@@ -321,6 +321,66 @@
       "url": "https://velopers.kr/jobs/29773"
     },
     {
+      "id": "coupangpay-staff-ios-rocketpay-8146512",
+      "company": "쿠팡페이",
+      "title": "Staff iOS Engineer (Rocket Pay)",
+      "status": "open",
+      "statusText": "채용 시 마감",
+      "deadline": null,
+      "firstSeen": "2026-11-06",
+      "meta": [
+        [
+          "경력",
+          "6년 이상"
+        ],
+        [
+          "근무지",
+          "서울"
+        ],
+        [
+          "도메인",
+          "결제 · 핀테크 (로켓페이)"
+        ]
+      ],
+      "fits": [
+        [
+          "우대: Flutter 크로스플랫폼",
+          "티몬파트너센터 Flutter 판매자 앱을 8개월간 유지보수하고 iOS·Android 양대 스토어 릴리즈를 전담한 경험이 우대 조건과 바로 맞아요"
+        ],
+        [
+          "우대: 인증 · 보안",
+          "Face ID·Keychain Access Group·AES256 토큰 암호화로 자사 앱 2개 로그인을 연동한 경험"
+        ],
+        [
+          "대규모 Consumer App · B2C",
+          "Qoo10 통합 앱을 6년간 운영하며 Swift 5% → 98% 전환을 운영 중단 없이 마친 경험"
+        ],
+        [
+          "UIKit · SwiftUI · Combine · async/await",
+          "신규 쇼핑 앱 3종에서 async/await·Combine 상태 관리와 SwiftUI 화면을 구성한 경험"
+        ]
+      ],
+      "gap": [
+        "보완할 점",
+        "같은 회사 Core Payment 공고처럼 테크 리드(Staff) 포지션이라 아키텍처 결정·멘토링 경험을 물어봐요. 두 공고 중 Flutter 우대가 있는 이쪽이 이력서와 조금 더 맞아요."
+      ],
+      "stack": {
+        "hit": [
+          "Swift",
+          "UIKit",
+          "SwiftUI",
+          "Combine",
+          "Swift Concurrency",
+          "Flutter"
+        ],
+        "other": [
+          "Payment Processing",
+          "Instruments"
+        ]
+      },
+      "url": "https://velopers.kr/jobs/82"
+    },
+    {
       "id": "socar-elecle-mobile-242346",
       "company": "나인투원 (쏘카일레클)",
       "title": "모바일 앱 개발자 (iOS / Android Native)",
@@ -457,5 +517,5 @@
       "url": "https://www.jobkorea.co.kr/Recruit/GI_Read/50302626"
     }
   ],
-  "advice": "커머스 화면 개발과 UIKit→SwiftUI 전환, Tuist 모듈화가 그대로 겹치는 **컬리**와 **당근**을 먼저 넣는 걸 추천해요. 마감이 정해진 **핀다(11/28)**도 이번 달 안에 함께 넣고, 경력 휴식 기간에 만든 Maplay 개인 프로젝트를 면접에서 구체적으로 얘기할 수 있게 준비해 두세요."
+  "advice": "커머스 화면 개발과 UIKit→SwiftUI 전환, Tuist 모듈화가 그대로 겹치는 **컬리**와 **당근**을 먼저 넣는 걸 추천해요. 마감이 정해진 **핀다(11/28)**도 이번 달 안에 넣고, 새로 찾은 **쿠팡페이 Rocket Pay**는 Flutter 릴리즈 경험이 우대 조건과 맞으니 Staff 면접 대비를 해 두고 도전해 보세요."
 }
