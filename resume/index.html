@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>고윤지 · Backend Developer</title>
-  <meta name="description" content="장애에도 버티는 구조를 만들고, 그 이유를 기록하는 9년 차 백엔드 개발자 고윤지의 이력서." />
+  <meta name="description" content="장애는 구조로 막고, 결정은 근거로 남기는 백엔드 개발자 고윤지의 이력서." />
   <link rel="canonical" href="https://haebom.app/resume/" />
   <meta property="og:type" content="profile" />
   <meta property="og:title" content="고윤지 · Backend Developer" />
-  <meta property="og:description" content="장애에도 버티는 구조를 만들고, 그 이유를 기록하는 9년 차 백엔드 개발자." />
+  <meta property="og:description" content="장애는 구조로 막고, 결정은 근거로 남기는 백엔드 개발자." />
   <meta property="og:url" content="https://haebom.app/resume/" />
   <meta property="og:locale" content="ko_KR" />
   <meta property="og:image" content="https://haebom.app/resume/og.jpg" />
@@ -16,7 +16,7 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="고윤지 · Backend Developer" />
-  <meta name="twitter:description" content="장애에도 버티는 구조를 만들고, 그 이유를 기록하는 9년 차 백엔드 개발자." />
+  <meta name="twitter:description" content="장애는 구조로 막고, 결정은 근거로 남기는 백엔드 개발자." />
   <meta name="twitter:image" content="https://haebom.app/resume/og.jpg" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%236d5dfc'/><stop offset='1' stop-color='%2310b981'/></linearGradient></defs><rect width='100' height='100' rx='24' fill='url(%23g)'/><text x='50' y='66' font-size='46' font-family='sans-serif' font-weight='800' text-anchor='middle' fill='white'>YJ</text></svg>" type="image/svg+xml" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
@@ -144,10 +144,10 @@
     }
     .hello .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 0 rgba(16, 185, 129, .6); animation: pulse 2s infinite; }
     @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
-    h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1.12; letter-spacing: -.035em; font-weight: 800; margin: 0 0 24px; }
+    h1 { font-size: clamp(30px, 4.6vw, 50px); line-height: 1.2; letter-spacing: -.035em; font-weight: 800; margin: 0 0 24px; }
     h1 .grad { background: var(--grad); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
     @keyframes shine { to { background-position: 200% center; } }
-    .lead { font-size: clamp(17px, 2vw, 19px); color: var(--sub); max-width: 600px; margin: 0 0 32px; }
+    .lead { font-size: clamp(16px, 1.7vw, 17.5px); color: var(--sub); max-width: 600px; margin: 0 0 32px; }
     .lead strong { color: var(--text); font-weight: 600; }
     .cta { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
@@ -189,7 +189,7 @@
     }
 
     /* ---------- Stats ---------- */
-    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 64px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 64px; }
     .stat {
       background: color-mix(in srgb, var(--card) 85%, transparent); border: 1px solid var(--border);
       border-radius: 18px; padding: 22px 22px 20px; box-shadow: var(--shadow);
@@ -369,19 +369,16 @@
     .card.emerald { --c: var(--emerald); }
 
     /* ---------- Skills ---------- */
-    .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .skill {
-      background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px 22px 18px;
-      box-shadow: var(--shadow);
+    .skills {
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow);
+      padding: 8px 28px;
     }
-    .skill h4 { margin: 0 0 12px; font-size: 15px; display: flex; align-items: center; gap: 8px; }
-    .skill h4::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
-    .skill .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-    .skill .chips span {
-      font-size: 13.5px; font-weight: 500; padding: 5px 11px; border-radius: 8px;
-      background: var(--bg-soft); color: var(--sub); transition: background .2s, color .2s;
-    }
-    .skill .chips span.main { background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); font-weight: 650; }
+    .skill { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: baseline; padding: 14px 0; }
+    .skill + .skill { border-top: 1px solid var(--border); }
+    .skill h4 { margin: 0; font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .skill h4::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+    .skill p { margin: 0; font-size: 15.5px; color: var(--sub); }
+    .skill p b { color: var(--text); font-weight: 650; }
 
     /* ---------- Extra ---------- */
     .extra { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
@@ -422,10 +419,9 @@
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
       .avatar { display: none; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .f-body { grid-template-columns: 1fr; }
       .f-col + .f-col { border-left: 0; border-top: 1px solid var(--border); }
-      .skills { grid-template-columns: repeat(2, 1fr); }
       .extra { grid-template-columns: 1fr; }
       .strengths { grid-template-columns: 1fr; }
     }
@@ -446,7 +442,10 @@
       .arrow { flex-basis: 24px; transform: rotate(90deg); }
       .f-col { padding: 24px 20px; }
       .stack { padding: 0 20px 24px; }
-      .grid, .skills { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .skills { padding: 4px 18px; }
+      .skill { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+      .skill p { font-size: 15px; }
       .card, .box { padding: 22px; }
       .contact { padding: 48px 22px; border-radius: 22px; }
       .ai-banner { grid-template-columns: auto 1fr; padding: 18px; gap: 14px; }
@@ -464,7 +463,7 @@
       nav, .blobs, .theme-toggle, .avatar, .cta, .f-more, .ai-banner .ai-go, .contact { display: none !important; }
       .js .reveal { opacity: 1; transform: none; }
       .hero { padding: 8px 0 16px; }
-      h1 { font-size: 34px; }
+      h1 { font-size: 30px; }
       .stats { margin-top: 20px; }
       section.block { padding: 24px 0; }
       .sec-head { margin-bottom: 18px; }
@@ -472,7 +471,7 @@
       .card .foot .go { display: none; }
       /* A4 폭(약 794px)에서 모바일 레이아웃으로 접히지 않도록 데스크톱 그리드 유지 */
       .container { padding: 0 2px; }
-      .stats { grid-template-columns: repeat(4, 1fr) !important; gap: 10px; }
+      .stats { grid-template-columns: repeat(3, 1fr) !important; gap: 10px; }
       .stat { padding: 14px; }
       .stat .num { font-size: 26px; }
       .strengths { grid-template-columns: repeat(3, 1fr) !important; gap: 12px; }
@@ -487,7 +486,6 @@
       .node { min-width: 100px; padding: 8px 10px; font-size: 12px; }
       .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px; }
       .card { padding: 18px; }
-      .skills { grid-template-columns: repeat(3, 1fr) !important; gap: 10px; }
       .extra { grid-template-columns: 2fr 1fr !important; }
       .sec-head { break-inside: avoid; break-after: avoid; }
       .kicker, h2, h3 { break-after: avoid; }
@@ -502,9 +500,9 @@
     <div class="container nav-inner">
       <a class="logo" href="#top">yunji<span>.log</span></a>
       <div class="nav-links">
+        <a href="#ai">AI</a>
         <a href="#skills">Skills</a>
         <a href="#strengths">Strengths</a>
-        <a href="#ai">AI</a>
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <a href="#contact" class="keep">Contact</a>
@@ -523,7 +521,7 @@
       <div class="hero-grid">
         <div>
           <div class="hello"><span class="pulse"></span>Backend Developer · 한화생명</div>
-          <h1>버티는 구조를 만들고<br><span class="grad">이유를 기록하는</span><br>개발자 고윤지입니다</h1>
+          <h1>장애는 구조로 막고<br><span class="grad">결정은 근거로 남기는</span><br>백엔드 개발자 고윤지입니다</h1>
           <p class="lead">
             통신, OTT, 모빌리티, 보험까지 여러 도메인을 거치며 제가 가장 잘하는 일을 찾았습니다.
             외부 시스템이 느려지거나 멈춰도 <strong>서비스가 버티는 구조</strong>를 만드는 일,
@@ -556,15 +554,23 @@
           <div class="chip c3">📝 기록하는 습관</div>
         </div>
       </div>
-
-      <div class="stats">
-        <div class="stat reveal"><div class="num">9<small>년 차</small></div><div class="label">2017년부터 백엔드 한 길</div></div>
-        <div class="stat reveal"><div class="num">4→1<small>회</small></div><div class="label">같은 고객 중복 산출 제거</div></div>
-        <div class="stat reveal"><div class="num">500<small>만</small></div><div class="label">가입자 멤버십 서비스 운영</div></div>
-        <div class="stat reveal"><div class="num">3<small>채널</small></div><div class="label">웹·앱·FP 백엔드 단독 담당</div></div>
-      </div>
     </div>
   </header>
+
+  <!-- AI -->
+  <section class="block" id="ai" style="padding-top: 8px">
+    <div class="container">
+      <a class="ai-banner reveal" href="https://haebom.app" target="_blank" rel="noopener">
+        <span class="ai-icon" aria-hidden="true">✨</span>
+        <span class="ai-text">
+          <span class="kicker">Built with AI</span>
+          <strong>Claude Code와 함께 만든 무료 도구 사이트, 해봄</strong>
+          <span class="ai-sub">PDF · 영상 압축 · 이미지 변환 등 6개 도구를 직접 기획하고 배포해 운영하고 있습니다.</span>
+        </span>
+        <span class="ai-go">haebom.app →</span>
+      </a>
+    </div>
+  </section>
 
   <!-- Skills -->
   <section class="block alt" id="skills">
@@ -572,32 +578,32 @@
       <div class="sec-head reveal">
         <p class="kicker">Skills</p>
         <h2>다루는 도구</h2>
-        <p>색이 칠해진 것이 최근 실무에서 주로 쓰는 기술입니다.</p>
+        <p>굵은 글씨가 최근 실무에서 주로 쓰는 기술입니다.</p>
       </div>
-      <div class="skills">
-        <div class="skill reveal" style="--c: var(--violet)">
+      <div class="skills reveal">
+        <div class="skill" style="--c: var(--violet)">
           <h4>Language</h4>
-          <div class="chips"><span class="main">Java</span><span class="main">Kotlin</span><span>TypeScript</span></div>
+          <p><b>Java</b> · <b>Kotlin</b> · TypeScript</p>
         </div>
-        <div class="skill reveal" style="--c: var(--blue)">
+        <div class="skill" style="--c: var(--blue)">
           <h4>Backend</h4>
-          <div class="chips"><span class="main">Spring Boot</span><span class="main">Spring WebFlux</span><span class="main">Spring Data JPA</span><span class="main">OpenFeign</span><span>Spring MVC</span><span>NestJS</span></div>
+          <p><b>Spring Boot</b> · <b>WebFlux</b> · <b>JPA</b> · <b>OpenFeign</b> · NestJS</p>
         </div>
-        <div class="skill reveal" style="--c: var(--emerald)">
+        <div class="skill" style="--c: var(--emerald)">
           <h4>Data · Messaging</h4>
-          <div class="chips"><span class="main">MySQL</span><span class="main">Redis</span><span>Oracle</span><span>MongoDB</span><span>Cassandra</span><span>Elasticsearch</span><span>Kafka</span></div>
+          <p><b>MySQL</b> · <b>Redis</b> · Oracle · MongoDB · Kafka</p>
         </div>
-        <div class="skill reveal" style="--c: var(--amber)">
+        <div class="skill" style="--c: var(--amber)">
           <h4>Infra · Ops</h4>
-          <div class="chips"><span class="main">Docker</span><span class="main">AWS</span><span class="main">GitLab CI</span><span class="main">ArgoCD</span><span>Kubernetes</span><span>Jennifer APM</span><span>Kibana</span><span>Linux</span></div>
+          <p><b>AWS</b> · <b>Docker</b> · <b>GitLab CI</b> · <b>ArgoCD</b> · Kubernetes · Jennifer APM</p>
         </div>
-        <div class="skill reveal" style="--c: var(--rose)">
-          <h4>WAS · Web Server</h4>
-          <div class="chips"><span>Tomcat</span><span>JEUS</span><span>Apache</span><span>WebtoB</span></div>
+        <div class="skill" style="--c: var(--rose)">
+          <h4>WAS · Web</h4>
+          <p>Tomcat · JEUS · Apache · WebtoB</p>
         </div>
-        <div class="skill reveal" style="--c: #06b6d4">
+        <div class="skill" style="--c: #06b6d4">
           <h4>Frontend · App</h4>
-          <div class="chips"><span>React</span><span>React Native</span><span>Next.js</span><span>Thymeleaf</span><span>JSP</span></div>
+          <p>React · React Native</p>
         </div>
       </div>
     </div>
@@ -643,21 +649,6 @@
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- AI -->
-  <section class="block" id="ai" style="padding-top: 8px">
-    <div class="container">
-      <a class="ai-banner reveal" href="https://haebom.app" target="_blank" rel="noopener">
-        <span class="ai-icon" aria-hidden="true">✨</span>
-        <span class="ai-text">
-          <span class="kicker">Built with AI</span>
-          <strong>Claude Code와 함께 만든 무료 도구 사이트, 해봄</strong>
-          <span class="ai-sub">PDF · 영상 압축 · 이미지 변환 등 6개 도구를 직접 기획하고 배포해 운영하고 있습니다.</span>
-        </span>
-        <span class="ai-go">haebom.app →</span>
-      </a>
     </div>
   </section>
 
