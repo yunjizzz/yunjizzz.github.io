@@ -45,7 +45,9 @@ def refresh_access_token():
     key = os.environ.get("KAKAO_REST_API_KEY")
     refresh = os.environ.get("KAKAO_REFRESH_TOKEN")
     if not key or not refresh:
-        sys.exit("[kakao] KAKAO_REST_API_KEY / KAKAO_REFRESH_TOKEN 환경변수가 없습니다.")
+        # 카카오 설정 전에도 루틴이 실패로 끝나지 않도록 건너뛴다.
+        print("[kakao] KAKAO_REST_API_KEY / KAKAO_REFRESH_TOKEN 환경변수가 없어 알림을 건너뜁니다.")
+        sys.exit(0)
     data = {"grant_type": "refresh_token", "client_id": key, "refresh_token": refresh}
     secret = os.environ.get("KAKAO_CLIENT_SECRET")
     if secret:
