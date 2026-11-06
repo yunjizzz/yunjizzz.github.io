@@ -462,8 +462,10 @@
         <div>APNs 푸시 · 딥링크 / Universal Link · WKWebView ↔ 네이티브 브리지</div>
         <div class="k">빌드 · 배포</div>
         <div>Xcode · SPM · CocoaPods · App Store Connect · Firebase Crashlytics</div>
+        <div class="k">크로스플랫폼</div>
+        <div>Flutter<span class="lv">운영·릴리즈 경험</span> · Dart · Google Play Console</div>
         <div class="k">그 외</div>
-        <div>Flutter · Dart · Google Play Console · TypeScript · NestJS · Spring · MariaDB</div>
+        <div>TypeScript · NestJS · Spring · MariaDB</div>
       </div>
     </div>
 
@@ -522,8 +524,8 @@
             <li>앱 전역에서 쓰이는 <code>MobileAPICommon</code>, <code>WebViewOptionManager</code>, <code>PriceUtil</code>, <code>BarManager</code>를 정리해 Swift로 이전</li>
             <li>ObjC↔Swift 혼용 구간의 기존 호출 관계를 유지하고, 전환마다 회귀 QA로 기존 기능 동작을 확인</li>
           </ul></dd>
-          <dt>판단</dt>
-          <dd>“언어만 바꾸는 작업”이 아니라 “영향 범위가 작은 것부터 옮기는 작업”으로 정의했습니다. 화면 → 공통 모듈 순으로 진행해 각 단계가 독립적으로 배포 가능하도록 했습니다.</dd>
+          <dt>성과</dt>
+          <dd>운영 중인 서비스의 기능을 유지하면서 코드 구조와 유지보수성을 개선했습니다. 화면 → 공통 모듈 순으로 단계적으로 전환해, 각 단계를 독립적으로 배포할 수 있었습니다.</dd>
         </dl>
         <div class="tags"><span>Swift</span><span>Objective-C</span><span>UIKit</span><span>SnapKit</span><span>Auto Layout</span><span>REST API</span></div>
       </div>
@@ -545,8 +547,8 @@
             <li>Tuist 모듈화와 Clean Architecture 적용, async/await·Combine 기반 비동기·상태 관리 구조 구성</li>
             <li>기존 서비스 핵심 기능이 신규 앱에서 동일하게 동작하는지 전환 QA 진행</li>
           </ul></dd>
-          <dt>판단</dt>
-          <dd>앱 전체를 한 번에 교체하지 않고 런처와 WebView를 분리해 전환했습니다. 위험한 변경을 작게 나눠 호환성을 확인하면서 새 구조를 도입했습니다.</dd>
+          <dt>성과</dt>
+          <dd>신규 쇼핑 앱 3종을 출시했습니다. 런처와 WebView를 분리해 전환하고 전환 QA를 맡아, 기존 서비스 기능과의 호환성을 확보했습니다.</dd>
         </dl>
         <div class="tags"><span>SwiftUI</span><span>Tuist</span><span>Combine</span><span>async/await</span><span>Clean Architecture</span><span>WKWebView</span></div>
       </div>
@@ -567,6 +569,8 @@
             <li><b>Keychain Access Group</b>으로 앱 간 저장소를 공유하고, 로그인 토큰은 AES256으로 한 번 더 암호화해 저장</li>
             <li>인증 실패·사용자 취소·생체인증 미등록·기기 미지원 등 예외 흐름을 시나리오별로 검증</li>
           </ul></dd>
+          <dt>성과</dt>
+          <dd>자사 앱 2개에 생체인증 로그인을 적용하고, 한 번 로그인하면 다른 자사 앱에서도 토큰을 재사용하는 구조를 마련해 반복 로그인을 줄였습니다.</dd>
         </dl>
         <div class="tags"><span>LocalAuthentication</span><span>Keychain</span><span>AES256</span><span>Swift</span><span>Objective-C</span></div>
       </div>
@@ -584,7 +588,7 @@
             <li>QA 후 릴리즈 브랜치 생성 → 빌드 검증 → App Store Connect·Google Play Console 배포</li>
             <li>Xcode 업데이트로 깨진 iOS 빌드와 Flutter·Firebase SDK 호환성 문제 해결</li>
           </ul></dd>
-        </dl>
+</dl>
         <div class="tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>App Store Connect</span><span>Google Play Console</span></div>
       </div>
     </div>
