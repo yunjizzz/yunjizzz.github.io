@@ -80,6 +80,8 @@
     .advice { margin-top: 12px; padding: 16px 20px; border-radius: 16px; background: var(--accent-soft); font-size: 14.5px; }
     .advice b { color: var(--accent); }
 
+    .new { font-size: 11px; font-weight: 800; color: #fff; background: var(--accent); padding: 1px 7px; border-radius: 99px; margin-left: 6px; vertical-align: 2px; }
+    .empty { color: var(--sub); background: var(--card); border-radius: 16px; padding: 20px; font-size: 14px; }
     footer { margin-top: 28px; font-size: 12.5px; color: var(--faint); text-align: center; }
 
     @media (max-width: 520px) {
@@ -92,7 +94,7 @@
 <div class="wrap">
 
   <header>
-    <span class="badge">2026.11.06 기준</span>
+    <span class="badge" id="updated">불러오는 중…</span>
     <h1>김지민 맞춤 iOS 공고</h1>
     <p class="intro">이력서 기준으로 지금 지원할 수 있는 <b>서울·경기</b> iOS 경력 공고를 골랐습니다. 공고마다 <b>이력서와 맞는 점</b>을 함께 표시했어요.</p>
     <div class="profile">
@@ -107,115 +109,62 @@
 
   <h2>추천 공고</h2>
   <p class="group-desc">잘 맞는 순서대로 정렬했어요. 초록색 기술은 이력서에 있는 기술입니다.</p>
-
-  <!-- 1. 당근 -->
-  <article class="job top">
-    <div class="job-head">
-      <div>
-        <div class="rank">추천 1</div>
-        <h3>당근 <small>Software Engineer, iOS · 정규직</small></h3>
-      </div>
-      <span class="status open">채용 시 마감</span>
-    </div>
-    <div class="meta"><span><b>경력</b>3년 이상</span><span><b>근무지</b>서울 서초</span><span><b>도메인</b>지역 커머스 · 중고거래</span></div>
-    <p class="fit-title">이력서와 맞는 점</p>
-    <ul class="fit">
-      <li><span><b>Tuist + 모듈형 아키텍처</b> <em>— 신규 쇼핑 앱 3종을 Tuist 모듈화로 만든 경험과 그대로 맞아요</em></span></li>
-      <li><span><b>SwiftUI</b> <em>— Objective-C 앱 런처를 SwiftUI로 다시 만든 경험</em></span></li>
-      <li><span><b>중고거래(커머스) 팀</b> <em>— Qoo10 등 커머스 앱을 6년 동안 운영한 도메인 경험</em></span></li>
-      <li><span><b>요구 경력 3년 이상</b> <em>— 6년이라 여유 있게 넘어요</em></span></li>
-    </ul>
-    <div class="gap"><b>보완할 점</b> · RxSwift, FlexLayout을 써요. 이력서에는 Combine 위주라 Rx 경험이 있으면 덧붙이면 좋아요.</div>
-    <div class="stack">
-      <span class="hit">Tuist</span><span class="hit">SwiftUI</span><span class="hit">Modular Architecture</span><span class="hit">Firebase</span>
-      <span>RxSwift</span><span>FlexLayout</span><span>KarrotListKit</span><span>GitHub Actions</span><span>fastlane</span>
-    </div>
-    <a class="go" href="https://careers.daangn.com/jobs/role/5282170003/" target="_blank" rel="noopener">공고 보기 ↗</a>
-  </article>
-
-  <!-- 2. 핀다 -->
-  <article class="job top">
-    <div class="job-head">
-      <div>
-        <div class="rank">추천 2</div>
-        <h3>핀다 <small>iOS 개발자</small></h3>
-      </div>
-      <span class="status due">11/28 마감</span>
-    </div>
-    <div class="meta"><span><b>경력</b>5년 이상</span><span><b>근무지</b>서울 강남</span><span><b>도메인</b>핀테크 (대출 비교)</span><span><b>기타</b>성과급</span></div>
-    <p class="fit-title">이력서와 맞는 점</p>
-    <ul class="fit">
-      <li><span><b>우대: 멀티 모듈 아키텍처 · 빌드 최적화</b> <em>— Tuist 모듈화로 서비스 3개가 공통 기능을 나눠 쓰게 한 경험</em></span></li>
-      <li><span><b>SnapKit · UIKit</b> <em>— XIB 화면을 SnapKit 코드 UI로 바꾼 전환 작업</em></span></li>
-      <li><span><b>금융 앱 보안</b> <em>— Face ID 로그인, Keychain, AES256 토큰 암호화 경험이 핀테크에 강점이 돼요</em></span></li>
-      <li><span><b>새 도메인</b> <em>— 이력서에 쓴 "더 다양한 도메인에서 새로운 문제를 풀고 싶다"는 방향과 맞아요</em></span></li>
-    </ul>
-    <div class="gap"><b>보완할 점</b> · RxSwift와 ReactorKit 중심 스택이에요. Swift Concurrency로도 지원할 수 있지만 Rx 경험을 짚어 두면 좋아요.</div>
-    <div class="stack">
-      <span class="hit">Swift</span><span class="hit">UIKit</span><span class="hit">SwiftUI</span><span class="hit">SnapKit</span><span class="hit">Swift Concurrency</span><span class="hit">Firebase</span>
-      <span>RxSwift</span><span>ReactorKit</span><span>Alamofire</span><span>Moya</span>
-    </div>
-    <a class="go" href="https://jumpit.saramin.co.kr/position/55441201" target="_blank" rel="noopener">공고 보기 ↗</a>
-  </article>
-
-  <!-- 3. 토스 -->
-  <article class="job">
-    <div class="job-head">
-      <div>
-        <div class="rank">추천 3</div>
-        <h3>토스 <small>iOS Developer (신규 공고)</small></h3>
-      </div>
-      <span class="status check">열려 있는지 확인 필요</span>
-    </div>
-    <div class="meta"><span><b>게시</b>2026.11 초</span><span><b>근무지</b>서울</span><span><b>도메인</b>핀테크</span></div>
-    <p class="fit-title">이력서와 맞는 점</p>
-    <ul class="fit">
-      <li><span><b>Combine · SwiftUI</b> <em>— async/await와 Combine으로 비동기·상태 관리 구조를 만든 경험</em></span></li>
-      <li><span><b>운영 중인 대형 앱</b> <em>— 운영을 멈추지 않고 Swift로 전환한 경험은 사용자가 많은 앱 팀에서 특히 높게 봐요</em></span></li>
-    </ul>
-    <div class="gap"><b>참고</b> · 10/30에 마감된 토스 iOS 공고(Tuist·멀티모듈)와는 다른 공고예요. 토스 채용 페이지에서 아직 열려 있는지 확인하세요.</div>
-    <div class="stack">
-      <span class="hit">Swift</span><span class="hit">Combine</span><span class="hit">SwiftUI</span><span>fastlane</span>
-    </div>
-    <a class="go" href="https://freehire.me/jobs/ios-developer-toss-2yza24od" target="_blank" rel="noopener">공고 보기 ↗</a>
-  </article>
-
-  <!-- 4. NHN ACE -->
-  <article class="job">
-    <div class="job-head">
-      <div>
-        <div class="rank">추천 4</div>
-        <h3>NHN ACE <small>모빌리티/광고 서비스 모바일 앱 개발자 (iOS)</small></h3>
-      </div>
-      <span class="status check">원문 확인 필요</span>
-    </div>
-    <div class="meta"><span><b>근무지</b>경기 성남</span><span><b>도메인</b>모빌리티 · 광고</span></div>
-    <p class="fit-title">이력서와 맞는 점</p>
-    <ul class="fit">
-      <li><span><b>새 도메인</b> <em>— 커머스 밖의 다른 도메인을 경험하고 싶다는 방향과 맞아요</em></span></li>
-      <li><span><b>NHN 계열</b> <em>— 규모가 있는 회사라 안정성이 있어요</em></span></li>
-    </ul>
-    <div class="gap"><b>참고</b> · 요구 연차와 기술 스택은 공고 원문에서 확인하세요.</div>
-    <a class="go" href="https://www.jobkorea.co.kr/Recruit/GI_Read/50046714" target="_blank" rel="noopener">공고 보기 ↗</a>
-  </article>
+  <div id="jobs"></div>
 
   <h2>참고 · 제외한 공고</h2>
-  <div class="notes">
-    <ul>
-      <li><b>토스 iOS Developer (Tuist·멀티모듈)</b> — 스택은 가장 잘 맞았는데 10/30에 마감됐어요. 다시 열리면 1순위로 넣을 만해요.</li>
-      <li><b>쿠팡이츠 Manager, iOS Engineer</b> — 10월 말에 올라온 공고지만 팀장(매니저) 포지션이에요. <a href="https://velopers.kr/jobs/26919" target="_blank" rel="noopener">공고</a></li>
-      <li><b>당근 산업기능요원 캠페인 iOS</b> — 11/13 마감이고 병역특례 대상자만 지원할 수 있어요.</li>
-      <li><b>26도라인 iOS 경력직</b> — 요구 경력이 1년 이상이라 연차에 비해 낮은 자리예요. 12/2 마감.</li>
-    </ul>
-  </div>
+  <div class="notes"><ul id="excluded"></ul></div>
 
-  <div class="advice">
-    <b>추천</b> — 커머스 도메인과 Tuist·모듈화 스택이 겹치는 <b>당근</b>을 먼저 넣고, 마감이 정해진 <b>핀다(11/28)</b>를 함께 넣는 걸 추천해요.
-    경력 휴식 기간은 이력서에 Maplay 개인 프로젝트로 설명돼 있으니, 면접에서 그 기간에 무엇을 만들고 배웠는지 구체적으로 얘기할 수 있게 준비해 두면 좋아요.
-  </div>
+  <div class="advice" id="advice"></div>
 
-  <footer>공고 정보는 2026-11-06에 확인한 내용이에요. 일부는 집계 사이트 기준이라 지원 전에 공고 원문에서 마감 여부를 다시 확인하세요.</footer>
+  <footer>공고 정보는 매일 오후 7시에 자동으로 갱신돼요. 일부는 집계 사이트 기준이라 지원 전에 공고 원문에서 마감 여부를 다시 확인하세요.</footer>
 
 </div>
+<script>
+(function () {
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var md = function (t) { return esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'); };
+  var safeUrl = function (u) { return /^https?:\/\//.test(u || '') ? esc(u) : '#'; };
+  var STATUS = { open: 'open', due: 'due', check: 'check' };
+
+  function card(j, i, updatedAt) {
+    var isNew = j.firstSeen && j.firstSeen === updatedAt;
+    var h = '<article class="job' + (i < 2 ? ' top' : '') + '">';
+    h += '<div class="job-head"><div><div class="rank">추천 ' + (i + 1) + (isNew ? '<span class="new">NEW</span>' : '') + '</div>';
+    h += '<h3>' + esc(j.company) + ' <small>' + esc(j.title) + '</small></h3></div>';
+    h += '<span class="status ' + (STATUS[j.status] || 'check') + '">' + esc(j.statusText) + '</span></div>';
+    if (j.meta && j.meta.length) h += '<div class="meta">' + j.meta.map(function (m) { return '<span><b>' + esc(m[0]) + '</b>' + esc(m[1]) + '</span>'; }).join('') + '</div>';
+    if (j.fits && j.fits.length) {
+      h += '<p class="fit-title">이력서와 맞는 점</p><ul class="fit">';
+      h += j.fits.map(function (f) { return '<li><span><b>' + esc(f[0]) + '</b> <em>— ' + esc(f[1]) + '</em></span></li>'; }).join('');
+      h += '</ul>';
+    }
+    if (j.gap) h += '<div class="gap"><b>' + esc(j.gap[0]) + '</b> · ' + md(j.gap[1]) + '</div>';
+    var st = j.stack || {};
+    var chips = (st.hit || []).map(function (s) { return '<span class="hit">' + esc(s) + '</span>'; }).concat((st.other || []).map(function (s) { return '<span>' + esc(s) + '</span>'; }));
+    if (chips.length) h += '<div class="stack">' + chips.join('') + '</div>';
+    h += '<a class="go" href="' + safeUrl(j.url) + '" target="_blank" rel="noopener">공고 보기 ↗</a></article>';
+    return h;
+  }
+
+  fetch('jobs.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (d) {
+      document.getElementById('updated').textContent = (d.updatedAt || '').replace(/-/g, '.') + ' 기준';
+      var jobs = d.jobs || [];
+      document.getElementById('jobs').innerHTML = jobs.length
+        ? jobs.map(function (j, i) { return card(j, i, d.updatedAt); }).join('')
+        : '<p class="empty">지금은 조건에 맞는 공고가 없어요.</p>';
+      document.getElementById('excluded').innerHTML = (d.excluded || []).map(function (x) {
+        return '<li><b>' + esc(x.title) + '</b> — ' + md(x.reason) + (x.url ? ' <a href="' + safeUrl(x.url) + '" target="_blank" rel="noopener">공고</a>' : '') + '</li>';
+      }).join('');
+      var adv = document.getElementById('advice');
+      if (d.advice) adv.innerHTML = '<b>추천</b> — ' + md(d.advice); else adv.remove();
+    })
+    .catch(function () {
+      document.getElementById('updated').textContent = '불러오기 실패';
+      document.getElementById('jobs').innerHTML = '<p class="empty">공고 데이터를 불러오지 못했어요. 잠시 후 다시 열어 주세요.</p>';
+    });
+})();
+</script>
 </body>
 </html>

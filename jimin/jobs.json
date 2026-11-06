@@ -1,0 +1,85 @@
+{
+  "updatedAt": "2026-11-06",
+  "jobs": [
+    {
+      "id": "daangn-ios-5282170003",
+      "company": "당근",
+      "title": "Software Engineer, iOS · 정규직",
+      "status": "open",
+      "statusText": "채용 시 마감",
+      "deadline": null,
+      "firstSeen": "2026-11-06",
+      "meta": [["경력", "3년 이상"], ["근무지", "서울 서초"], ["도메인", "지역 커머스 · 중고거래"]],
+      "fits": [
+        ["Tuist + 모듈형 아키텍처", "신규 쇼핑 앱 3종을 Tuist 모듈화로 만든 경험과 그대로 맞아요"],
+        ["SwiftUI", "Objective-C 앱 런처를 SwiftUI로 다시 만든 경험"],
+        ["중고거래(커머스) 팀", "Qoo10 등 커머스 앱을 6년 동안 운영한 도메인 경험"],
+        ["요구 경력 3년 이상", "6년이라 여유 있게 넘어요"]
+      ],
+      "gap": ["보완할 점", "RxSwift, FlexLayout을 써요. 이력서에는 Combine 위주라 Rx 경험이 있으면 덧붙이면 좋아요."],
+      "stack": { "hit": ["Tuist", "SwiftUI", "Modular Architecture", "Firebase"], "other": ["RxSwift", "FlexLayout", "KarrotListKit", "GitHub Actions", "fastlane"] },
+      "url": "https://careers.daangn.com/jobs/role/5282170003/"
+    },
+    {
+      "id": "finda-ios-55441201",
+      "company": "핀다",
+      "title": "iOS 개발자",
+      "status": "due",
+      "statusText": "11/28 마감",
+      "deadline": "2026-11-28",
+      "firstSeen": "2026-11-06",
+      "meta": [["경력", "5년 이상"], ["근무지", "서울 강남"], ["도메인", "핀테크 (대출 비교)"], ["기타", "성과급"]],
+      "fits": [
+        ["우대: 멀티 모듈 아키텍처 · 빌드 최적화", "Tuist 모듈화로 서비스 3개가 공통 기능을 나눠 쓰게 한 경험"],
+        ["SnapKit · UIKit", "XIB 화면을 SnapKit 코드 UI로 바꾼 전환 작업"],
+        ["금융 앱 보안", "Face ID 로그인, Keychain, AES256 토큰 암호화 경험이 핀테크에 강점이 돼요"],
+        ["새 도메인", "이력서에 쓴 \"더 다양한 도메인에서 새로운 문제를 풀고 싶다\"는 방향과 맞아요"]
+      ],
+      "gap": ["보완할 점", "RxSwift와 ReactorKit 중심 스택이에요. Swift Concurrency로도 지원할 수 있지만 Rx 경험을 짚어 두면 좋아요."],
+      "stack": { "hit": ["Swift", "UIKit", "SwiftUI", "SnapKit", "Swift Concurrency", "Firebase"], "other": ["RxSwift", "ReactorKit", "Alamofire", "Moya"] },
+      "url": "https://jumpit.saramin.co.kr/position/55441201"
+    },
+    {
+      "id": "toss-ios-2yza24od",
+      "company": "토스",
+      "title": "iOS Developer (신규 공고)",
+      "status": "check",
+      "statusText": "열려 있는지 확인 필요",
+      "deadline": null,
+      "firstSeen": "2026-11-06",
+      "meta": [["게시", "2026.11 초"], ["근무지", "서울"], ["도메인", "핀테크"]],
+      "fits": [
+        ["Combine · SwiftUI", "async/await와 Combine으로 비동기·상태 관리 구조를 만든 경험"],
+        ["운영 중인 대형 앱", "운영을 멈추지 않고 Swift로 전환한 경험은 사용자가 많은 앱 팀에서 특히 높게 봐요"]
+      ],
+      "gap": ["참고", "10/30에 마감된 토스 iOS 공고(Tuist·멀티모듈)와는 다른 공고예요. 토스 채용 페이지에서 아직 열려 있는지 확인하세요."],
+      "stack": { "hit": ["Swift", "Combine", "SwiftUI"], "other": ["fastlane"] },
+      "url": "https://freehire.me/jobs/ios-developer-toss-2yza24od"
+    },
+    {
+      "id": "nhnace-ios-50046714",
+      "company": "NHN ACE",
+      "title": "모빌리티/광고 서비스 모바일 앱 개발자 (iOS)",
+      "status": "check",
+      "statusText": "원문 확인 필요",
+      "deadline": null,
+      "firstSeen": "2026-11-06",
+      "meta": [["근무지", "경기 성남"], ["도메인", "모빌리티 · 광고"]],
+      "fits": [
+        ["새 도메인", "커머스 밖의 다른 도메인을 경험하고 싶다는 방향과 맞아요"],
+        ["NHN 계열", "규모가 있는 회사라 안정성이 있어요"]
+      ],
+      "gap": ["참고", "요구 연차와 기술 스택은 공고 원문에서 확인하세요."],
+      "stack": { "hit": [], "other": [] },
+      "url": "https://www.jobkorea.co.kr/Recruit/GI_Read/50046714"
+    }
+  ],
+  "excluded": [
+    { "title": "토스 iOS Developer (Tuist·멀티모듈)", "reason": "스택은 가장 잘 맞았는데 10/30에 마감됐어요. 다시 열리면 1순위로 넣을 만해요.", "url": "https://freehire.me/jobs/ios-developer-toss-g6zezb7c" },
+    { "title": "쿠팡이츠 Manager, iOS Engineer", "reason": "10월 말에 올라온 공고지만 팀장(매니저) 포지션이에요.", "url": "https://velopers.kr/jobs/26919" },
+    { "title": "당근 산업기능요원 캠페인 iOS", "reason": "11/13 마감이고 병역특례 대상자만 지원할 수 있어요.", "url": "https://careers.daangn.com/jobs/role/8043888003/" },
+    { "title": "26도라인 iOS 경력직", "reason": "요구 경력 1~5년, 근무지 경기 광주의 펌웨어 기반 소규모 회사예요. 12/2 마감.", "url": "https://jumpit.saramin.co.kr/position/55339270" },
+    { "title": "전북은행 iOS 앱개발 전문인력", "reason": "근무지가 전주라 제외했어요.", "url": "https://www.jobkorea.co.kr/Recruit/GI_Read/50302626" }
+  ],
+  "advice": "커머스 도메인과 Tuist·모듈화 스택이 겹치는 **당근**을 먼저 넣고, 마감이 정해진 **핀다(11/28)**를 함께 넣는 걸 추천해요. 경력 휴식 기간은 이력서에 Maplay 개인 프로젝트로 설명돼 있으니, 면접에서 그 기간에 무엇을 만들고 배웠는지 구체적으로 얘기할 수 있게 준비해 두면 좋아요."
+}
