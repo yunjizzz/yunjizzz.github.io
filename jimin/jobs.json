@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06",
+  "updatedAt": "2026-11-07",
   "jobs": [
     {
       "id": "daangn-ios-5282170003",
@@ -481,6 +481,11 @@
     }
   ],
   "excluded": [
+    {
+      "title": "새흐름 FODI iOS 개발자",
+      "reason": "서울 관악 3인 스타트업으로 iOS 1인 담당·팀장급을 원하고, 고용형태와 마감일이 공고에 없어요.",
+      "url": "https://groupby.kr/positions/12070"
+    },
     {
       "title": "올리브영 커머스플랫폼유닛 iOS",
       "reason": "커머스라 도메인은 맞지만 요구 경력이 10~15년이에요.",
