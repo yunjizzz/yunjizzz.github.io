@@ -84,7 +84,6 @@ button,input,textarea{font:inherit;color:inherit}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .nar{font-family:'Gowun Batang',serif;font-size:16px;line-height:1.75;color:var(--ink);text-align:center;padding:4px 10px;word-break:keep-all}
 .nar.old{color:var(--muted)}
-.hint{font-size:12.5px;color:var(--muted);text-align:center;margin:0 0 8px;animation:fade .8s ease both}
 /* 종이 없이 글씨체만 손글씨인 한 줄 */
 .hand{font-family:'Nanum Pen Script','Gowun Batang',cursive;font-size:28px;line-height:1.35;color:var(--ink);text-align:center;margin:0;padding:6px 10px 8px;word-break:keep-all}
 .msg{display:flex;gap:8px;align-items:flex-start;max-width:86%}
@@ -693,7 +692,7 @@ function renderScene(step){
     <div class="chat" ${sc.chat&&!prose?'':'style="border:0;background:transparent"'}>${head}
       <div class="feed ${prose?'cfeed':''}" aria-live="polite" style="cursor:default">${feed}</div>${inBar}</div>
   </main>
-  <div class="foot">${step==='open'&&!S.hinted&&!done?'<p class="hint">화면을 누르면 글이 바로 나와요</p>':''}<div class="nav"><button class="btn slim" data-act="prev">이전</button>
+  <div class="foot"><div class="nav"><button class="btn slim" data-act="prev">이전</button>
     <button class="btn primary" data-act="next" ${done?'':'disabled'}>${nextLabel}</button></div></div>`;
   const f=app.querySelector('.feed'); if(f){f.style.scrollBehavior='auto';f.scrollTop=f.scrollHeight;f.style.scrollBehavior='';}
   if(acted&&sc.ver==='u'&&navigator.vibrate)try{navigator.vibrate(120)}catch(e){}
@@ -919,7 +918,7 @@ app.addEventListener('click',e=>{
   /* 이야기 화면의 빈 곳을 누르면 기다리지 않고 다음 글이 바로 나옴 */
   if(e.target.closest('.scene')&&!e.target.closest('button,a,input,label,.actbox'))hurry();
 });
-function hurry(){if(sheet||busy||!isStory(STEPS[S.step]))return;S.hinted=true;clearTimeout(timer);autoStep();}
+function hurry(){if(sheet||busy||!isStory(STEPS[S.step]))return;clearTimeout(timer);autoStep();}
 sheetEl.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t)return;if(t.classList.contains('overlay')&&e.target!==t)return;handle(t.dataset.act,t);});
 app.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.ck;
   if(k){S.checks[k]=e.target.checked;save();renderCheck();const box=app.querySelector(`[data-ck="${k}"]`);if(box)box.focus();}});
