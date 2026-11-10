@@ -27,25 +27,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --n-bg:#EDEFEE;--n-ink:#20262B;--n-muted:#5B646B;--n-line:#CBD1D1;--n-accent:#3D5A6E;--n-surface:#F8F9F8;--n-on:#FFFFFF;
-  --c-bg:#D6DCE2;--c-ink:#26303B;--c-muted:#56626E;--c-line:#AFB9C3;--c-accent:#445F79;--c-surface:#E8ECEF;--c-on:#FFFFFF;
-  --w-bg:#F5DCBF;--w-ink:#3A2517;--w-muted:#74533B;--w-line:#DDB58B;--w-accent:#8A560E;--w-surface:#FBEBD8;--w-on:#FFFFFF;
+  --n-bg:#F3F5F4;--n-ink:#20262B;--n-muted:#5B646B;--n-line:#D3D8D8;--n-accent:#3D5A6E;--n-surface:#FCFDFC;--n-on:#FFFFFF;
+  --c-bg:#E1E6EB;--c-ink:#26303B;--c-muted:#56626E;--c-line:#BCC5CE;--c-accent:#445F79;--c-surface:#F0F3F5;--c-on:#FFFFFF;
+  --w-bg:#F9E6CE;--w-ink:#3A2517;--w-muted:#74533B;--w-line:#E3C19C;--w-accent:#8A560E;--w-surface:#FDF3E5;--w-on:#FFFFFF;
   --danger:#A23B2E;
   color-scheme:light;box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --n-bg:#1B1F23;--n-ink:#E4E7E9;--n-muted:#9AA3AA;--n-line:#343B42;--n-accent:#9DB8CC;--n-surface:#242A30;--n-on:#14181C;
-    --c-bg:#192029;--c-ink:#CDD5DE;--c-muted:#8592A0;--c-line:#2E3945;--c-accent:#8EAECB;--c-surface:#222B36;--c-on:#121820;
-    --w-bg:#2B1D13;--w-ink:#F4DFC6;--w-muted:#C2A185;--w-line:#4A3424;--w-accent:#E7B062;--w-surface:#38281B;--w-on:#2B1D13;
+    --n-bg:#262B31;--n-ink:#E8EBED;--n-muted:#A8B0B7;--n-line:#444C55;--n-accent:#A6C0D3;--n-surface:#313840;--n-on:#14181C;
+    --c-bg:#242D39;--c-ink:#D8DFE7;--c-muted:#98A4B1;--c-line:#3F4B5A;--c-accent:#9DBBD6;--c-surface:#2F3A48;--c-on:#121820;
+    --w-bg:#3B291C;--w-ink:#F6E3CC;--w-muted:#CFB096;--w-line:#5F4532;--w-accent:#EDB96C;--w-surface:#4B3626;--w-on:#2B1D13;
     --danger:#E58A7C;color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --n-bg:#1B1F23;--n-ink:#E4E7E9;--n-muted:#9AA3AA;--n-line:#343B42;--n-accent:#9DB8CC;--n-surface:#242A30;--n-on:#14181C;
-  --c-bg:#192029;--c-ink:#CDD5DE;--c-muted:#8592A0;--c-line:#2E3945;--c-accent:#8EAECB;--c-surface:#222B36;--c-on:#121820;
-  --w-bg:#2B1D13;--w-ink:#F4DFC6;--w-muted:#C2A185;--w-line:#4A3424;--w-accent:#E7B062;--w-surface:#38281B;--w-on:#2B1D13;
+  --n-bg:#262B31;--n-ink:#E8EBED;--n-muted:#A8B0B7;--n-line:#444C55;--n-accent:#A6C0D3;--n-surface:#313840;--n-on:#14181C;
+  --c-bg:#242D39;--c-ink:#D8DFE7;--c-muted:#98A4B1;--c-line:#3F4B5A;--c-accent:#9DBBD6;--c-surface:#2F3A48;--c-on:#121820;
+  --w-bg:#3B291C;--w-ink:#F6E3CC;--w-muted:#CFB096;--w-line:#5F4532;--w-accent:#EDB96C;--w-surface:#4B3626;--w-on:#2B1D13;
   --danger:#E58A7C;color-scheme:dark;
 }
 :root[data-mode="neutral"]{--bg:var(--n-bg);--ink:var(--n-ink);--muted:var(--n-muted);--line:var(--n-line);--accent:var(--n-accent);--surface:var(--n-surface);--on:var(--n-on)}
@@ -799,8 +799,7 @@ function renderSheet(){
         ${S.userGender?'':`<p class="note" style="margin:12px 0 8px">나의 성별</p><div class="chips">${[['여','여자'],['남','남자']].map(([v,l])=>`<label class="chip"><input type="radio" name="ug2" value="${v}"><span>${l}</span></label>`).join('')}</div>`}
         <p class="note">손위 형제자매는 이름 뒤에 언니, 오빠, 누나, 형을 붙여 불러요.</p></fieldset>
       <fieldset class="field" id="ageBox" style="border:0;padding:0;margin:0 0 20px;${rel==='자녀'?'':'display:none'}"><legend style="font-size:14px;font-weight:500;margin-bottom:8px;padding:0">자녀 나이</legend>
-        <div class="chips">${AGES.map(([g,r])=>`<label class="chip"><input type="radio" name="age" value="${g}" ${g===age?'checked':''}><span>${g} <small style="opacity:.7;margin-left:4px">${r}</small></span></label>`).join('')}</div>
-        <p class="note">아기나 어린이는 보험 찾기, 은행 업무 같은 장면에는 나오지 않아요.</p></fieldset>
+        <div class="chips">${AGES.map(([g,r])=>`<label class="chip"><input type="radio" name="age" value="${g}" ${g===age?'checked':''}><span>${g} <small style="opacity:.7;margin-left:4px">${r}</small></span></label>`).join('')}</div></fieldset>
       <p class="err" id="merr" role="alert"></p>
       <button class="btn primary" type="submit" style="width:100%">${m?'저장하기':'추가하기'}</button>
     </form></div></div>`;
