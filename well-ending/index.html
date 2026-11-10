@@ -48,11 +48,12 @@
   --w-bg:#3B291C;--w-ink:#F6E3CC;--w-muted:#CFB096;--w-line:#5F4532;--w-accent:#EDB96C;--w-surface:#4B3626;--w-on:#2B1D13;
   --danger:#E58A7C;color-scheme:dark;
 }
-:root[data-mode="neutral"]{--bg:var(--n-bg);--ink:var(--n-ink);--muted:var(--n-muted);--line:var(--n-line);--accent:var(--n-accent);--surface:var(--n-surface);--on:var(--n-on)}
+/* 첫 화면과 가족 등록 화면: 기기 설정과 상관없이 항상 밝게 */
+:root[data-mode="neutral"]{--bg:#F6F7F6;--ink:#1D2328;--muted:#56606A;--line:#D5DADB;--accent:#3D5A6E;--surface:#FFFFFF;--on:#FFFFFF;--danger:#A23B2E;color-scheme:light}
 :root[data-mode="cold"]{--bg:var(--c-bg);--ink:var(--c-ink);--muted:var(--c-muted);--line:var(--c-line);--accent:var(--c-accent);--surface:var(--c-surface);--on:var(--c-on)}
 :root[data-mode="warm"]{--bg:var(--w-bg);--ink:var(--w-ink);--muted:var(--w-muted);--line:var(--w-line);--accent:var(--w-accent);--surface:var(--w-surface);--on:var(--w-on)}
 /* 엔딩노트 안내 화면: 기기 설정과 상관없이 항상 밝은 화면. 포인트 색은 --accent 한 곳만 바꾸면 됨 */
-:root[data-mode="bright"]{--bg:#FFFBF5;--ink:#33261C;--muted:#7C6B5D;--line:#EFE2D0;--accent:#D9772B;--surface:#FFFFFF;--on:#FFFFFF;color-scheme:light}
+:root[data-mode="bright"]{--bg:#FFFBF5;--ink:#33261C;--muted:#7C6B5D;--line:#EFE2D0;--accent:#D9772B;--surface:#FFFFFF;--on:#FFFFFF;--danger:#A23B2E;color-scheme:light}
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px);transition:background-color .8s}
 body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;transition:background-color .8s,color .8s;-webkit-font-smoothing:antialiased}
@@ -314,8 +315,15 @@ const META={
   sub:{t:['오후','8:15'],title:'결제 완료 알림'},last:{t:['오후','11:58'],title:'마지막 말'},
   ending:{t:['오전','6:40'],title:'다시, 아침'}
 };
+const META_L={
+  open:{t:['오전','6:40'],title:'눈을 뜬 곳은 병원'},phone:{t:['오전','9:12'],title:'잠긴 휴대폰'},
+  drawer:{t:['오후','1:30'],title:'서랍 대소동'},funeral:{t:['오후','4:05'],title:'원무과 창구'},
+  money:{t:['오전','11:20'],title:'오늘이 납부일'},pet:{t:['오후','7:40'],title:'밥그릇 앞 대치'},
+  sub:{t:['오후','8:15'],title:'결제 완료 알림'},last:{t:['오후','10:30'],title:'병실의 밤'},
+  ending:{t:['오전','6:40'],title:'다시, 집'}
+};
 function joinNames(list){const n=list.map(m=>m.name);if(n.length===1)return n[0];if(n.length===2)return J(n[0],'과')+' '+n[1];return n.slice(0,-1).join(', ')+', 그리고 '+n[n.length-1];}
-function words(){return S.lastWords&&S.lastWords.trim()?S.lastWords.trim():'늘 고마웠어. 너무 오래 슬퍼하지 마.';}
+function words(){return S.lastWords&&S.lastWords.trim()?S.lastWords.trim():(S.tone==='light'?'다들 고생했어. 나으면 맛있는 거 살게.':'늘 고마웠어. 너무 오래 슬퍼하지 마.');}
 
 function polite(m){
   if(!m||m.elder||m.relation==='부모'||m.relation==='형제자매'||m.relation==='반려동물')return false;
@@ -341,6 +349,164 @@ function build(key,ver,a){
   const RS=m=>{const r=R(m).trim();return r?J(r,'이')+' ':'';};
   const v=variantOf(key);
   const pick=arr=>arr[v%arr.length];
+  /* ---------- 가벼운 버전(S.tone==='light'): 내가 갑자기 입원해 하루를 통째로 자 버린 날. 아무도 죽지 않음. 장면 키와 짝(u/p)은 본편과 같음 ---------- */
+  if(S.tone==='light'){
+    const FAIL='잠꼬대로 들림', word=()=>said('u:last')?S.acts['u:last']:words();
+    switch(key){
+    case 'open':{const x=a.adults[0]||G('가족'), y=a.adults[1]||null;
+      return {chat:'group',beats:[
+        N('눈을 떠보니 병원 천장이었다.'),
+        N('새벽에 배를 움켜쥐고 응급실에 온 것까지는 기억난다.'),
+        NO('병원','수술이 잘 끝났습니다. 오늘은 푹 주무세요.','＋'),
+        N('맹장이었다고 한다. 진통제 덕분에 눈꺼풀이 천근만근이었다.'),
+        ...pick([
+          [T(x,`수술 잘 끝났대. ${R(x)}지금 자`,`수술 잘 끝났대요. ${R(x)}지금 자요`), ...(y?[TR(y,x,'다행이다. 놀랐잖아','다행이에요. 정말 놀랐어요')]:[]), T(x,'근데 회사에는 누가 연락하지?','그런데 회사에는 누가 연락하죠?')],
+          [T(x,'맹장이래. 큰일은 아니래','맹장이래요. 큰일은 아니래요'), ...(y?[TR(y,x,'휴, 십년감수했네','휴, 십년감수했어요')]:[]), T(x,`${R(x)}오늘 약속이랑 일은 다 어떡하지`,`${R(x)}오늘 약속이랑 일은 다 어떡하죠`)]
+        ]),
+        N('대답하고 싶었지만, 입에서는 “으음…” 소리만 나왔다.'),
+        N('그렇게 나는 하루를 통째로 자 버렸다.'),
+        N('그리고 그 하루 동안, 집은 난리가 났다.')]};}
+
+    case 'phone':{const n=a.phone||G('가족');
+      if(U) return {chat:'group',input:true,inText:'비몽사몽이라 보낼 수 없어요',beats:[
+        N(`${J(n.name,'이')} 내 휴대폰을 들고 한참을 노려보았다.`),
+        ...pick([
+          [T(n,`${R(n)}회사에 못 간다고 알려야 하는데`,`${R(n)}회사에 못 간다고 알려야 하는데요`), T(n,'생일 넣어봤는데 아니네','생일 넣어봤는데 아니네요'),
+            NO('잠금','비밀번호를 여러 번 틀렸습니다. 30초 후에 다시 시도하세요.','!',true), T(n,'내 생일도 아니야. 좀 서운하다','제 생일도 아니에요. 조금 서운하네요')],
+          [T(n,'오늘 치과 예약 있다고 했던 것 같은데','오늘 치과 예약이 있다고 했던 것 같은데요'), T(n,'0000도 1234도 아니야','0000도 1234도 아니에요'),
+            NO('잠금','비밀번호를 여러 번 틀렸습니다. 30초 후에 다시 시도하세요.','!',true), T(n,'얼굴 인식은 자는 얼굴이라 안 된대','얼굴 인식은 자는 얼굴이라 안 된대요')]
+        ]),
+        N('휴대폰은 그날 하루 종일 울렸고, 아무도 받지 못했다.'),
+        N('부재중 전화 열일곱 통.'),N('나는 그것도 모르고 잘 잤다.')]};
+      return {chat:'group',beats:[
+        N(`${J(n.name,'이')} 내 가방에서 노트 한 권을 꺼냈다.`),
+        ...pick([
+          [NOTE(n,'휴대폰 비밀번호는 여기. 급한 연락처는 그 아래에.'), T(n,'노트에 다 있네. 회사에 연락했어','노트에 다 있네요. 회사에 연락했어요'), T(n,'팀장님이 푹 쉬래','팀장님이 푹 쉬라고 하셨어요')],
+          [NOTE(n,'비밀번호, 그리고 내가 자리를 비우면 연락할 사람들.'), T(n,'치과 예약 미뤄놨어','치과 예약 미뤄놨어요'), T(n,'회사에도 말해놨어','회사에도 말해놨어요')]
+        ]),
+        N('전화 세 통으로 내 하루가 정리됐다.'),
+        N('나는 여전히 자고 있었지만,'),N('이번엔 마음 놓고 자도 되는 잠이었다.')]};}
+
+    case 'drawer':{const n=a.drawer||G('가족'), o=other(a,[n.id]);
+      if(U) return {chat:'group',input:true,inText:'비몽사몽이라 보낼 수 없어요',beats:[
+        N(`집에 간 ${J(n.name,'이')} 서랍을 전부 꺼내 바닥에 쏟았다.`),
+        ...pick([
+          [T(n,'실손보험 청구해야 하는데 어디 보험이야?','실손보험을 청구해야 하는데 어디 보험이에요?'), ...(o?[TR(o,n,'글쎄… 들었다고는 했는데','글쎄요… 들었다고는 했는데요')]:[]), T(n,'10년 전 영수증이랑 안 쓰는 충전기만 나와','10년 전 영수증이랑 안 쓰는 충전기만 나와요')],
+          [T(n,'보험 증권 같은 거 본 사람?','보험 증권 같은 거 보신 분 계세요?'), ...(o?[TR(o,n,'그런 건 다 알아서 했잖아','그런 건 다 알아서 챙겼잖아요')]:[]), T(n,'서랍에서 초등학교 상장이 나왔어','서랍에서 초등학교 상장이 나왔어요')]
+        ]),
+        N('나는 알고 있었다. 두 번째 서랍, 파란 파일.'),
+        N('하지만 그때 나는 병실에서 코를 골고 있었다.'),
+        T(n,'보험사마다 전화 돌려봐야겠다','보험사마다 전화 돌려봐야겠어요'),
+        N('서랍은 그날 저녁까지 바닥에 누워 있었다.')]};
+      return {chat:'group',beats:[
+        NOTE(n,'보험 증권이랑 통장은 두 번째 서랍, 파란 파일에 있어.'),
+        N(`${J(n.name,'이')} 두 번째 서랍에서 파란 파일을 꺼냈다.`),
+        T(n,'찾았어. 앱으로 청구하는 데 10분 걸렸어','찾았어요. 앱으로 청구하는 데 10분 걸렸어요'),
+        ...(o?[TR(o,n,'역시 꼼꼼하네','역시 꼼꼼하네요')]:[]),
+        N('서랍은 열렸다가, 얌전히 다시 닫혔다.')]};}
+
+    case 'funeral':{const x=a.fa||G('가족'), y=a.fb||null;
+      if(U) return {chat:'group',input:true,inText:'비몽사몽이라 보낼 수 없어요',failLabel:FAIL,beats:[
+        N('병원 원무과 창구에서 질문이 쏟아졌다.'),
+        ...pick([
+          [NO('원무과','환자분 알레르기와 드시는 약을 적어주세요.','＋'), T(x,`${R(x)}알레르기 있었나?`,`${R(x)}알레르기가 있었나요?`), ...(y?[TR(y,x,'복숭아 못 먹지 않았나?','복숭아를 못 먹지 않았나요?')]:[]), T(x,'그건 그냥 싫어하는 거 아니었어?','그건 그냥 싫어하는 거 아니었나요?')],
+          [NO('원무과','평소 다니는 병원과 드시는 약을 적어주세요.','＋'), T(x,`${R(x)}평소에 먹는 약 있었어?`,`${R(x)}평소에 먹는 약이 있었나요?`), ...(y?[TR(y,x,'영양제 말고 뭐 있었나?','영양제 말고 뭐가 있었나요?')]:[]), T(x,'다니는 병원도 모르겠네','다니는 병원도 모르겠네요')]
+        ]),
+        ACT({kind:'send',q:'직접 알려주세요.',opts:['복숭아 알레르기 있어','먹는 약은 없어']}),
+        N('내 입에서 나온 건 웅얼거림뿐이었다.'),
+        N('종이의 빈칸에는 결국 “모름”이 적혔다.')]};
+      return {chat:'group',beats:[
+        N('원무과 창구 앞에서 노트가 펼쳐졌다.'),
+        NOTE(x,'알레르기는 복숭아. 먹는 약은 없음. 다니는 병원은 사거리 내과.'),
+        T(x,'노트에 다 적혀 있어. 그대로 옮겨 적었어','노트에 다 적혀 있어요. 그대로 옮겨 적었어요'),
+        ...(y?[TR(y,x,'복숭아, 진짜 알레르기였네','복숭아, 진짜 알레르기였네요')]:[]),
+        ...(said('u:funeral')?[N('이번에는, 웅얼거리지 않아도 되었다.')]:[]),
+        N('창구 직원이 “준비 잘하셨네요” 하며 웃었다.')]};}
+
+    case 'money':{const n=a.money||G('가족');
+      if(U) return {chat:'group',input:true,inText:'비몽사몽이라 보낼 수 없어요',beats:[
+        ...pick([
+          [NO('은행','자동이체 잔액 부족 안내','₩'),NO('관리비','오늘까지 납부해 주세요.','₩'), T(n,`${R(n)}통장에 돈 옮겨놔야 하는 거 아니야?`,`${R(n)}통장에 돈을 옮겨놔야 하는 거 아닌가요?`),
+            NO('은행','본인 인증이 필요합니다. 명의자 본인만 이체할 수 있어요.','!',true), T(n,'본인은 지금 코 골고 있는데','본인은 지금 코 골고 있는데요')],
+          [NO('카드','오늘은 카드 대금 결제일입니다.','₩'),NO('은행','출금 계좌 잔액이 부족합니다.','₩'), T(n,'어느 통장에서 빠져나가는 거야?','어느 통장에서 빠져나가는 거예요?'),
+            NO('은행','본인 인증이 필요합니다. 명의자 본인만 조회할 수 있어요.','!',true), T(n,'통장이 왜 이렇게 많아','통장이 왜 이렇게 많아요')]
+        ]),
+        N('연체료 몇천 원이 붙었다.'),
+        N('큰돈은 아니었지만, 깨어나서 들으니 꽤 미안했다.')]};
+      return {chat:'group',beats:[
+        N(`${J(n.name,'이')} 노트의 ‘돈’ 쪽을 폈다.`),
+        NOTE(n,'월급 통장은 이것 하나. 매달 25일에 관리비랑 카드값이 나가.'),
+        T(n,'미리 채워놨어. 이자는 치킨으로 받을게','미리 채워놨어요. 이자는 치킨으로 받을게요'),
+        N('연체는 없었다.'),N('대신 치킨 빚이 생겼다.')]};}
+
+    case 'pet':{const p=a.pet.name, h=a.fifth||G('가족'), o=other(a,[h.id],'fifth');
+      const [chat,opt,end]=pick([
+        [[T(h,`${p} 밥 얼마나 줘야 해?`,`${p} 밥은 얼마나 줘야 해요?`), ...(o?[TR(o,h,'한 컵? 두 컵?','한 컵인가요? 두 컵인가요?')]:[]), T(h,'모르겠다. 일단 많이 줬어','모르겠어요. 일단 많이 줬어요')],'하루 두 번, 종이컵 반 컵이야',`${J(p,'은')} 그날 평소의 세 배를 먹었다.`],
+        [[T(h,`${p} 사료 어디 있어?`,`${p} 사료가 어디 있어요?`), ...(o?[TR(o,h,'싱크대 밑 아니야?','싱크대 밑 아닌가요?')]:[]), T(h,'못 찾아서 간식만 줬어','못 찾아서 간식만 줬어요')],'사료는 베란다 선반에 있어',`${J(p,'은')} 그날 세 끼를 간식으로 먹었다.`]
+      ]);
+      if(U) return {chat:'group',input:true,inText:'비몽사몽이라 보낼 수 없어요',failLabel:FAIL,beats:[
+        N(`${J(p,'이')} 빈 밥그릇 앞에서 ${J(h.name,'을')} 올려다보았다.`),...chat,
+        ACT({kind:'send',q:`${K(h.name)}에게 알려주세요.`,opts:[opt]}),N(end),N('인생 최고의 하루였다는 표정이었다.')]};
+      return {chat:'group',beats:[
+        NOTE(h,`${said('u:fifth')?S.acts['u:fifth']:opt}. 산책은 저녁에 한 번.`),
+        T(h,'적힌 대로 줬어','적힌 대로 줬어요'),
+        ...(said('u:fifth')?[N('이번에는, 미리 알려줄 수 있었다.')]:[]),
+        N(`${J(p,'은')} 조금 아쉬운 표정이었다.`)]};}
+
+    case 'sub':{const n=a.fifth||G('가족');
+      if(U) return {chat:'group',input:true,inText:'비몽사몽이라 보낼 수 없어요',beats:[
+        NO('영상','정기결제가 완료되었습니다.','▶'),NO('게임','아이템 결제가 완료되었습니다.','◆'),NO('쇼핑','주문하신 상품이 배송 출발했습니다.','●'),
+        ...pick([
+          [T(n,`${R(n)}폰이 계속 울려. 뭘 이렇게 많이 구독해?`,`${R(n)}폰이 계속 울려요. 뭘 이렇게 많이 구독한 거예요?`), T(n,'택배도 세 개나 온대','택배도 세 개나 온대요')],
+          [T(n,'게임 결제 알림이 왔는데…','게임 결제 알림이 왔는데요…'), T(n,'레벨이 꽤 높은가 봐','레벨이 꽤 높은가 봐요')]
+        ]),
+        N('자는 동안 내 사생활이 알림으로 중계되고 있었다.'),
+        N('깨어나면 변명할 게 많아질 것 같았다.')]};
+      return {chat:'group',beats:[
+        N('노트 한쪽에 구독 목록과 택배 받는 법이 적혀 있었다.'),
+        T(n,'택배는 경비실에 맡겨달라고 했어','택배는 경비실에 맡겨달라고 했어요'),
+        T(n,'게임은… 못 본 걸로 할게','게임은… 못 본 걸로 할게요'),
+        N('사생활은 지켜졌다.'),N('대체로.')]};}
+
+    case 'last':{const n=a.last||G('가족');
+      if(U){const [chat,opt2]=pick([
+          [[C(n,'오늘 하루가 일주일 같았어'),C(n,'서랍은 아직도 바닥에 있어'),C(n,'그래도 수술 잘 돼서 다행이야')],'다들 고생했어'],
+          [[C(n,'자?'),C(n,'자겠지. 하루 종일 잤으니까'),C(n,'내일은 꼭 비밀번호 알려줘')],'미안, 내일 다 알려줄게']
+        ]);
+        return {chat:'dm',dmFrom:n,input:true,inText:'비몽사몽이라 보낼 수 없어요',failLabel:'보내지 못함',beats:[N(`밤늦게, 집에 돌아간 ${J(n.name,'이')} 나에게 메시지를 보냈다.`),...chat,
+          ACT({kind:'send',q:'답장을 보내보세요.',opts:[words(),opt2]}),N('휴대폰은 침대 옆에서 혼자 반짝였다.'),N('나는 그 옆에서, 세상모르고 자고 있었다.'),N('고맙다는 말은, 깨어 있을 때 해야 하는 말이었다.')]};}
+      return {chat:'dm',dmFrom:n,beats:[
+        N(`밤늦게, ${J(n.name,'이')} 노트의 마지막 장을 넘겼다.`),
+        N('맨 뒷장에는, 한 줄이 더 적혀 있었다.'), HAND(word()),
+        ...(said('u:last')?[N('보내지 못했던 그 말이, 이번에는 먼저 가 있었다.')]:[]),
+        ...pick([[C(n,'이런 건 또 언제 적어놨대')],[C(n,'괜히 찡하네'),C(n,'빨리 나아')]]),
+        N('그날 밤, 집의 불은 평소보다 일찍 꺼졌다.')]};}
+
+    case 'baby':{const b=a.last, g=a.adults[0]||null;
+      if(U) return {chat:g?'dm':null,dmFrom:g,input:true,inText:'비몽사몽이라 보낼 수 없어요',failLabel:'보내지 못함',beats:[
+        N(`그날 밤, ${J(b.name,'은')} 좀처럼 잠들지 못했다.`),
+        ...(g?pick([[C(g,`${J(b.name,'이')} 자꾸 현관만 봐`),C(g,'자기 전에 읽어주던 책이 뭐였지')],[C(g,`${K(b.name)} 재우는 데 두 시간째야`),C(g,'평소엔 어떻게 재운 거야')]]):[]),
+        ACT({kind:'send',q:`${K(b.name)}에게 말을 걸어보세요.`,opts:[`${voc(b.name)}, 금방 갈게`,words()]}),
+        N('재우는 순서는 나만 알고 있었다.'),N('목욕, 그림책 두 권, 그리고 등 토닥이기.')]};
+      return {chat:g?'dm':null,dmFrom:g,beats:[
+        N('노트에는 재우는 순서까지 적혀 있었다.'),
+        NOTE(g,'목욕하고, 그림책 두 권 읽고, 등을 토닥토닥.'),
+        ...(g?[C(g,'10분 만에 잠들었어')]:[]),
+        N('맨 뒷장에는, 한 줄이 더 적혀 있었다.'), HAND(word()),
+        ...(said('u:last')?[N('들려주지 못했던 그 말이, 이번에는 먼저 가 있었다.')]:[]),
+        N(`${J(b.name,'은')} 평소처럼 잘 잤다.`)]};}
+
+    case 'summary':return {chat:null,beats:[N('같은 하루였다.'),N('내가 아팠던 것도, 가족이 놀란 것도 같았다.'),N('다만 이번엔,'),N('가족이 서랍 대신 내 걱정만 하면 됐다.'),N('준비는 큰일이 났을 때만 쓰는 게 아니었다.'),N('내가 잠깐 자리를 비워도,'),N('집이 평소처럼 굴러가게 해 주는 일이었다.')]};
+    case 'ending':{const f=a.adults[0]||DF()[0];
+      return {chat:'group',input:true,alive:true,beats:[
+        N('며칠 뒤, 집에서 맞는 아침.'),NO('알람','오전 6:40','⏰'),
+        f.relation==='반려동물'?N(`${J(f.name,'이')} 침대 위로 뛰어올랐다.`):C(f,pick(['죽 끓여놨어. 천천히 먹어','오늘은 무리하지 마','커피는 아직 안 돼'])),
+        N('배는 아직 좀 당겼다.'),N('그래도 집 천장이 이렇게 반가울 줄은 몰랐다.'),
+        ACT({kind:'send',q:'이번엔 보낼 수 있어요.',opts:['고마워','다들 고생했어','비밀번호 알려줄게']}),
+        N('큰일이 아니어도, 자리를 비우는 날은 갑자기 온다.')]};}
+    }
+    return {beats:[]};
+  }
   switch(key){
   case 'open':{const f=DF(), ad=a.adults, x=ad[0]||G('가족'), y=ad[1]||null;
     const baby=f.find(m=>ageOf(m)==='아기');
@@ -539,18 +705,18 @@ function build(key,ver,a){
   return {beats:[]};
 }
 function sceneOf(step){
-  const a=assign();
+  const a=assign(), L=S.tone==='light', M=L?META_L:META;
   if(['open','summary','ending'].includes(step)){
     const sc=build(step,step==='open'?'u':'p',a);
-    return Object.assign(sc,{key:step,ver:step==='open'?'u':'p',meta:step==='summary'?{t:null,title:'되감은 하루'}:META[step],
-      act:{open:'눈을 뜬 아침',summary:'되감은 하루',ending:'다시, 아침'}[step],
-      closing:step==='ending'?'당신이 남기고 싶은 다정함은,\n어떤 모습인가요?':null});
+    return Object.assign(sc,{key:step,ver:step==='open'?'u':'p',meta:step==='summary'?{t:null,title:'되감은 하루'}:M[step],
+      act:(L?{open:'눈을 뜬 곳은 병원',summary:'되감은 하루',ending:'다시, 집'}:{open:'눈을 뜬 아침',summary:'되감은 하루',ending:'다시, 아침'})[step],
+      closing:step==='ending'?(L?'당신이 하루 자리를 비우면,\n가족은 무엇부터 찾을까요?':'당신이 남기고 싶은 다정함은,\n어떤 모습인가요?'):null});
   }
   const [ver,k]=step.split(':');
   let key=k==='fifth'?(a.pet?'pet':'sub'):k;
   const metaKey=key;
   if(key==='last'&&a.last&&ageOf(a.last)==='아기')key='baby';
-  return Object.assign(build(key,ver,a),{key,ver,meta:META[metaKey],act:ver==='u'?'준비되지 않은 이별':'미리 준비했다면'});
+  return Object.assign(build(key,ver,a),{key,ver,meta:M[metaKey],act:ver==='u'?(L?'내가 잠든 하루':'준비되지 않은 이별'):(L?'미리 적어뒀다면':'미리 준비했다면')});
 }
 function modeOf(step){
   if(['intro','family'].includes(step))return 'neutral';
@@ -597,18 +763,26 @@ function draw(){
 function renderIntro(){
   app.innerHTML=`<div class="page">
     <p class="time" aria-hidden="true" style="margin-top:24px"><span class="ampm">오전</span>6:40</p>
-    <h1 class="h1">어느 날, 내가 없는 아침</h1>
-    <p class="lead">갑작스러운 이별 뒤에 남은 가족에게 어떤 일이 생기는지 따라가 보는 이야기예요. 당신의 가족이 직접 등장하고, 당신은 그 곁에서 지켜보게 돼요.</p>
+    <h1 class="h1">${S.tone==='light'?'어느 날, 내가 입원한 아침':'어느 날, 내가 없는 아침'}</h1>
+    <p class="lead">${S.tone==='light'?'내가 갑자기 하루 자리를 비우면 집에서는 무슨 일이 벌어질까요? 당신의 가족이 직접 등장하는, 조금 가벼운 이야기예요.':'갑작스러운 이별 뒤에 남은 가족에게 어떤 일이 생기는지 따라가 보는 이야기예요. 당신의 가족이 직접 등장하고, 당신은 그 곁에서 지켜보게 돼요.'}</p>
     <form id="introForm" novalidate>
+      <fieldset class="field" style="border:0;padding:0;margin:0 0 20px"><legend style="font-size:14px;font-weight:500;margin-bottom:8px;padding:0">어떤 이야기로 볼까요?</legend>
+        <div class="chips">${[['','먹먹한 이야기'],['light','가벼운 이야기']].map(([v,l])=>`<label class="chip"><input type="radio" name="tone" value="${v}" ${(S.tone||'')===v?'checked':''}><span>${l}</span></label>`).join('')}</div></fieldset>
       <label class="field"><span>이야기 속 당신의 이름</span>
       <input class="input" id="uname" maxlength="10" autocomplete="off" placeholder="예: 지훈" value="${esc(S.userName)}"></label>
       <fieldset class="field" style="border:0;padding:0;margin:0 0 20px"><legend style="font-size:14px;font-weight:500;margin-bottom:8px;padding:0">당신의 성별</legend><small style="display:block;font-size:13px;color:var(--muted);margin:-2px 0 8px">형제자매가 언니, 오빠, 누나, 형으로 부르는 데 쓰여요.</small>
         <div class="chips">${['여','남'].map(g=>`<label class="chip"><input type="radio" name="ug" value="${g}" ${S.userGender===g?'checked':''}><span>${g==='여'?'여자':'남자'}</span></label>`).join('')}</div></fieldset>
       <label class="field"><span>가족에게 꼭 하고 싶은 말 한 줄 (선택)</span><small>이야기 속 어딘가에서 이 말이 쓰여요.</small>
-      <textarea class="input" id="uwords" maxlength="60" placeholder="예: 늘 고마웠어. 너무 오래 슬퍼하지 마.">${esc(S.lastWords||'')}</textarea></label>
+      <textarea class="input" id="uwords" maxlength="60" placeholder="${S.tone==='light'?'예: 다들 고생했어. 나으면 맛있는 거 살게.':'예: 늘 고마웠어. 너무 오래 슬퍼하지 마.'}">${esc(S.lastWords||'')}</textarea></label>
       <p class="err" id="uerr" role="alert"></p>
       <button class="btn primary" type="submit" style="width:100%">시작하기</button>
     </form></div>`;
+  /* 이야기 종류를 바꾸면 적어 둔 값을 지키면서 제목·소개만 바꿔 다시 그림 */
+  document.getElementById('introForm').addEventListener('change',e=>{if(e.target.name!=='tone')return;
+    const ug=document.querySelector('#introForm input[name=ug]:checked');
+    S.tone=e.target.value;S.keeps={};S.userName=document.getElementById('uname').value.trim();if(ug)S.userGender=ug.value;
+    S.lastWords=document.getElementById('uwords').value.trim();save();renderIntro();
+    const t=document.querySelector('#introForm input[name=tone]:checked');if(t)t.focus();});
   document.getElementById('introForm').addEventListener('submit',e=>{
     e.preventDefault();const v=document.getElementById('uname').value.trim();
     if(!v){document.getElementById('uerr').textContent='이름을 입력해 주세요.';return;}
@@ -633,15 +807,15 @@ function addBtnHTML(){
 function renderFamily(){
   app.innerHTML=`${header('가족 등록',false)}<div class="page">
     <h1 class="h1">함께 사는 가족을 알려주세요</h1>
-    <p class="lead">${esc(J(S.userName,'이'))} 떠난 뒤의 하루에 이 가족들이 등장해요. 반려동물도 가족으로 추가할 수 있어요.</p>
+    <p class="lead">${S.tone==='light'?esc(J(S.userName,'이'))+' 자리를 비운 하루에 이 가족들이 등장해요.':esc(J(S.userName,'이'))+' 떠난 뒤의 하루에 이 가족들이 등장해요.'} 반려동물도 가족으로 추가할 수 있어요.</p>
     ${famListHTML()}${addBtnHTML()}
   </div><div class="foot"><div class="nav" style="padding-top:14px">
     <button class="btn slim" data-act="toIntro">이전</button>
     <button class="btn primary" data-act="begin" ${S.family.length?'':'disabled'}>이야기 시작</button></div></div>`;
 }
 
-function meBubble(text,status,shake){
-  const lab={fail:'전송 실패',read:'읽음',sent:''}[status];
+function meBubble(text,status,shake,failLab){
+  const lab={fail:failLab||'전송 실패',read:'읽음',sent:''}[status];
   return `<div class="msg me ${status==='fail'?'fail':''} ${shake?'shk':''}"><div class="bub">${esc(text)}</div>${lab?`<span class="st ${status}">${lab}</span>`:''}</div>`;
 }
 function beatHTML(b,i,sc,isLast){
@@ -663,7 +837,7 @@ function actHTML(b,sc,cls){
   const step=STEPS[S.step], done=S.acts[step];
   if(done!==undefined){
     if(sc.chat==='prose') return `<p class="nar old ${i_justActed?'shk':''}">“${esc(done)}”<span class="unheard">아무에게도 들리지 않았다</span></p>`;
-    if(b.kind==='send') return meBubble(done,sc.alive?'read':'fail',i_justActed);
+    if(b.kind==='send') return meBubble(done,sc.alive?'read':'fail',i_justActed,sc.failLabel);
   }
   if(b.kind==='send') return `<div class="actbox ${cls}"><p class="act-q">${esc(b.q)}</p><div class="qrs">${b.opts.map(o=>`<button class="qr" data-act="send" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>${sc.alive?'':'<button class="skip" data-act="skip">건너뛰기</button>'}</div>`;
   return '';
@@ -684,7 +858,7 @@ function renderScene(step){
   const humans=S.family.filter(m=>m.relation!=='반려동물').length;
   const head=sc.chat==='dm'?`<div class="chat-h">${sc.ver==='u'?esc(S.userName):esc((sc.dmFrom||G('가족')).name)}<small>${sc.ver==='u'?'1:1 대화':'1:1 대화'}</small></div>`
     :sc.chat==='group'?`<div class="chat-h">우리 가족<small>${humans+3}</small></div>`:'';
-  const inBar=sc.input?`<div class="chat-in"><span>${sc.alive?'메시지 입력':'메시지를 보낼 수 없어요'}</span><i aria-hidden="true">↑</i></div>`:'';
+  const inBar=sc.input?`<div class="chat-in"><span>${sc.alive?'메시지 입력':(sc.inText||'메시지를 보낼 수 없어요')}</span><i aria-hidden="true">↑</i></div>`:'';
   const nextLabel=pend?'직접 해보세요':(step==='ending'?'엔딩노트 시작하기':'다음 장면');
   app.innerHTML=`${header(sc.act,true)}
   <main class="scene">
@@ -701,11 +875,11 @@ function renderScene(step){
 function renderRewind(){
   app.innerHTML=`${header('되감기',true)}
   <main class="scene" style="overflow-y:auto">
-    <div class="trow"><p class="time" id="rwClock"><span class="ampm">오후</span>11:58</p><p class="title">잠깐.</p></div>
+    <div class="trow"><p class="time" id="rwClock"><span class="ampm">오후</span>${S.tone==='light'?'10:30':'11:58'}</p><p class="title">잠깐.</p></div>
     <div class="clock" aria-hidden="true"><svg viewBox="0 0 320 150"><circle class="s" cx="160" cy="75" r="56"/>
     ${[0,30,60,90,120,150,180,210,240,270,300,330].map(d=>`<line class="s" x1="160" y1="23" x2="160" y2="${d%90?28:33}" transform="rotate(${d} 160 75)"/>`).join('')}
     <g class="hands" id="rwHands"><line class="s" x1="160" y1="75" x2="160" y2="40"/><line class="s as" x1="160" y1="75" x2="188" y2="75"/><circle class="a" cx="160" cy="75" r="4"/></g></svg></div>
-    <p class="nar">만약 내가 미리 준비했다면?</p><p class="nar old">그랬다면, 이 하루는 어땠을까요.</p>
+    <p class="nar">${S.tone==='light'?'만약 내가 미리 적어뒀다면?':'만약 내가 미리 준비했다면?'}</p><p class="nar old">그랬다면, 이 하루는 어땠을까요.</p>
   </main>
   <div class="foot"><div class="nav"><button class="btn slim" data-act="prev">이전</button>
   <button class="btn primary" data-act="rewind">되감기</button></div></div>`;
@@ -713,7 +887,7 @@ function renderRewind(){
 function fmt(min){const h=Math.floor(min/60),m=Math.round(min%60);const ap=h<12?'오전':'오후';let hh=h%12;if(hh===0)hh=12;return `<span class="ampm">${ap}</span>${hh}:${String(m).padStart(2,'0')}`;}
 function doRewind(){
   if(busy)return;busy=true;
-  const clock=document.getElementById('rwClock'),from=23*60+58,to=6*60+47,dur=reduce?0:1600,t0=performance.now();
+  const clock=document.getElementById('rwClock'),from=S.tone==='light'?22*60+30:23*60+58,to=6*60+40,dur=reduce?0:1600,t0=performance.now();
   const finish=()=>{busy=false;S.step++;S.revealed=1;animIdx=0;save();render();};
   if(!dur){finish();return;}
   const hands=document.getElementById('rwHands');if(hands)hands.classList.add('go');
@@ -747,7 +921,7 @@ function renderCheck(){
     ['msg','남기는 말','미뤄 둔 한마디']
   ];
   const n=feats.filter(f=>S.checks[f[0]]).length;
-  const K=S.keeps||{}, keeps=[S.lastWords,K.funeral,pet?K.pet:'',K.reply!==S.lastWords?K.reply:''].filter(Boolean);
+  const K=S.keeps||{}, keeps=[S.lastWords,S.tone==='light'?'':K.funeral,pet?K.pet:'',K.reply!==S.lastWords?K.reply:''].filter(Boolean);
   const old=app.querySelector('.page.en'), top=old?old.scrollTop:0;
   app.innerHTML=`${header('엔딩노트',true)}<div class="page en">
     <p class="en-k">엔딩노트</p>
@@ -843,7 +1017,8 @@ function eyeOpen(tone,then,fast){
   if(reduce){then();return;}
   busy=true;
   const el=document.createElement('div');el.className='eye '+tone+(fast?' fast':'');
-  const line=tone==='cold'?'어젯밤, 평소처럼 잠들었다.':'그리고, 다시 아침.';
+  const L=S.tone==='light';
+  const line=tone==='cold'?(L?'어젯밤, 배가 조금 아팠다.':'어젯밤, 평소처럼 잠들었다.'):(L?'그리고, 다시 집.':'그리고, 다시 아침.');
   el.innerHTML='<div class="eye-view" aria-hidden="true"></div><i class="eye-hole" aria-hidden="true"></i><p class="eye-line" role="status">'+line+'</p><i class="eye-dim" aria-hidden="true"></i><i class="eye-phone" aria-hidden="true"><b>6:40</b></i>';
   document.body.appendChild(el);
   const t0=performance.now();let done=false,t1,t2;
@@ -867,7 +1042,7 @@ function completeAct(v,skipped){
   const st=STEPS[S.step];S.acts[st]=v;
   if(!skipped){S.said=S.said||{};S.said[st]=true;}
   if(!skipped&&typeof v==='string'){S.keeps=S.keeps||{};
-    if(st==='u:funeral'&&v!=='제발 싸우지 마')S.keeps.funeral=v;
+    if(st==='u:funeral'&&v!=='제발 싸우지 마'&&S.tone!=='light')S.keeps.funeral=v;
     if(st==='u:fifth')S.keeps.pet=v;
     if(st==='u:last')S.keeps.reply=v;}
   i_justActed=true;save();render();
@@ -876,7 +1051,7 @@ function completeAct(v,skipped){
 const ENDINGNOTE_URL='';
 let showSoon=false;
 function handoff(){
-  return {version:1,name:S.userName,gender:S.userGender||'',lastWords:S.lastWords||'',
+  return {version:1,tone:S.tone||'',name:S.userName,gender:S.userGender||'',lastWords:S.lastWords||'',
     family:S.family.map(m=>({relation:m.relation,name:m.name,age:m.age||'',gender:m.sg||'',older:m.older})),
     wishes:Object.assign({},S.keeps||{}),checklist:Object.assign({},S.checks)};
 }
