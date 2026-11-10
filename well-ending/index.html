@@ -4,7 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>어느 날, 내가 없는 아침</title>
-<meta name="description" content="내가 떠난 뒤 남은 가족의 하루를 따라가 보는 인터랙티브 스토리. 준비되지 않은 하루와 미리 준비한 하루를 나란히 보여줍니다.">
+<meta name="description" content="어느 날 아침, 내가 깨어나지 못했다면. 남은 가족의 하루를 따라가 보는 5분짜리 이야기.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="어느 날, 내가 없는 아침">
+<meta property="og:description" content="어느 날 아침, 내가 깨어나지 못했다면. 남은 가족의 하루를 따라가 보는 5분짜리 이야기.">
+<meta property="og:url" content="https://haebom.app/well-ending/">
+<meta property="og:image" content="https://haebom.app/well-ending/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://haebom.app/well-ending/">
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
@@ -16,7 +24,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --n-bg:#EDEFEE;--n-ink:#20262B;--n-muted:#5B646B;--n-line:#CBD1D1;--n-accent:#3D5A6E;--n-surface:#F8F9F8;--n-on:#FFFFFF;
@@ -43,11 +51,15 @@
 :root[data-mode="neutral"]{--bg:var(--n-bg);--ink:var(--n-ink);--muted:var(--n-muted);--line:var(--n-line);--accent:var(--n-accent);--surface:var(--n-surface);--on:var(--n-on)}
 :root[data-mode="cold"]{--bg:var(--c-bg);--ink:var(--c-ink);--muted:var(--c-muted);--line:var(--c-line);--accent:var(--c-accent);--surface:var(--c-surface);--on:var(--c-on)}
 :root[data-mode="warm"]{--bg:var(--w-bg);--ink:var(--w-ink);--muted:var(--w-muted);--line:var(--w-line);--accent:var(--w-accent);--surface:var(--w-surface);--on:var(--w-on)}
+/* 엔딩노트 안내 화면: 기기 설정과 상관없이 항상 밝은 화면. 포인트 색은 --accent 한 곳만 바꾸면 됨 */
+:root[data-mode="bright"]{--bg:#FFFBF5;--ink:#33261C;--muted:#7C6B5D;--line:#EFE2D0;--accent:#D9772B;--surface:#FFFFFF;--on:#FFFFFF;color-scheme:light}
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px);transition:background-color .8s}
 body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;transition:background-color .8s,color .8s;-webkit-font-smoothing:antialiased}
 button,input,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.feed,.page,.scene,.sheet{scrollbar-width:none}
+.feed::-webkit-scrollbar,.page::-webkit-scrollbar,.scene::-webkit-scrollbar,.sheet::-webkit-scrollbar{display:none}
 .app{height:100%;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:0 16px}
 .prog{padding-top:12px}
 .seg{display:block;height:5px;border-radius:3px;background:var(--line);overflow:hidden}
@@ -72,6 +84,9 @@ button,input,textarea{font:inherit;color:inherit}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .nar{font-family:'Gowun Batang',serif;font-size:16px;line-height:1.75;color:var(--ink);text-align:center;padding:4px 10px;word-break:keep-all}
 .nar.old{color:var(--muted)}
+.hint{font-size:12.5px;color:var(--muted);text-align:center;margin:0 0 8px;animation:fade .8s ease both}
+/* 종이 없이 글씨체만 손글씨인 한 줄 */
+.hand{font-family:'Nanum Pen Script','Gowun Batang',cursive;font-size:28px;line-height:1.35;color:var(--ink);text-align:center;margin:0;padding:6px 10px 8px;word-break:keep-all}
 .msg{display:flex;gap:8px;align-items:flex-start;max-width:86%}
 .msg .av{margin-top:2px}
 .nm{display:block;font-size:12px;color:var(--muted);margin:0 0 3px 2px}
@@ -89,9 +104,12 @@ button,input,textarea{font:inherit;color:inherit}
 .noti b{display:block;font-size:12px;color:var(--muted);font-weight:500}
 .noti.alert{border:1.5px solid var(--danger)}
 .noti.alert .ic{background:var(--danger)}
-.photos{display:grid;grid-template-columns:repeat(3,48px);gap:4px;margin-bottom:6px}
-.photos span{height:48px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--line));opacity:.75}
-.paper{font-family:'Gowun Batang',serif;background:#FFF9EC;color:#3A2A1A;border-radius:4px;padding:12px 14px;font-size:15px;line-height:1.7;box-shadow:0 1px 0 rgba(0,0,0,.08);transform:rotate(-1deg);word-break:keep-all}
+/* 사진 메시지: 흰 테두리 인화 사진. 안은 흐릿한 빛만(무엇이 찍혔는지는 그리지 않음) */
+.photo{display:block;width:150px;margin:2px 0 8px;padding:5px 5px 14px;background:#FBF8F1;border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.28);transform:rotate(-2deg)}
+.photo svg{display:block;width:100%;height:auto;border-radius:1px}
+/* 손글씨 메모: 줄 노트(가로줄 + 왼쪽 여백선) 위에 펜글씨 */
+.paper{font-family:'Nanum Pen Script','Gowun Batang',cursive;color:#2E2A3A;border-radius:3px;padding:6px 16px 8px 34px;font-size:23px;line-height:30px;letter-spacing:.2px;box-shadow:0 1px 3px rgba(0,0,0,.18);word-break:keep-all;
+  background:linear-gradient(90deg,transparent 23px,#E9A7A0 23px,#E9A7A0 24px,transparent 24px),repeating-linear-gradient(#FFF9EC 0,#FFF9EC 29px,#CFDAE6 29px,#CFDAE6 30px) 0 4px;background-color:#FFF9EC}
 .vid{display:flex;align-items:center;gap:10px}
 .play{width:30px;height:30px;border-radius:50%;background:var(--on);color:var(--accent);display:grid;place-items:center;font-size:12px;flex:none}
 .sub{font-family:'Gowun Batang',serif;font-size:17px;line-height:1.7}
@@ -110,7 +128,7 @@ button,input,textarea{font:inherit;color:inherit}
 .paper.solo{max-width:86%;margin-left:auto;margin-right:auto}
 .unheard{display:block;font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:700;color:var(--danger);margin-top:2px}
 .hint{font-size:12px;color:var(--muted);text-align:center}
-.closing{font-family:'Gowun Batang',serif;font-size:clamp(22px,6vw,28px);line-height:1.5;color:var(--ink);text-align:center;margin:20px 6px 6px;word-break:keep-all;animation:rise .8s ease both}
+.closing{font-family:'Gowun Batang',serif;font-size:clamp(22px,6vw,28px);line-height:1.5;color:var(--ink);text-align:center;margin:20px 6px 6px;word-break:keep-all;white-space:pre-line;animation:rise .8s ease both}
 .foot{padding-top:12px}
 .nav{display:flex;gap:10px;padding-bottom:14px}
 .btn{flex:1;min-height:52px;border-radius:14px;border:1px solid var(--line);background:transparent;font-size:16px;font-weight:500;cursor:pointer}
@@ -124,7 +142,7 @@ button,input,textarea{font:inherit;color:inherit}
 .hands{transform-box:view-box;transform-origin:160px 75px}
 .hands.go{animation:back 1.6s cubic-bezier(.2,.7,.3,1) forwards}
 @keyframes back{to{transform:rotate(-1080deg)}}
-.page{flex:1;overflow-y:auto;padding:8px 0 20px}
+.page{flex:1;overflow-y:auto;padding:8px 6px 20px;margin:0 -6px}
 .h1{font-family:'Gowun Batang',serif;font-size:clamp(28px,8vw,40px);line-height:1.35;margin:6px 0 14px;font-weight:700;word-break:keep-all}
 .lead{font-size:15px;line-height:1.75;color:var(--muted);margin:0 0 26px;word-break:keep-all}
 .field{display:block;margin-bottom:20px}
@@ -160,6 +178,28 @@ textarea.input{padding:12px 14px;min-height:84px;resize:none;line-height:1.6}
 .checks input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--accent)}
 .checks input:checked+span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
 .progress{font-family:'Gowun Batang',serif;font-size:44px;color:var(--accent);margin:0}
+/* 엔딩노트 안내 화면 */
+.en-k{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);margin:18px 0 0}
+.en-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:34px 0 12px}
+.en-h h2{font-family:'Gowun Batang',serif;font-size:20px;margin:0}
+.en-h span{font-size:13px;color:var(--muted);flex:none}
+.en-h b{color:var(--accent);font-size:15px}
+.en-page{display:flex;flex-direction:column;padding-top:4px;padding-bottom:4px;font-size:24px}
+.en-cap{text-align:center;margin:10px 0 0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{position:relative;display:block;cursor:pointer}
+.tile input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.tile-in{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;height:100%;border:1.5px solid var(--line);border-radius:18px;background:var(--surface);padding:14px 10px 14px;transition:border-color .2s}
+.tile svg{width:100%;max-width:150px;height:auto;margin-bottom:8px}
+.tile b{font-size:15px;font-weight:700;word-break:keep-all}
+.tile small{font-size:12.5px;color:var(--muted);margin-top:3px;word-break:keep-all}
+.tile i{position:absolute;top:10px;right:10px;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:700;color:transparent}
+.tile input:checked+.tile-in{border-color:var(--accent)}
+.tile input:checked+.tile-in i{background:var(--accent);border-color:var(--accent);color:var(--on)}
+.tile input:focus-visible+.tile-in{outline:2px solid var(--accent);outline-offset:2px}
+.en-how{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.en-how li{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:13.5px;font-weight:500;line-height:1.4;word-break:keep-all}
+.en-how span{width:56px;height:56px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:25px}
 .keeps{border:1px solid var(--line);border-radius:16px;padding:16px;margin:0 0 20px;background:var(--surface)}
 .keeps h2{font-size:15px;margin:0 0 4px}
 .keeps dl{margin:0}
@@ -179,6 +219,11 @@ textarea.input{padding:12px 14px;min-height:84px;resize:none;line-height:1.6}
 .eye.cold .eye-phone{background:var(--c-bg);color:var(--c-accent);box-shadow:0 0 9vmin 1vmin rgba(200,215,235,.35)}
 .eye.warm .eye-phone{background:var(--w-bg);color:var(--w-accent);box-shadow:0 0 9vmin 1vmin rgba(255,225,170,.5)}
 .eye-phone b{font-family:'Gowun Batang',serif;font-weight:400;font-size:5.4vmin;letter-spacing:-.02em;animation:eyePhoneTxt 2.5s 8.2s ease both}
+/* 이야기를 다시 볼 때는 같은 연출을 절반 이하 길이로 */
+.eye.fast .eye-line{animation-duration:1.3s;animation-delay:.1s}
+.eye.fast .eye-view,.eye.fast .eye-hole{animation-duration:2.2s;animation-delay:1.2s}
+.eye.fast .eye-dim{animation-duration:.8s;animation-delay:3.2s}
+.eye.fast .eye-phone,.eye.fast .eye-phone b{animation-duration:1.5s;animation-delay:3.2s}
 @keyframes eyeDim{from{opacity:0}to{opacity:.6}}
 @keyframes eyePhone{0%{opacity:0;top:68%;width:22vmin;height:44vmin;border-radius:3.5vmin;transform:translate(-50%,-50%) rotate(-7deg)}28%,52%{opacity:1;top:66%;width:22vmin;height:44vmin;border-radius:3.5vmin;transform:translate(-50%,-50%) rotate(-7deg)}100%{opacity:1;top:50%;width:112vw;height:112vh;border-radius:0;transform:translate(-50%,-50%) rotate(0)}}
 @keyframes eyePhoneTxt{0%,52%{opacity:1}72%,100%{opacity:0}}
@@ -197,7 +242,6 @@ textarea.input{padding:12px 14px;min-height:84px;resize:none;line-height:1.6}
 const KEY='lastMorning:v2', MAX=5;
 const RELS=['배우자','자녀','부모','형제자매','반려동물','기타'];
 const AGES=[['아기','0~3세'],['어린이','4~12세'],['청소년','13~18세'],['성인','19세 이상']];
-const EMOJIS=['','🙂','🌷','⭐','☕','🌙','🐶','🐱'];
 const STEPS=['intro','family','open','u:phone','u:drawer','u:funeral','u:money','u:fifth','u:last','rewind','p:phone','p:drawer','p:funeral','p:money','p:fifth','p:last','summary','ending','check'];
 const STORY=STEPS.slice(2,18);
 const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -211,7 +255,9 @@ let sheet=null, animIdx=-1, busy=false;
 
 function jong(w){const c=(w||'').trim().slice(-1);if(!c)return null;const k=c.charCodeAt(0);
   if(k>=0xAC00&&k<=0xD7A3)return (k-0xAC00)%28!==0;if(/[0-9]/.test(c))return '013678'.includes(c);return null;}
-function J(w,t){const m={'은':['은','는'],'이':['이','가'],'을':['을','를'],'과':['과','와']}[t];const h=jong(w);
+/* 받침으로 끝나는 자녀 이름은 부를 때처럼 '-이'를 붙임: 하준 → 하준이(가/는/를/와/에게/의) */
+function K(w){return jong(w)===true&&S.family.some(m=>m.relation==='자녀'&&m.name===w)?w+'이':w;}
+function J(w,t){w=K(w);const m={'은':['은','는'],'이':['이','가'],'을':['을','를'],'과':['과','와']}[t];const h=jong(w);
   if(h===null)return w+m[0]+'('+m[1]+')';return w+(h?m[0]:m[1]);}
 function voc(w){const h=jong(w);return h===null?w:w+(h?'아':'야');}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -260,14 +306,14 @@ function other(a,ex,scene){return a.adults.find(m=>!ex.includes(m&&m.id)&&canPla
 
 /* ---------- 비트 ---------- */
 const N=text=>({t:'n',text}), C=(m,text)=>({t:'c',m,text}), PH=(m,text)=>({t:'photo',m,text}),
-  NOTE=(m,text)=>({t:'note',m,text}), NO=(app,text,ic,alert)=>({t:'noti',app,text,ic,alert}), VID=(label,sub)=>({t:'video',label,sub}),
+  NOTE=(m,text)=>({t:'note',m,text}), NO=(app,text,ic,alert)=>({t:'noti',app,text,ic,alert}), VID=(label,sub)=>({t:'video',label,sub}), HAND=text=>({t:'hand',text}),
   ACT=o=>Object.assign({t:'act'},o);
 const META={
-  open:{t:['오전','6:47'],title:'눈을 뜬 아침'},phone:{t:['오전','9:12'],title:'잠긴 휴대폰'},
+  open:{t:['오전','6:40'],title:'눈을 뜬 아침'},phone:{t:['오전','9:12'],title:'잠긴 휴대폰'},
   drawer:{t:['새벽','2:30'],title:'서랍 속 파란 파일'},funeral:{t:['오후','4:05'],title:'장례식장 복도'},
   money:{t:['오전','11:20'],title:'몰랐던 통장'},pet:{t:['오후','7:40'],title:'비어 있는 밥그릇'},
   sub:{t:['오후','8:15'],title:'결제 완료 알림'},last:{t:['오후','11:58'],title:'마지막 말'},
-  ending:{t:['오전','6:47'],title:'다시, 아침'}
+  ending:{t:['오전','6:40'],title:'다시, 아침'}
 };
 function joinNames(list){const n=list.map(m=>m.name);if(n.length===1)return n[0];if(n.length===2)return J(n[0],'과')+' '+n[1];return n.slice(0,-1).join(', ')+', 그리고 '+n[n.length-1];}
 function words(){return S.lastWords&&S.lastWords.trim()?S.lastWords.trim():'늘 고마웠어. 너무 오래 슬퍼하지 마.';}
@@ -308,9 +354,9 @@ function build(key,ver,a){
     return {chat:'group',beats:[
       N('알람이 울리기도 전에 눈이 떠졌다.'),
       N('몸이 이상하게 가벼웠다.'),
-      NO('알람','오전 6:47','⏰'),
+      NO('알람','오전 6:40','⏰'),
       N(pick(['알람을 끄려는데, 손가락이 화면에 닿지 않았다.','알람이 울렸다. 아무리 눌러도 꺼지지 않았다.','알람이 한참을 울렸다. 끄려 해도 꺼지지 않았다.'])), ...chat,
-      N(who), N('식탁 위에는 내가 어제 쓰던 컵이 그대로 놓여 있었다.'), ...(baby&&f.length>1?[N(`${baby.name}만 아무것도 모른 채 옹알이를 하고 있었다.`)]:[]),
+      N(who), N('식탁 위에는 내가 어제 쓰던 컵이 그대로 놓여 있었다.'), ...(baby&&f.length>1?[N(`${K(baby.name)}만 아무것도 모른 채 놀고 있었다.`)]:[]),
       N('“다들 왜 그래?” 아무도 대답하지 않았다.'),
       N('현관 거울 앞을 지나는데, 거울 속엔 아무도 없었다.'),N('그제야 알았다. 나는 어젯밤 잠든 채로, 깨어나지 못했다.'),N('어젯밤의 “잘 자”가, 이 집에 남긴 마지막 인사였다.')]};}
 
@@ -335,27 +381,25 @@ function build(key,ver,a){
       ]), N('사진을 고르는 손끝이, 조금은 덜 떨렸다.')]};}
 
   case 'drawer':{const n=a.drawer||G('가족'), o=other(a,[n.id]);
-    const act=ACT({kind:'send',q:`${n.name}에게 알려주세요.`,opts:['두 번째 서랍! 파란 파일!']});
     if(U) return {chat:'group',input:true,beats:[
       N(`새벽 두 시, ${J(n.name,'이')} 서랍을 전부 꺼내 바닥에 쏟았다.`),
       ...pick([
         [T(n,'보험 어디 들었는지 아는 사람 있어?','혹시 보험 어디 들었는지 아시는 분 계세요?'), ...(o?[TR(o,n,'글쎄… 들었다고는 했던 것 같은데','글쎄요… 들었다고는 했던 것 같은데요')]:[])],
         [T(n,'보험 증권 같은 거 본 사람 있어?','보험 증권 같은 거 보신 분 계세요?'), ...(o?[TR(o,n,'그런 건 다 알아서 했잖아','그런 건 다 알아서 챙겼잖아요')]:[])],
-        [T(n,'서류가 어디 있는지 정말 모르겠어','서류가 어디 있는지 정말 모르겠어요'), ...(o?[TR(o,n,'내일 같이 찾아보자','내일 같이 찾아봐요')]:[])]
+        [T(n,'보험 서류가 어디 있는지 정말 모르겠어','보험 서류가 어디 있는지 정말 모르겠어요'), ...(o?[TR(o,n,'내일 같이 찾아보자','내일 같이 찾아봐요')]:[])]
       ]),
-      N('나는 알고 있었다. 두 번째 서랍, 파란 파일.'), act, N('들릴 리가 없었다.'),
+      N('나는 알고 있었다. 두 번째 서랍, 파란 파일.'), N('알려줄 방법이 없었다.'),
       pick([T(n,'못 찾겠어. 내일 다시 볼게','못 찾겠어요. 내일 다시 볼게요'),T(n,'보험사마다 전화 돌려봐야겠어','보험사마다 전화 돌려봐야겠어요'),T(n,'새벽인데 잠이 안 와','새벽인데 잠이 안 오네요')]),
-      N(`${n.name}의 어깨가 작게 들썩였다. 나는 그 어깨를 안아줄 수 없었다.`)]};
+      N(`${K(n.name)}의 어깨가 작게 들썩였다.`), N('나는 그 어깨를 안아줄 수 없었다.')]};
     return {chat:'group',beats:[
-      NOTE(n,'서류는 두 번째 서랍, 파란 파일에 있어.'),
+      NOTE(n,'보험 증권이랑 통장은 두 번째 서랍, 파란 파일에 있어.'),
       N(`${J(n.name,'이')} 두 번째 서랍에서 파란 파일을 꺼냈다.`),
-      ...(said('u:drawer')?[N('이번에는, 외치지 않아도 되었다.')]:[]),
       ...pick([
         [T(n,'보험이랑 계좌 정리된 거 찾았어. 전화 몇 통이면 될 것 같아','보험이랑 계좌 정리된 거 찾았어요. 전화 몇 통이면 될 것 같아요'), ...(o?[TR(o,n,'다행이다. 이제 좀 자','다행이에요. 이제 좀 쉬세요')]:[])],
         [T(n,'파란 파일에 다 있었어. 보험사 연락처까지','파란 파일에 다 있었어요. 보험사 연락처까지요'), ...(o?[TR(o,n,'역시 꼼꼼했네','역시 꼼꼼했네요')]:[])],
-        [T(n,'서랍 열자마자 찾았어','서랍 열자마자 찾았어요'), ...(o?[(o.relation==='부모'&&n.relation==='부모')?C(o,'다행이다. 당신도 좀 쉬어'):TR(o,n,'다행이다. 너도 좀 쉬어','다행이에요. 좀 쉬세요')]:[])]
+        [T(n,'서랍 열자마자 찾았어. 보험 증권까지 다 있어','서랍 열자마자 찾았어요. 보험 증권까지 다 있어요'), ...(o?[(o.relation==='부모'&&n.relation==='부모')?C(o,'다행이다. 당신도 좀 쉬어'):TR(o,n,'다행이다. 너도 좀 쉬어','다행이에요. 좀 쉬세요')]:[])]
       ]),
-      N('파일 맨 뒤에는 짧은 쪽지가 끼워져 있었다. ‘혼자 찾느라 고생 많았지. 고마워.’'),
+      N('파일 맨 뒤에는 짧은 쪽지가 끼워져 있었다.'), N('‘혼자 찾느라 고생 많았지. 고마워.’'),
       N(`남은 밤, ${J(n.name,'은')} 서랍 대신 내 사진을 들여다보았다.`)]};}
 
   case 'funeral':{const x=a.fa||G('가족'), y=a.fb||Object.assign(G('친척 어른'),{elder:true}), fx=!a.fb;
@@ -390,7 +434,8 @@ function build(key,ver,a){
         [T(y,'해바라기라니, 딱 걔답다','해바라기라니, 딱 그 사람답네요'), TR(x,y,'적힌 대로 하자','적힌 대로 해요')]]
     ]);
     const re=ch==='납골당도 괜찮아'?[T(y,'자주 보러 가자','자주 보러 가요'), TR(x,y,'그래, 같이 가자','네, 같이 가요')]:ch==='꽃은 아무거나 괜찮아'?plain:react;
-    return {chat:'prose',beats:[
+    return {chat:'prose',img:'img/funeral-hall-ready.jpg',imgAlt:'따뜻한 빛이 드는 장례식장 복도에서 가족들이 서로를 안고 위로하는 그림',beats:[
+      N('장례식장 복도는 조용했다.'),
       N(`${J(x.name,'과')} ${J(y.name,'이')} 같은 종이를 함께 읽었다.`),
       NOTE(x,alts[ch]||base), say(re[0],'말했다.'), say(re[1],'고개를 끄덕였다.'),
       ...(said('u:funeral')?[N('이번에는, 내 말이 먼저 도착해 있었다.')]:[]),
@@ -399,13 +444,13 @@ function build(key,ver,a){
   case 'money':{const n=a.money||G('가족');
     const act=NO('은행','본인 인증이 필요합니다. 명의자 본인만 조회할 수 있어요.','!',true);
     if(U) return {chat:'group',input:true,beats:pick([
-      [NO('은행','대출 이자 자동이체 출금 예정 안내','₩'),NO('은행','적금 만기 안내','₩'),N(`은행 창구에서 ${n.name}의 얼굴이 하얘졌다.`),act,
+      [NO('은행','대출 이자 자동이체 출금 예정 안내','₩'),NO('은행','적금 만기 안내','₩'),N(`은행 창구에서 ${K(n.name)}의 얼굴이 하얘졌다.`),act,
         T(n,`${R(n)}대출 있었던 거 아는 사람 있어?`,`${R(n)}대출 있었던 거 아시는 분 계세요?`),T(n,'왜 나한테 말을 안 했지','왜 저한테 말을 안 했을까요')],
-      [NO('카드','카드 대금 결제 예정 안내','₩'),NO('은행','자동이체 출금 실패 안내','₩'),N(`${n.name} 앞으로 낯선 우편물이 쌓이기 시작했다.`),act,
+      [NO('카드','카드 대금 결제 예정 안내','₩'),NO('은행','자동이체 출금 실패 안내','₩'),N(`${K(n.name)} 앞으로 낯선 우편물이 쌓이기 시작했다.`),act,
         T(n,`${R(n)}카드가 몇 장인지 아는 사람?`,`${R(n)}카드가 몇 장인지 아시는 분 계세요?`),T(n,'모르는 것투성이야','모르는 것투성이에요')],
-      [NO('보험','보험료 미납 안내','₩'),NO('은행','휴면 계좌 안내','₩'),N(`은행 창구에서 ${n.name}의 얼굴이 하얘졌다.`),act,
+      [NO('보험','보험료 미납 안내','₩'),NO('은행','휴면 계좌 안내','₩'),N(`은행 창구에서 ${K(n.name)}의 얼굴이 하얘졌다.`),act,
         T(n,'통장이 생각보다 많았어','통장이 생각보다 많았어요'),T(n,'하나하나 다 서류를 떼야 한대','하나하나 다 서류를 떼야 한대요')]
-    ]).concat([N('갚을 계획도, 모아둔 이유도, 설명해 줄 사람이 없었다.'),N(`${n.name}에게 미안하다는 말조차, 이제는 전할 수 없었다.`)])};
+    ]).concat([N('갚을 계획도, 모아둔 이유도, 설명해 줄 사람이 없었다.'),N(`${K(n.name)}에게 미안하다는 말조차, 이제는 전할 수 없었다.`)])};
     return {chat:'group',beats:[
       N(`${J(n.name,'은')} 노트에 적힌 목록을 은행 직원에게 내밀었다.`),
       ...pick([
@@ -413,7 +458,7 @@ function build(key,ver,a){
         [NOTE(n,'카드는 이 세 장. 자동이체는 이렇게 정리해줘.'),T(n,'카드랑 자동이체 다 정리했어','카드랑 자동이체 다 정리했어요')],
         [NOTE(n,'통장은 두 개야. 하나는 비상금. 놀라지 말고 써.'),T(n,'비상금까지 적어놨더라','비상금까지 적어놨더라고요')]
       ]),
-      N(`${J(n.name,'은')} 내 글씨를 손가락으로 한 번 쓸어보았다.`),N('숫자로 가득한 종이였지만, 그건 내가 남긴 마지막 다정함이었다.')]};}
+      N(`${J(n.name,'은')} 내 글씨를 손가락으로 한 번 쓸어보았다.`),N('숫자로 가득한 종이였지만,'),N('그건 내가 남긴 마지막 다정함이었다.')]};}
 
   case 'pet':{const p=a.pet.name, h=a.fifth||G('가족'), o=other(a,[h.id],'fifth');
     if(U){const [chat,opt,end]=pick([
@@ -425,13 +470,13 @@ function build(key,ver,a){
          '노란 봉지 간식 제일 좋아해', `${J(p,'은')} 내가 앉던 자리에서 잠들었다.`]
       ]);
       return {chat:'group',input:true,beats:[N(`${J(p,'이')} 현관 앞에서 하루 종일 기다렸다.`),...chat,
-        ACT({kind:'send',q:`${h.name}에게 알려주세요.`,opts:[opt]}),N(end),N('나는 몇 번이고 그 작은 머리를 쓰다듬으려 했다.')]};}
+        ACT({kind:'send',q:`${K(h.name)}에게 알려주세요.`,opts:[opt]}),N(end),N('나는 몇 번이고 그 작은 머리를 쓰다듬으려 했다.')]};}
     return {chat:'group',beats:[
       N(`노트 마지막 장에 ${p} 이야기가 있었다.`),
       ...pick([
-        [NOTE(h,`사료는 베란다 선반에. ${J(p,'은')} ${h.name}에게 부탁해.`),T(h,`${J(p,'은')} 내가 데려갈게`,`${J(p,'은')} 제가 데려갈게요`),TP(h,'밥 다 먹었어','밥 다 먹었어요')],
-        [NOTE(h,`다니는 병원은 사거리 동물병원. ${h.name}에게 부탁해.`),T(h,`${J(p,'은')} 우리 집으로 데려왔어`,`${J(p,'은')} 저희 집으로 데려왔어요`),TP(h,'잘 적응하고 있어','잘 적응하고 있어요')],
-        [NOTE(h,`간식은 노란 봉지. ${J(p,'은')} ${h.name}에게 부탁해.`),T(h,`${J(p,'은')} 내가 맡을게`,`${J(p,'은')} 제가 맡을게요`),TP(h,'간식 주니까 꼬리 흔든다','간식 주니까 꼬리 흔들어요')]
+        [NOTE(h,`사료는 베란다 선반에. ${J(p,'은')} ${K(h.name)}에게 부탁해.`),T(h,`${J(p,'은')} 내가 데려갈게`,`${J(p,'은')} 제가 데려갈게요`),TP(h,'밥 다 먹었어','밥 다 먹었어요')],
+        [NOTE(h,`다니는 병원은 사거리 동물병원. ${K(h.name)}에게 부탁해.`),T(h,`${J(p,'은')} 우리 집으로 데려왔어`,`${J(p,'은')} 저희 집으로 데려왔어요`),TP(h,'잘 적응하고 있어','잘 적응하고 있어요')],
+        [NOTE(h,`간식은 노란 봉지. ${J(p,'은')} ${K(h.name)}에게 부탁해.`),T(h,`${J(p,'은')} 내가 맡을게`,`${J(p,'은')} 제가 맡을게요`),TP(h,'간식 주니까 꼬리 흔든다','간식 주니까 꼬리 흔들어요')]
       ]),
       ...(said('u:fifth')?[N('이번에는, 미리 알려줄 수 있었다.')]:[]),
       N(`${J(p,'은')} 그날 밤 처음으로 밥을 다 먹었다.`),N('가끔은 여전히 현관 쪽을 바라보겠지만, 이제 혼자 기다리지는 않을 것이다.')]};}
@@ -450,47 +495,47 @@ function build(key,ver,a){
       [T(n,'구독 다 정리했어. 음악은 내가 계속 쓰려고','구독 다 정리했어요. 음악은 제가 계속 쓰려고요'),N(`${J(n.name,'은')} 내 플레이리스트를 틀어놓고 저녁을 먹었다.`)],
       [T(n,'목록대로 다 해지했어','목록대로 다 해지했어요'),T(n,'게임은… 레벨이 꽤 높더라','게임은… 레벨이 꽤 높더라고요'),N('나는 조금 민망해졌다.')],
       [T(n,'사진 저장공간은 남겨뒀어','사진 저장공간은 남겨뒀어요'),N(`${J(n.name,'은')} 가끔 그 사진들을 꺼내 볼 것이다.`)]
-    ]),N('사소한 것들이 정리되자, 나를 떠올리는 시간이 조금 더 따뜻해졌다.')]};}
+    ]),N('사소한 것들이 정리되자,'),N('나를 떠올리는 시간이 조금 더 따뜻해졌다.')]};}
 
   case 'last':{const n=a.last||G('가족');
     if(U){const [chat,opt2]=pick([
-        [[C(n,'마지막으로 나한테 무슨 말 했었지'),C(n,'“먼저 잘게” 그게 마지막이었어'),C(n,'보고 싶어')],'나도 보고 싶어'],
-        [[C(n,'오늘 장례 끝났어'),C(n,'집이 너무 조용해'),C(n,'현관문 소리만 나면 아직도 돌아보게 돼')],'나 여기 있어'],
-        [[C(n,'오늘 꿈에 나왔어'),C(n,'아무 말도 안 하고 웃기만 하더라'),C(n,'뭐라고 좀 해주지')],'미안해']
+        [[C(n,'마지막으로 나한테 무슨 말 했었지'),C(n,'“먼저 잘게” 그게 마지막이었어'),C(n,'보고 싶어')],'늘 곁에 있을게'],
+        [[C(n,'오늘 장례 끝났어'),C(n,'집이 너무 조용해'),C(n,'현관문 소리만 나면 아직도 돌아보게 돼')],'밥 잘 챙겨 먹어'],
+        [[C(n,'오늘 꿈에 나왔어'),C(n,'아무 말도 안 하고 웃기만 하더라'),C(n,'뭐라고 좀 해주지')],'웃는 얼굴로 기억해 줘']
       ]);
       return {chat:'dm',dmFrom:n,input:true,beats:[N(`밤늦게, ${J(n.name,'이')} 나에게 메시지를 보냈다.`),...chat,
         ACT({kind:'send',q:'답장을 보내보세요.',opts:[words(),opt2]}),N('읽음 표시는 끝내 사라지지 않았다.'),N('하고 싶은 말이 그렇게 많았는데.'),N('사랑한다는 말은, 생각보다 미루기 쉬운 말이었다.')]};}
     return {chat:'dm',dmFrom:n,beats:[
-      N(`${J(n.name,'이')} 노트 사이에 꽂힌 메모리카드를 발견했다.`), VID(`${n.name}에게`,said('u:last')?S.acts['u:last']:words()), N('화면 속 내 목소리가 조용히 방 안을 채웠다.'),
+      N(`${J(n.name,'이')} 노트에 적힌 비밀번호로 내 휴대폰을 열었다.`), VID(pick(['지난 생일 저녁에 찍은 영상','주말 아침, 식탁에서 찍은 영상','지난여름 바닷가에서 찍은 영상'])), N('별것 아닌 날의 내 목소리가, 조용히 방 안을 채웠다.'),
+      N('노트 맨 뒷장에는, 한 줄이 더 적혀 있었다.'), HAND(said('u:last')?S.acts['u:last']:words()),
       ...(said('u:last')?[N('보내지 못했던 그 말이, 이번에는 닿았다.')]:[]),
       ...pick([[C(n,'몇 번이고 다시 봤어')],[C(n,'처음엔 못 보겠더라'),C(n,'근데 이제 매일 밤 봐')],[C(n,'목소리 듣고 많이 울었어'),C(n,'고마워. 남겨줘서')]]),
-      N(`${J(n.name,'은')} 이 목소리로 나를 기억할 것이다.`),N('미처 하지 못한 말은, 이렇게 미리 남겨둘 수 있는 거였다.')]};}
+      N(`${J(n.name,'은')} 이 목소리로 나를 기억할 것이다.`)]};}
 
   case 'baby':{const b=a.last, g=a.adults[0]||null;
     if(U){const [chat,o1]=pick([
         [[C(g,`${J(b.name,'은')} 오늘도 잘 자`),C(g,`${J(b.name,'은')} 목소리 기억 못 하겠지`)],`${voc(b.name)}, 사랑해`],
         [[C(g,`${J(b.name,'이')} 오늘 처음 뒤집기 했어`),C(g,'같이 봤어야 했는데')],`${voc(b.name)}, 잘했어`],
-        [[C(g,`${b.name} 재우다가 같이 울었어`),C(g,'자장가를 몰라서')],`${voc(b.name)}, 잘 자`]
+        [[C(g,`${K(b.name)} 재우다가 같이 울었어`),C(g,'늘 불러주던 그 자장가가 생각나서')],`${voc(b.name)}, 잘 자`]
       ]);
-      const pw=S.userGender==='남'?'아빠':S.userGender==='여'?'엄마':'';
-      return {chat:g?'dm':null,dmFrom:g,input:true,beats:[N(`밤늦게 ${b.name}의 아기 침대 옆에 앉았다.`),N('작은 숨소리가 방 안을 오르내렸다.'),...(g?chat:[]),
-        ACT({kind:'send',q:`${b.name}에게 말을 걸어보세요.`,opts:[o1,words()]}),N('이 아이는 내 목소리를 기억하지 못할 것이다.'),
-        N(pw?`이 아이가 처음 “${pw}”라고 부르는 날, 나는 거기 없을 것이다.`:'이 아이가 처음 나를 부르는 날, 나는 거기 없을 것이다.')]};}
-    const [label,line]=pick([[`${J(b.name,'이')} 열 살이 되면`,`${b.name}한테 꼭 보여줄게`],[`${b.name}의 첫 생일에`,'돌잔치 때 다 같이 볼게'],[`${b.name}의 입학식 날에`,'꼭 그날 보여줄게']]);
+      return {chat:g?'dm':null,dmFrom:g,input:true,beats:[N(`밤늦게 ${K(b.name)}의 아기 침대 옆에 앉았다.`),N('작은 숨소리가 방 안을 오르내렸다.'),...(g?chat:[]),
+        ACT({kind:'send',q:`${K(b.name)}에게 말을 걸어보세요.`,opts:[o1,words()]}),N('이 아이는 내 목소리를 기억하지 못할 것이다.'),
+        N('아직 해주지 못한 말이 이렇게 많은데.'),N('더 많이 안아줄걸.')]};}
+    const [label,line]=pick([[`${K(b.name)}에게 그림책 읽어주던 밤`,'이 목소리, 크면 꼭 들려줄게'],[`${J(b.name,'과')} 놀아주던 주말`,`${K(b.name)} 크면 같이 볼게`],[`${K(b.name)} 재우며 불러주던 자장가`,'오늘은 이거 틀어주고 재웠어']]);
     return {chat:g?'dm':null,dmFrom:g,beats:[
-      N('노트 사이에 메모리카드가 하나 꽂혀 있었다.'), VID(label,said('u:last')?S.acts['u:last']:words()), ...(g?[C(g,line)]:[]),
+      N('잠금이 풀린 내 휴대폰 안에, 평소 찍어둔 영상들이 있었다.'), VID(label), ...(g?[C(g,line)]:[]),
+      N('노트 맨 뒷장에는, 한 줄이 더 적혀 있었다.'), HAND(said('u:last')?S.acts['u:last']:words()),
       ...(said('u:last')?[N('들려주지 못했던 그 말이, 이번에는 남아 있었다.')]:[]),
-      N(`영상 속 나는, 언젠가 ${J(b.name,'이')} 물어볼 질문들에 미리 대답하고 있었다.`),
       N(`${J(b.name,'은')} 자라서, 이 목소리로 나를 알게 될 것이다.`)]};}
 
-  case 'summary':return {chat:null,beats:[N('같은 하루였다.'),N('같은 사람들이, 같은 이유로 울었다.'),N('슬픔의 크기는 같았다.'),N('다만 이번엔, 가족이 나를 그리워하는 데만 시간을 쓸 수 있었다.'),N('준비는 죽음을 위한 게 아니었다.'),N('남겨질 사람들이 덜 헤매도록, 내가 건넬 수 있는 마지막 다정함이었다.')]};
+  case 'summary':return {chat:null,beats:[N('같은 하루였다.'),N('같은 사람들이, 같은 이유로 울었다.'),N('슬픔의 크기는 같았다.'),N('다만 이번엔,'),N('가족이 나를 그리워하는 데만 시간을 쓸 수 있었다.'),N('준비는 죽음을 위한 게 아니었다.'),N('남겨질 사람들이 덜 헤매도록,'),N('내가 건넬 수 있는 마지막 다정함이었다.')]};
   case 'ending':{const f=a.adults[0]||DF()[0];
     return {chat:'group',input:true,alive:true,beats:[
-      N('띠리리리. 알람이 울렸다.'),NO('알람','오전 6:47','⏰'),
+      N('띠리리리. 알람이 울렸다.'),NO('알람','오전 6:40','⏰'),
       f.relation==='반려동물'?N(`${J(f.name,'이')} 침대 위로 뛰어올랐다.`):C(f,pick(['일어났어? 아침 먹고 가','오늘 비 온대. 우산 챙겨','커피 내려놨어'])),
       N('현관 거울 속에, 내가 있었다.'),N('평범한 아침이 이렇게 눈부신 줄, 그동안 몰랐다.'),
-      ACT({kind:'send',q:'이번엔 보낼 수 있어요.',opts:['오늘 저녁에 할 얘기가 있어','고마워, 다들']}),
-      N('오늘은 노트 한 권을 사 들고 들어가기로 했다.')]};}
+      ACT({kind:'send',q:'이번엔 보낼 수 있어요.',opts:['바빠, 나중에','고마워','사랑해']}),
+      N('준비는 떠날 사람이 아니라, 남을 사람을 위한 일이었다.')]};}
   }
   return {beats:[]};
 }
@@ -500,7 +545,7 @@ function sceneOf(step){
     const sc=build(step,step==='open'?'u':'p',a);
     return Object.assign(sc,{key:step,ver:step==='open'?'u':'p',meta:step==='summary'?{t:null,title:'되감은 하루'}:META[step],
       act:{open:'눈을 뜬 아침',summary:'되감은 하루',ending:'다시, 아침'}[step],
-      closing:step==='ending'?'당신의 가족은, 당신의 휴대폰 비밀번호를 알고 있나요?':null});
+      closing:step==='ending'?'당신이 남기고 싶은 다정함은,\n어떤 모습인가요?':null});
   }
   const [ver,k]=step.split(':');
   let key=k==='fifth'?(a.pet?'pet':'sub'):k;
@@ -509,12 +554,13 @@ function sceneOf(step){
   return Object.assign(build(key,ver,a),{key,ver,meta:META[metaKey],act:ver==='u'?'준비되지 않은 이별':'미리 준비했다면'});
 }
 function modeOf(step){
-  if(['intro','family','check'].includes(step))return 'neutral';
+  if(['intro','family'].includes(step))return 'neutral';
+  if(step==='check')return 'bright';
   if(step==='open'||step==='rewind'||step.startsWith('u:'))return 'cold';return 'warm';
 }
 
 /* ---------- UI ---------- */
-function avatar(m){const t=m.avatar||[...m.name][0]||'?';return `<span class="av" aria-hidden="true">${esc(t)}</span>`;}
+function avatar(m){const t=[...m.name][0]||'?';return `<span class="av" aria-hidden="true">${esc(t)}</span>`;}
 let lastPct=0, lastStep='', timer=null;
 function beatDelay(b){
   if(!b)return 900;
@@ -551,7 +597,7 @@ function draw(){
 }
 function renderIntro(){
   app.innerHTML=`<div class="page">
-    <p class="time" aria-hidden="true" style="margin-top:24px"><span class="ampm">오전</span>6:47</p>
+    <p class="time" aria-hidden="true" style="margin-top:24px"><span class="ampm">오전</span>6:40</p>
     <h1 class="h1">어느 날, 내가 없는 아침</h1>
     <p class="lead">갑작스러운 이별 뒤에 남은 가족에게 어떤 일이 생기는지 따라가 보는 이야기예요. 당신의 가족이 직접 등장하고, 당신은 그 곁에서 지켜보게 돼요.</p>
     <form id="introForm" novalidate>
@@ -604,11 +650,12 @@ function beatHTML(b,i,sc,isLast){
   switch(b.t){
   case 'n': return `<p class="nar ${isLast?'':'old'} ${cls}">${esc(b.text)}</p>`;
   case 'c': return `<div class="msg ${cls}">${avatar(b.m)}<div><span class="nm">${esc(b.m.name)}</span><div class="bub">${esc(b.text)}</div></div>${sc.chat==='dm'&&sc.ver==='u'?'<span class="ur">1</span>':''}</div>`;
-  case 'photo': return `<div class="msg ${cls}">${avatar(b.m)}<div><span class="nm">${esc(b.m.name)}</span><div class="bub"><div class="photos"><span></span><span></span><span></span></div>${esc(b.text)}</div></div></div>`;
-  case 'note': if(sc.chat==='prose')return `<div class="paper solo ${cls}">‘${esc(b.text)}’</div>`;
+  case 'photo': return `<div class="msg ${cls}">${avatar(b.m)}<div><span class="nm">${esc(b.m.name)}</span><div class="bub"><span class="photo" role="img" aria-label="사진 한 장"><svg viewBox="0 0 140 110" aria-hidden="true"><defs><linearGradient id="phBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3D9A8"/><stop offset=".55" stop-color="#E2A77C"/><stop offset="1" stop-color="#8E6F8C"/></linearGradient><filter id="phBlur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter></defs><rect width="140" height="110" fill="url(#phBg)"/><g filter="url(#phBlur)"><circle cx="34" cy="30" r="20" fill="#FFF4D2" opacity=".85"/><circle cx="98" cy="46" r="16" fill="#FFE2B8" opacity=".6"/><circle cx="66" cy="86" r="24" fill="#6F5A7E" opacity=".45"/><circle cx="122" cy="92" r="16" fill="#FFD9A8" opacity=".5"/></g></svg></span>${esc(b.text)}</div></div></div>`;
+  case 'note': if(sc.chat==='prose'||!b.m)return `<div class="paper solo ${cls}">‘${esc(b.text)}’</div>`;
     return `<div class="msg ${cls}">${avatar(b.m)}<div><span class="nm">${esc(J(b.m.name,'이'))} 사진을 보냈어요</span><div class="paper">‘${esc(b.text)}’</div></div></div>`;
+  case 'hand': return `<p class="hand ${cls}">${esc(b.text)}</p>`;
   case 'noti': return `<div class="noti ${b.alert?'alert':''} ${cls}"><span class="ic">${esc(b.ic||'•')}</span><span><b>${esc(b.app)}</b>${esc(b.text)}</span></div>`;
-  case 'video': return `<div class="msg me ${cls}"><div class="bub"><div class="vid"><span class="play">▶</span><span>${esc(b.label)}</span></div><p class="sub" style="margin:8px 0 0">“${esc(b.sub)}”</p></div></div>`;
+  case 'video': return `<div class="msg me ${cls}"><div class="bub"><div class="vid"><span class="play">▶</span><span>${esc(b.label)}</span></div>${b.sub?`<p class="sub" style="margin:8px 0 0">“${esc(b.sub)}”</p>`:''}</div></div>`;
   case 'act': return actHTML(b,sc,cls);
   }
   return '';
@@ -646,7 +693,7 @@ function renderScene(step){
     <div class="chat" ${sc.chat&&!prose?'':'style="border:0;background:transparent"'}>${head}
       <div class="feed ${prose?'cfeed':''}" aria-live="polite" style="cursor:default">${feed}</div>${inBar}</div>
   </main>
-  <div class="foot"><div class="nav"><button class="btn slim" data-act="prev">이전</button>
+  <div class="foot">${step==='open'&&!S.hinted&&!done?'<p class="hint">화면을 누르면 글이 바로 나와요</p>':''}<div class="nav"><button class="btn slim" data-act="prev">이전</button>
     <button class="btn primary" data-act="next" ${done?'':'disabled'}>${nextLabel}</button></div></div>`;
   const f=app.querySelector('.feed'); if(f){f.style.scrollBehavior='auto';f.scrollTop=f.scrollHeight;f.style.scrollBehavior='';}
   if(acted&&sc.ver==='u'&&navigator.vibrate)try{navigator.vibrate(120)}catch(e){}
@@ -675,37 +722,52 @@ function doRewind(){
   (function tick(now){const p=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-p,3);clock.innerHTML=fmt(from-(from-to)*e);
     if(p<1)requestAnimationFrame(tick);else setTimeout(finish,350);})(t0);
 }
+/* 엔딩노트 안내: 글은 최소로, 기능마다 그림 타일 하나. 타일을 누르면 "오늘 해본 것"으로 체크됨(S.checks) */
+const EN_ART={
+  pw:`<rect x="42" y="7" width="36" height="70" rx="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><rect x="51" y="34" width="18" height="14" rx="3.5" fill="var(--accent)"/><path d="M55 34v-5a5 5 0 0 1 10 0v5" fill="none" stroke="var(--accent)" stroke-width="2.5"/><g fill="var(--ink)"><circle cx="50" cy="62" r="2"/><circle cx="57" cy="62" r="2"/><circle cx="64" cy="62" r="2"/><circle cx="71" cy="62" r="2"/></g>`,
+  ins:`<path d="M36 12h18l4 5h28a3 3 0 0 1 3 3v30H33V15a3 3 0 0 1 3-3z" fill="#5B8DD9"/><rect x="40" y="22" width="42" height="26" rx="2" fill="#FFF9EC"/><path d="M46 30h28M46 37h20" stroke="#B9C6D8" stroke-width="2" stroke-linecap="round"/><rect x="14" y="42" width="92" height="34" rx="6" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><path d="M50 59h20" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>`,
+  fun:`<path d="M60 44v34" stroke="#6FA36B" stroke-width="3" stroke-linecap="round"/><path d="M60 64c-10-1-15-6-17-12 9 0 15 4 17 12zM60 70c9-1 14-5 16-11-8 0-14 4-16 11z" fill="#6FA36B"/><g fill="#F2C14E">${[0,36,72,108,144,180,216,252,288,324].map(d=>`<ellipse cx="60" cy="17" rx="5" ry="10" transform="rotate(${d} 60 32)"/>`).join('')}</g><circle cx="60" cy="32" r="9" fill="#7A5230"/>`,
+  acc:`<rect x="18" y="16" width="62" height="44" rx="5" fill="#FFF9EC" stroke="#BDAE8E" stroke-width="2"/><path d="M27 28h30M27 36h44M27 44h38" stroke="#C9BFA9" stroke-width="2.5" stroke-linecap="round"/><rect x="50" y="40" width="54" height="34" rx="6" fill="var(--accent)"/><rect x="50" y="48" width="54" height="7" fill="var(--on)" opacity=".55"/><rect x="58" y="62" width="16" height="5" rx="2.5" fill="var(--on)" opacity=".7"/>`,
+  sub:`<g font-size="15" text-anchor="middle" font-family="sans-serif"><rect x="12" y="26" width="28" height="28" rx="8" fill="var(--accent)"/><text x="26" y="45.5" fill="var(--on)">♪</text><rect x="46" y="26" width="28" height="28" rx="8" fill="var(--accent)" opacity=".75"/><text x="60" y="45.5" fill="var(--on)">▶</text><rect x="80" y="26" width="28" height="28" rx="8" fill="var(--accent)" opacity=".5"/><text x="94" y="45.5" fill="var(--on)">☁</text></g><path d="M30 66h56" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 6"/><path d="M86 66l-6-4v8z" fill="var(--ink)"/><path d="M92 60l8 12M100 60l-8 12" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/>`,
+  pet:`<path d="M28 50h64l-8 22a4 4 0 0 1-4 3H40a4 4 0 0 1-4-3z" fill="var(--accent)"/><ellipse cx="60" cy="50" rx="32" ry="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><g fill="var(--ink)"><ellipse cx="60" cy="28" rx="8" ry="6.5"/><circle cx="47" cy="19" r="3.6"/><circle cx="56" cy="13" r="3.6"/><circle cx="66" cy="13" r="3.6"/><circle cx="74" cy="20" r="3.6"/></g>`,
+  kid:`<rect x="26" y="46" width="30" height="30" rx="5" fill="var(--accent)"/><rect x="60" y="46" width="30" height="30" rx="5" fill="#8DB98A"/><rect x="43" y="14" width="30" height="30" rx="5" fill="#E9A7A0"/><path d="M96 14l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6-4.5-4.1 6-.7z" fill="#F2C14E"/>`,
+  msg:`<rect x="22" y="20" width="76" height="50" rx="6" fill="#FFF9EC" stroke="#BDAE8E" stroke-width="2"/><path d="M23 25l37 25 37-25" fill="none" stroke="#BDAE8E" stroke-width="2" stroke-linejoin="round"/><path d="M60 64c-9-6-12-10-12-14a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 4-3 8-12 14z" fill="var(--accent)" transform="translate(21 17) scale(.65)"/>`
+};
 function renderCheck(){
   const pet=S.family.find(m=>m.relation==='반려동물');
   const kid=S.family.find(m=>['아기','어린이','청소년'].includes(ageOf(m)));
-  const items=[
-    ['pw','휴대폰과 주요 계정 비밀번호를 어디에 보관하는지 가족에게 알려두기'],
-    ['ins','가입한 보험과 보험사 연락처 정리하기'],
-    ['acc','계좌, 대출, 비상금 목록 적어두기'],
-    ['fun','원하는 장례 방식을 가족과 이야기해 두기'],
-    ['sub','정기결제와 구독 목록, 해지 방법 적어두기'],
-    ...(kid?[['kid',`${J(kid.name,'이')} 클 때까지 돌봐줄 사람과 교육비 계획 정리해두기`]]:[]),
-    ...(pet?[['pet',`${J(pet.name,'을')} 돌봐줄 사람 정해두기`]]:[]),
-    ['msg','가족에게 남길 말을 글이나 영상으로 한 번 남겨보기']
+  /* [체크 키, 기능 이름, 한 줄 설명] — 그림은 EN_ART[키] */
+  const feats=[
+    ['pw','열쇠 보관함','휴대폰·계정 여는 법'],
+    ['ins','서류 찾기 지도','보험·통장 서류 위치'],
+    ['fun','장례에 대한 바람','원하는 장례 방식'],
+    ['acc','돈과 계좌 목록','계좌·대출·비상금'],
+    ['sub','구독과 정기결제','구독 목록과 해지 방법'],
+    ...(pet?[['pet',`${pet.name} 돌봄 메모`,'사료·병원·돌봐줄 사람']]:[]),
+    ...(kid?[['kid','아이를 위한 계획','돌봐줄 사람·교육비']]:[]),
+    ['msg','남기는 말','미뤄 둔 한마디']
   ];
-  const n=items.filter(i=>S.checks[i[0]]).length;
-  const K=S.keeps||{}, keeps=[
-    ...(S.lastWords?[['가족에게 하고 싶은 말',`“${S.lastWords}”`]]:[]),
-    ...(K.funeral?[['장례에 대한 바람',K.funeral]]:[]),
-    ...(K.pet&&pet?[[`${J(pet.name,'을')} 위한 메모`,K.pet]]:[]),
-    ...(K.reply&&K.reply!==S.lastWords?[['마지막으로 보낸 답장',`“${K.reply}”`]]:[])
-  ];
-  app.innerHTML=`${header('엔딩노트',true)}<div class="page">
-    <p class="progress">${n}/${items.length}</p>
-    <h1 class="h1">오늘 시작할 수 있는 준비</h1>
-    <p class="lead">하나씩 해나갈 때마다 체크해 보세요. 체크한 내용은 이 기기에만 저장돼요.</p>
-    ${keeps.length?`<section class="keeps"><h2>이야기 속에서 남긴 것들</h2><dl>${keeps.map(([t,d])=>`<dt>${esc(t)}</dt><dd>${esc(d)}</dd>`).join('')}</dl>
-      <p class="note">엔딩노트 앱에서 이 내용을 이어서 쓸 수 있어요.</p></section>`:''}
-    <ul class="checks">${items.map(([k,t])=>`<li><label><input type="checkbox" data-ck="${k}" ${S.checks[k]?'checked':''}><span>${esc(t)}</span></label></li>`).join('')}</ul>
+  const n=feats.filter(f=>S.checks[f[0]]).length;
+  const K=S.keeps||{}, keeps=[S.lastWords,K.funeral,pet?K.pet:'',K.reply!==S.lastWords?K.reply:''].filter(Boolean);
+  const old=app.querySelector('.page.en'), top=old?old.scrollTop:0;
+  app.innerHTML=`${header('엔딩노트',true)}<div class="page en">
+    <p class="en-k">엔딩노트</p>
+    <h1 class="h1">미리 적어 두는<br>한 권의 노트</h1>
+    <p class="lead">가족이 덜 헤매도록, 한 칸씩.</p>
+    ${keeps.length?`<div class="paper en-page" aria-label="이야기 속에서 이미 적은 것">${keeps.map(k=>`<span>${esc(k)}</span>`).join('')}</div>
+      <p class="note en-cap">이야기 속에서 벌써 첫 장을 쓰셨어요.</p>`:''}
+    <div class="en-h"><h2>이런 걸 담아요</h2><span>오늘 해본 것 <b>${n}</b>/${feats.length}</span></div>
+    <div class="tiles">${feats.map(([k,t,d])=>`<label class="tile"><input type="checkbox" data-ck="${k}" ${S.checks[k]?'checked':''}>
+      <span class="tile-in"><svg viewBox="0 0 120 84" aria-hidden="true">${EN_ART[k]}</svg><b>${esc(t)}</b><small>${esc(d)}</small><i aria-hidden="true">✓</i></span></label>`).join('')}</div>
+    <p class="note en-cap">오늘 해본 것은 눌러서 표시해 보세요.</p>
+    <div class="en-h"><h2>이렇게 써요</h2></div>
+    <ul class="en-how"><li><span aria-hidden="true">🗓️</span>하루에 한 칸</li><li><span aria-hidden="true">🤝</span>한 사람에게 알리기</li><li><span aria-hidden="true">🎂</span>생일마다 고쳐 쓰기</li></ul>
+    <p class="note en-cap" style="margin-bottom:24px">엔딩노트는 법적 효력이 있는 유언장은 아니에요.</p>
     <button class="btn primary" style="width:100%" data-act="toApp">엔딩노트 앱에서 이어서 쓰기</button>
     ${showSoon?'<p class="note" role="status" style="text-align:center;margin:12px 0 4px">엔딩노트 앱은 곧 만나볼 수 있어요. 오늘 남긴 내용은 이 기기에 잘 보관해 둘게요.</p>':''}
     <button class="btn" style="width:100%;margin-top:10px" data-act="replay">이야기 다시 보기</button>
   </div>`;
+  if(top)app.querySelector('.page.en').scrollTop=top;
 }
 
 /* ---------- 가족 시트 ---------- */
@@ -722,7 +784,7 @@ function renderSheet(){
     return;
   }
   const m=sheet.id?S.family.find(x=>x.id===sheet.id):null;
-  const rel=m?m.relation:'',av=m?m.avatar:'',age=m?(m.age||''):'';
+  const rel=m?m.relation:'',age=m?(m.age||''):'';
   sheetEl.innerHTML=`<div class="overlay" data-act="closeSheet"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shT">
     <div class="sheet-head"><h2 id="shT">${m?'가족 수정하기':'가족 추가하기'}</h2><button class="link" data-act="closeSheet">닫기</button></div>
     <form id="memForm" novalidate>
@@ -739,8 +801,6 @@ function renderSheet(){
       <fieldset class="field" id="ageBox" style="border:0;padding:0;margin:0 0 20px;${rel==='자녀'?'':'display:none'}"><legend style="font-size:14px;font-weight:500;margin-bottom:8px;padding:0">자녀 나이</legend>
         <div class="chips">${AGES.map(([g,r])=>`<label class="chip"><input type="radio" name="age" value="${g}" ${g===age?'checked':''}><span>${g} <small style="opacity:.7;margin-left:4px">${r}</small></span></label>`).join('')}</div>
         <p class="note">아기나 어린이는 보험 찾기, 은행 업무 같은 장면에는 나오지 않아요.</p></fieldset>
-      <fieldset class="field" style="border:0;padding:0;margin:0 0 20px"><legend style="font-size:14px;font-weight:500;margin-bottom:8px;padding:0">아바타 (선택)</legend>
-        <div class="chips">${EMOJIS.map(e=>`<label class="chip"><input type="radio" name="av" value="${e}" ${e===(av||'')?'checked':''} aria-label="${e||'이름 첫 글자'}"><span>${e||'가'}</span></label>`).join('')}</div></fieldset>
       <p class="err" id="merr" role="alert"></p>
       <button class="btn primary" type="submit" style="width:100%">${m?'저장하기':'추가하기'}</button>
     </form></div></div>`;
@@ -752,7 +812,7 @@ function renderSheet(){
     document.getElementById('sibBox').style.display=v==='형제자매'?'':'none';}});
   f.addEventListener('submit',e=>{
     e.preventDefault();
-    const r=f.querySelector('input[name=rel]:checked'), a=f.querySelector('input[name=av]:checked');
+    const r=f.querySelector('input[name=rel]:checked');
     const err=document.getElementById('merr');
     if(!r){err.textContent='관계를 선택해 주세요.';return;}
     let name=document.getElementById('mName').value.trim();
@@ -768,9 +828,9 @@ function renderSheet(){
       if(!S.userGender&&!u2){err.textContent='나의 성별을 선택해 주세요.';return;}
       if(u2)S.userGender=u2.value; sg=g.value; older=o.value==='1';
     }
-    if(m){m.name=name;m.relation=r.value;m.avatar=a?a.value:'';m.age=ageVal;m.sg=sg;m.older=older;}
+    if(m){m.name=name;m.relation=r.value;delete m.avatar;m.age=ageVal;m.sg=sg;m.older=older;}
     else{if(S.family.length>=MAX){err.textContent='가족은 최대 5명까지 추가할 수 있어요.';return;}
-      S.family.push({id:uid(),name,relation:r.value,avatar:a?a.value:'',age:ageVal,sg,older});}
+      S.family.push({id:uid(),name,relation:r.value,age:ageVal,sg,older});}
     save();
     if(sheet.from==='list'){sheet={view:'list'};renderSheet();render();}else closeSheet();
   });
@@ -780,18 +840,18 @@ function renderSheet(){
 
 /* ---------- 이벤트 ---------- */
 function isStory(step){return !['intro','family','check','rewind'].includes(step);}
-/* 눈뜨는 연출: 검은 화면에 한 줄이 떴다 사라지고, 눈이 세 번 깜빡이다 열린다. 잠시 뒤 주변이 어두워지며 머리맡 휴대폰(6:47)이 켜지고 진동이 울린다. 그 휴대폰 화면이 커져 화면을 채우면 then()으로 그린 다음 장면이 그 위에 드러난다. 누르면 건너뛴다. */
-function eyeOpen(tone,then){
+/* 눈뜨는 연출: 검은 화면에 한 줄이 떴다 사라지고, 눈이 세 번 깜빡이다 열린다. 잠시 뒤 주변이 어두워지며 머리맡 휴대폰(6:40)이 켜지고 진동이 울린다. 그 휴대폰 화면이 커져 화면을 채우면 then()으로 그린 다음 장면이 그 위에 드러난다. 누르면 건너뛴다. */
+function eyeOpen(tone,then,fast){
   if(reduce){then();return;}
   busy=true;
-  const el=document.createElement('div');el.className='eye '+tone;
+  const el=document.createElement('div');el.className='eye '+tone+(fast?' fast':'');
   const line=tone==='cold'?'어젯밤, 평소처럼 잠들었다.':'그리고, 다시 아침.';
-  el.innerHTML='<div class="eye-view" aria-hidden="true"></div><i class="eye-hole" aria-hidden="true"></i><p class="eye-line" role="status">'+line+'</p><i class="eye-dim" aria-hidden="true"></i><i class="eye-phone" aria-hidden="true"><b>6:47</b></i>';
+  el.innerHTML='<div class="eye-view" aria-hidden="true"></div><i class="eye-hole" aria-hidden="true"></i><p class="eye-line" role="status">'+line+'</p><i class="eye-dim" aria-hidden="true"></i><i class="eye-phone" aria-hidden="true"><b>6:40</b></i>';
   document.body.appendChild(el);
   const t0=performance.now();let done=false,t1,t2;
   const reveal=()=>{if(done)return;done=true;clearTimeout(t1);clearTimeout(t2);busy=false;then();el.classList.add('out');setTimeout(()=>el.remove(),1050);};
-  t1=setTimeout(reveal,10700);
-  t2=setTimeout(()=>{if(navigator.vibrate)try{navigator.vibrate([150,120,150])}catch(e){}},8700);
+  t1=setTimeout(reveal,fast?4700:10700);
+  t2=setTimeout(()=>{if(navigator.vibrate)try{navigator.vibrate([150,120,150])}catch(e){}},fast?3600:8700);
   el.addEventListener('click',()=>{if(performance.now()-t0>400)reveal();});
 }
 function go(delta){
@@ -847,7 +907,7 @@ function handle(act,el){
     case 'prev':go(-1);break;
     case 'rewind':doRewind();break;
     case 'restart':S.step=0;S.revealed=1;S.acts={};S.said={};save();render();break;
-    case 'replay':eyeOpen('cold',()=>{S.seed=((S.seed||0)+1)%3;S.step=2;S.revealed=1;S.acts={};S.said={};animIdx=0;save();render();});break;
+    case 'replay':eyeOpen('cold',()=>{S.seed=((S.seed||0)+1)%3;S.step=2;S.revealed=1;S.acts={};S.said={};animIdx=0;save();render();},true);break;
     case 'send':completeAct(el.dataset.v);break;
     case 'skip':{const b=sceneOf(STEPS[S.step]).beats[S.revealed-1];completeAct(b.opts[0],true);break;}
     case 'toApp':toApp();break;
@@ -857,7 +917,10 @@ app.addEventListener('click',e=>{
   if(busy)return;
   const t=e.target.closest('[data-act]');
   if(t){if(!t.disabled)handle(t.dataset.act,t);return;}
+  /* 이야기 화면의 빈 곳을 누르면 기다리지 않고 다음 글이 바로 나옴 */
+  if(e.target.closest('.scene')&&!e.target.closest('button,a,input,label,.actbox'))hurry();
 });
+function hurry(){if(sheet||busy||!isStory(STEPS[S.step]))return;S.hinted=true;clearTimeout(timer);autoStep();}
 sheetEl.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t)return;if(t.classList.contains('overlay')&&e.target!==t)return;handle(t.dataset.act,t);});
 app.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.ck;
   if(k){S.checks[k]=e.target.checked;save();renderCheck();const box=app.querySelector(`[data-ck="${k}"]`);if(box)box.focus();}});
@@ -866,6 +929,7 @@ document.addEventListener('keydown',e=>{
   const eye=document.querySelector('.eye');
   if(eye&&!eye.classList.contains('out')&&(e.key==='Escape'||e.key==='Enter'||e.key===' ')){e.preventDefault();eye.click();return;}
   if(sheet||busy)return;
+  if((e.key===' '||e.key==='ArrowRight')&&(e.target===document.body||e.target.closest('.feed'))){e.preventDefault();hurry();}
 });
 if(S.step>=2&&!S.family.length)S.step=1;
 render();
