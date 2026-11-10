@@ -30,6 +30,7 @@
 | `/pdf/` | PDF 도구 | PDF 병합, 분할, 이미지 변환 (브라우저 내 처리) | Next.js 16, pdf-lib, pdfjs-dist |
 | `/review-check/` | 이 집.. 진짜 맛집일까? | 네이버 리뷰 데이터 기반 맛집 신뢰도 분석 | HTML/CSS/JS |
 | `/move/` | 이사 도우미 | 이사 날짜 기반 체크리스트 자동 생성 & 업체 모음 | Next.js 16, shadcn/ui |
+| `/well-ending/` | 어느 날, 내가 없는 아침 | 내가 떠난 뒤 가족의 하루를 따라가 보는 인터랙티브 스토리 | HTML/CSS/JS |
 
 ## 개발 서버 실행
 
