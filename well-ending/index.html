@@ -70,7 +70,7 @@ button,input,textarea{font:inherit;color:inherit}
 .feed>*{margin:0 0 10px}
 .in{animation:rise .45s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.nar{font-family:'Gowun Batang',serif;font-size:16px;line-height:1.75;color:var(--ink);text-align:center;padding:4px 10px;word-break:keep-all}
+.nar{white-space:pre-line;font-family:'Gowun Batang',serif;font-size:16px;line-height:1.75;color:var(--ink);text-align:center;padding:4px 10px;word-break:keep-all}
 .nar.old{color:var(--muted)}
 /* 종이 없이 글씨체만 손글씨인 한 줄 */
 .hand{font-family:'Nanum Pen Script','Gowun Batang',cursive;font-size:28px;line-height:1.35;color:var(--ink);text-align:center;margin:0;padding:6px 10px 8px;word-break:keep-all}
@@ -295,7 +295,13 @@ function assign(){
 function other(a,ex,scene){return a.adults.find(m=>!ex.includes(m&&m.id)&&canPlay(m,scene||'drawer'))||null;}
 
 /* ---------- 비트 ---------- */
-const N=text=>({t:'n',text}), C=(m,text)=>({t:'c',m,text}), PH=(m,text)=>({t:'photo',m,text}),
+/* 쉼표가 한 개 있는 긴 내레이션(휴대폰에서 두 줄이 되는 것)은 쉼표에서 줄을 나눠 한 번에 보여줌. 대사(“로 시작)와 이미 줄바꿈이 있는 글은 그대로 */
+function splitLine(t){
+  if(t.includes('\n')||t[0]==='“'||t.length<20)return t;
+  const m=t.match(/^([^,.?!]+,) ([^,]+)$/); /* 앞부분에 마침표가 있는 두 문장짜리는 건드리지 않음 */
+  return m?m[1]+'\n'+m[2]:t;
+}
+const N=text=>({t:'n',text:splitLine(text)}), C=(m,text)=>({t:'c',m,text}), PH=(m,text)=>({t:'photo',m,text}),
   NOTE=(m,text)=>({t:'note',m,text}), NO=(app,text,ic,alert)=>({t:'noti',app,text,ic,alert}), VID=(label,sub)=>({t:'video',label,sub}), HAND=text=>({t:'hand',text}),
   ACT=o=>Object.assign({t:'act'},o);
 const META={
@@ -422,7 +428,7 @@ function build(key,ver,a){
           [T(n,'실손보험 청구해야 하는데 어디 보험이야?','실손보험을 청구해야 하는데 어디 보험이에요?'), ...(o?[TR(o,n,'글쎄… 들었다고는 했는데','글쎄요… 들었다고는 했는데요')]:[]), T(n,'10년 전 영수증이랑 안 쓰는 충전기만 나와','10년 전 영수증이랑 안 쓰는 충전기만 나와요')],
           [T(n,'보험 증권 같은 거 본 사람?','보험 증권 같은 거 보신 분 계세요?'), ...(o?[TR(o,n,'그런 건 다 알아서 했잖아','그런 건 다 알아서 챙겼잖아요')]:[]), T(n,'서랍에서 초등학교 상장이 나왔어','서랍에서 초등학교 상장이 나왔어요')]
         ]),
-        N('나는 알고 있었다. 두 번째 서랍, 파란 파일.'),
+        N('나는 알고 있었다.\n두 번째 서랍, 파란 파일.'),
         N('하지만 그때 나는 병실에서 코를 골고 있었다.'),
         T(n,'보험사마다 전화 돌려봐야겠다','보험사마다 전화 돌려봐야겠어요'),
         N('서랍은 그날 저녁까지 바닥에 누워 있었다.')]};
@@ -552,20 +558,20 @@ function build(key,ver,a){
       N(pick(['알람을 끄려는데, 손가락이 화면에 닿지 않았다.','알람이 울렸다. 아무리 눌러도 꺼지지 않았다.','알람이 한참을 울렸다. 끄려 해도 꺼지지 않았다.'])), ...chat,
       N(who), N('식탁 위에는 내가 어제 쓰던 컵이 그대로 놓여 있었다.'), ...(baby&&f.length>1?[N(`${K(baby.name)}만 아무것도 모른 채 놀고 있었다.`)]:tweenKid&&f.length>1?[N(`${J(tweenKid.name,'은')} 방문 앞에서 한참을 서 있었다.`)]:[]),
       N('“다들 왜 그래?” 아무도 대답하지 않았다.'),
-      N('현관 거울 앞을 지나는데, 거울 속엔 아무도 없었다.'),N('그제야 알았다. 나는 어젯밤 잠든 채로, 깨어나지 못했다.'),N('어젯밤의 “잘 자”가, 이 집에 남긴 마지막 인사였다.')]};}
+      N('현관 거울 앞을 지나는데,\n거울 속엔 아무도 없었다.'),N('그제야 알았다.\n나는 어젯밤 잠든 채로, 깨어나지 못했다.'),N('어젯밤의 “잘 자”가,\n이 집에 남긴 마지막 인사였다.')]};}
 
   case 'phone':{const n=a.phone||G('가족'), o=other(a,[n.id],'phone');
     const pin=NO('잠금','비밀번호를 여러 번 틀렸습니다. 30초 후에 다시 시도하세요.','🔒',true);
     if(U) return {chat:'group',input:true,beats:[
-      N(`${J(n.name,'이')} 내 휴대폰을 붙잡고 있었다. 영정 사진을 찾으려는 거였다.`),
+      N(`${J(n.name,'이')} 내 휴대폰을 붙잡고 있었다.\n영정 사진을 찾으려는 거였다.`),
       ...pick([
         [T(n,`혹시 ${R(n)}휴대폰 비밀번호 아는 사람?`,`혹시 ${R(n)}휴대폰 비밀번호 아시는 분 계세요?`), ...(o?[TR(o,n,'생일로 해봤어?','생일로 해보셨어요?')]:[]), pin,
           T(n,'생일, 기념일 다 해봤어. 안 열려','생일, 기념일 다 해봤는데 안 열려요'), N('그 안에 우리 사진이 몇천 장인데, 한 장도 꺼낼 수 없었다.')],
         [T(n,'영정 사진으로 쓸 만한 거 있는 사람?','영정 사진으로 쓸 만한 거 갖고 계신 분 있으세요?'), ...(o?[TR(o,n,'휴대폰에 많을 텐데','휴대폰에 많을 거예요')]:[]), pin,
-          T(n,'잠겨서 안 열려. 결국 다 옛날 사진뿐이야','잠겨서 안 열려요. 결국 다 옛날 사진뿐이에요'), N('가장 최근에 웃고 있던 내 얼굴은, 잠긴 화면 너머에 있었다.')],
+          T(n,'잠겨서 안 열려. 결국 다 옛날 사진뿐이야','잠겨서 안 열려요. 결국 다 옛날 사진뿐이에요'), N('가장 최근에 웃고 있던 내 얼굴은,\n잠긴 화면 너머에 있었다.')],
         [T(n,'얼굴 인식도 안 되고 비밀번호도 모르겠어','얼굴 인식도 안 되고 비밀번호도 모르겠어요'), ...(o?[TR(o,n,'통신사 가면 열어주지 않을까?','통신사 가면 열어주지 않을까요?')]:[]), pin,
           T(n,'본인 아니면 안 된대','본인 아니면 안 된대요'), N('몇 년 치 우리 가족의 시간이, 그대로 잠겨버렸다.')]
-      ]), N('잠금 화면 속 우리 가족만, 아무것도 모른 채 웃고 있었다.')]};
+      ]), N('잠금 화면 속 우리 가족만,\n아무것도 모른 채 웃고 있었다.')]};
     return {chat:'group',beats:[
       N(`${J(n.name,'이')} 책상 서랍에서 노트 한 권을 꺼냈다.`),
       ...pick([
@@ -576,13 +582,13 @@ function build(key,ver,a){
 
   case 'drawer':{const n=a.drawer||G('가족'), o=other(a,[n.id]);
     if(U) return {chat:'group',input:true,beats:[
-      N(`새벽 두 시, ${J(n.name,'이')} 서랍을 전부 꺼내 바닥에 쏟았다.`),
+      N(`새벽 두 시,\n${J(n.name,'이')} 서랍을 전부 꺼내 바닥에 쏟았다.`),
       ...pick([
         [T(n,'보험 어디 들었는지 아는 사람 있어?','혹시 보험 어디 들었는지 아시는 분 계세요?'), ...(o?[TR(o,n,'글쎄… 들었다고는 했던 것 같은데','글쎄요… 들었다고는 했던 것 같은데요')]:[])],
         [T(n,'보험 증권 같은 거 본 사람 있어?','보험 증권 같은 거 보신 분 계세요?'), ...(o?[TR(o,n,'그런 건 다 알아서 했잖아','그런 건 다 알아서 챙겼잖아요')]:[])],
         [T(n,'보험 서류가 어디 있는지 정말 모르겠어','보험 서류가 어디 있는지 정말 모르겠어요'), ...(o?[TR(o,n,'내일 같이 찾아보자','내일 같이 찾아봐요')]:[])]
       ]),
-      N('나는 알고 있었다. 두 번째 서랍, 파란 파일.'), N('알려줄 방법이 없었다.'),
+      N('나는 알고 있었다.\n두 번째 서랍, 파란 파일.'), N('알려줄 방법이 없었다.'),
       pick([T(n,'못 찾겠어. 내일 다시 볼게','못 찾겠어요. 내일 다시 볼게요'),T(n,'보험사마다 전화 돌려봐야겠어','보험사마다 전화 돌려봐야겠어요'),T(n,'새벽인데 잠이 안 와','새벽인데 잠이 안 오네요')]),
       N(`${K(n.name)}의 어깨가 작게 들썩였다.`), N('나는 그 어깨를 안아줄 수 없었다.')]};
     return {chat:'group',beats:[
@@ -614,7 +620,7 @@ function build(key,ver,a){
       return {chat:'prose',img:'img/funeral-hall.jpg',imgAlt:'푸른빛 장례식장 복도에서 상복을 입은 가족들이 그림자처럼 서서 다투는 그림',
         beats:[N('장례식장 복도에서 언성이 높아졌다.'),
         say(chat[0],/할까요?$|\?$/.test(chat[0].text)?'물었다.':'말했다.'),say(chat[1],'받아쳤다.'),say(chat[2],'목소리를 높였다.'),chat[3],
-        ACT({kind:'send',q:'원하는 걸 직접 말해보세요.',opts}),N('나는 한 번도 제대로 말한 적이 없었다.'),N('내가 남긴 침묵이, 사랑하는 사람들을 서로 다투게 만들고 있었다.')]};}
+        ACT({kind:'send',q:'원하는 걸 직접 말해보세요.',opts}),N('나는 한 번도 제대로 말한 적이 없었다.'),N('내가 남긴 침묵이,\n사랑하는 사람들을 서로 다투게 만들고 있었다.')]};}
     /* 준비되지 않은 하루에서 고른 말이 그대로 노트에 적혀 있다 */
     const ch=S.acts['u:funeral'], plain=[T(y,'딱 걔답다','딱 그 사람답네요'), TR(x,y,'적힌 대로 하자','적힌 대로 해요')];
     const [base,alts,react]=pick([
@@ -644,7 +650,7 @@ function build(key,ver,a){
         T(n,`${R(n)}카드가 몇 장인지 아는 사람?`,`${R(n)}카드가 몇 장인지 아시는 분 계세요?`),T(n,'모르는 것투성이야','모르는 것투성이에요')],
       [NO('보험','보험료 미납 안내','₩'),NO('은행','휴면 계좌 안내','₩'),N(`은행 창구에서 ${K(n.name)}의 얼굴이 하얘졌다.`),act,
         T(n,'통장이 생각보다 많았어','통장이 생각보다 많았어요'),T(n,'하나하나 다 서류를 떼야 한대','하나하나 다 서류를 떼야 한대요')]
-    ]).concat([N('갚을 계획도, 모아둔 이유도, 설명해 줄 사람이 없었다.'),N(`${K(n.name)}에게 미안하다는 말조차, 이제는 전할 수 없었다.`)])};
+    ]).concat([N('갚을 계획도, 모아둔 이유도,\n설명해 줄 사람이 없었다.'),N(`${K(n.name)}에게 미안하다는 말조차, 이제는 전할 수 없었다.`)])};
     return {chat:'group',beats:[
       N(`${J(n.name,'은')} 노트에 적힌 목록을 은행 직원에게 내밀었다.`),
       ...pick([
@@ -710,7 +716,7 @@ function build(key,ver,a){
   case 'baby':{const b=a.last, g=a.adults[0]||null;
     if(U){const [chat,o1]=pick([
         [[C(g,`${J(b.name,'은')} 오늘도 잘 자`),C(g,`${J(b.name,'은')} 목소리 기억 못 하겠지`)],`${voc(b.name)}, 사랑해`],
-        [[C(g,`${J(b.name,'이')} 오늘 하루 종일 웃었어`),C(g,'같이 봤어야 했는데')],`${voc(b.name)}, 웃어줘서 고마워`],
+        [[C(g,`${J(b.name,'이')} 오늘따라 기분이 좋았어`),C(g,'같이 봤어야 했는데')],`${voc(b.name)}, 오늘처럼 늘 밝게 자라줘`],
         [[C(g,`${K(b.name)} 재우다가 같이 울었어`),C(g,'늘 불러주던 그 자장가가 생각나서')],`${voc(b.name)}, 잘 자`]
       ]);
       return {chat:g?'dm':null,dmFrom:g,input:true,beats:[N(`밤늦게 ${K(b.name)}의 아기 침대 옆에 앉았다.`),N('작은 숨소리가 방 안을 오르내렸다.'),...(g?chat:[]),
