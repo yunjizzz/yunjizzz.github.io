@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10",
+  "updatedAt": "2026-11-11",
   "jobs": [
     {
       "id": "daangn-ios-5282170003",
@@ -130,8 +130,8 @@
       "id": "toss-ios-2yza24od",
       "company": "토스",
       "title": "iOS Developer",
-      "status": "open",
-      "statusText": "채용 시 마감",
+      "status": "check",
+      "statusText": "링크 확인 불가",
       "deadline": null,
       "firstSeen": "2026-11-06",
       "meta": [
@@ -168,7 +168,7 @@
       ],
       "gap": [
         "참고",
-        "10/30에 마감된 토스 iOS 공고와는 다른 11/3 신규 공고예요. RIBs·TCA·ReactorKit 등 여러 아키텍처를 쓰니 경험한 MVVM·Clean Architecture와 비교해 설명할 수 있게 준비하세요."
+        "11/11 확인 시 원문 링크 접속 불가(토스 채용 페이지 404, velopers에는 상시 모집으로 남아 있음) — 직접 확인 필요"
       ],
       "stack": {
         "hit": [
@@ -487,9 +487,9 @@
       "url": "https://demoday.co.kr/recruits/6390"
     },
     {
-      "title": "새흐름 FODI iOS 개발자",
-      "reason": "서울 관악 3인 스타트업으로 iOS 1인 담당·팀장급을 원하고, 고용형태와 마감일이 공고에 없어요.",
-      "url": "https://groupby.kr/positions/12070"
+      "title": "헤렌(공비서) · iOS 리드 엔지니어",
+      "reason": "성수 근무·12/31 마감이고 Tuist·Clean Architecture 우대도 맞지만, 요구 경력이 7~15년이고 테크 리드 포지션이에요.",
+      "url": "https://career.rememberapp.co.kr/job/posting/337017"
     },
     {
       "title": "올리브영 커머스플랫폼유닛 iOS",
