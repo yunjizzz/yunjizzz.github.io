@@ -40,8 +40,9 @@ pdf, move 프로젝트 빌드 후 각각 `out/` 결과물을 해당 프로젝트
 ### 루트 랜딩 페이지 (`/index.html`)
 - 순수 HTML/CSS/JS (빌드 도구 없음), 인라인 스타일 + 스크립트
 - 라이트 기본 + 다크 모드 토글 (`data-theme="dark"` on `<html>`, localStorage 저장)
-- Canvas 파티클 배경 애니메이션 (마우스 인터랙션)
-- 프로젝트 추가 시 `.projects` 영역에 `<a class="project">` 카드를 추가하면 된다
+- 원페이지 풀스크린 구성: Hero → 도구(`#tools`) → 특징·제안(`#why`) 3개 `.screen` 섹션, `html { scroll-snap-type: y mandatory }` (모바일/낮은 화면은 `proximity`). 우측 점 네비 + 고정 헤더. 폰트는 Pretendard(CDN)
+- 프로젝트 추가 시 `#tools`의 `.grid`에 `<a class="card" data-category="daily|work">`를 추가하고, 히어로 `.chips`에도 필요하면 칩을 추가한다. 마지막 줄이 비면 JS(`fillLastRow`)가 마지막 카드를 자동으로 넓힌다
+- 공통 푸터/제안 모달은 `footer.js`가 주입 (헤더의 `#suggest-open` 버튼과 연동)
 
 ### pdf (`/pdf/`)
 PDF 도구 — 브라우저에서 PDF 병합, 분할, 이미지 변환, Excel 변환을 처리하는 웹 유틸리티. 모든 파일 처리는 클라이언트에서 수행.
@@ -103,7 +104,7 @@ PDF 도구 — 브라우저에서 PDF 병합, 분할, 이미지 변환, Excel �
 - move 프로젝트: 체크리스트 항목은 priority 순 정렬 (high → medium → low). 이사일 기준 지난 섹션은 자동 접힘.
 - move 프로젝트: primary 색상은 파란색 (`oklch(0.546 0.245 262.881)`). 헤더 로고는 의도적으로 `text-foreground` 사용.
 - compress 프로젝트: WebCodecs API 사용 (FFmpeg.wasm 대비 10~50배 빠른 하드웨어 가속). MP4만 지원.
-- 새 프로젝트 추가: 루트에 폴더 생성 → `index.html` 배치 → 루트 `index.html`에 링크 카드 추가. LIVE 프로젝트는 `.projects` 리스트 최상단에 배치.
+- 새 프로젝트 추가: 루트에 폴더 생성 → `index.html` 배치 → 루트 `index.html`에 링크 카드 추가. LIVE 프로젝트는 `.grid` 카드 리스트 앞쪽에 배치.
 - Google Analytics: 모든 페이지에 GA 태그 필수 적용. ID: `G-Y644EYN1VZ`
   - 정적 HTML: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>` + gtag 초기화 스크립트를 `<head>`에 삽입
   - Next.js: `next/script`의 `Script` 컴포넌트를 `layout.tsx`의 `<body>` 안에 `strategy="afterInteractive"`로 추가
