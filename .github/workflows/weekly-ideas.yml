@@ -8,38 +8,92 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   update-ideas:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout public repository
         uses: actions/checkout@v4
+        with:
+          path: public
+
+      - name: Checkout private repository
+        if: ${{ secrets.PRIVATE_REPO_TOKEN != '' }}
+        uses: actions/checkout@v4
+        with:
+          repository: yunjizzz/haebom-private
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: haebom-private
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
       - name: Install dependencies
+        working-directory: public
         run: |
           python -m pip install --upgrade pip
           pip install google-genai
 
       - name: Generate weekly utility ideas
+        working-directory: public
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scripts/update_ideas.py
 
-      - name: Commit and push updated IDEAS.md
+      - name: Sync ideas to private checklist and encrypt
+        if: ${{ secrets.PRIVATE_REPO_TOKEN != '' && secrets.HAEBOM_PRIVATE_PASSWORD != '' }}
+        working-directory: public
+        env:
+          HAEBOM_PRIVATE_PASSWORD: ${{ secrets.HAEBOM_PRIVATE_PASSWORD }}
+        run: |
+          node scripts/sync_ideas_to_private.mjs --ideas IDEAS.md --target ../haebom-private/new/index.html
+          git -C ../haebom-private config user.name "github-actions[bot]"
+          git -C ../haebom-private config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git -C ../haebom-private add new/index.html
+          NEED_ENCRYPT=false
+          if [ ! -f private/new/index.html ]; then
+            NEED_ENCRYPT=true
+          fi
+          if ! git -C ../haebom-private diff --cached --quiet; then
+            TODAY=$(TZ=Asia/Seoul date +%Y-%m-%d)
+            git -C ../haebom-private commit -m "chore(new): ${TODAY} 주간 아이디어 반영"
+            git -C ../haebom-private push
+            NEED_ENCRYPT=true
+          else
+            echo "haebom-private 변경 사항이 없습니다."
+          fi
+          if [ "$NEED_ENCRYPT" = "true" ]; then
+            node scripts/encrypt_private.mjs --src ../haebom-private --out private
+          fi
+
+      - name: Commit and push updated IDEAS.md and private pages
+        working-directory: public
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add IDEAS.md
+          git add IDEAS.md private
           if git diff --cached --quiet; then
             echo "변경 사항이 없습니다."
           else
+            PRIVATE_CHANGED=false
+            if ! git diff --cached --quiet -- private; then
+              PRIVATE_CHANGED=true
+            fi
             TODAY=$(TZ=Asia/Seoul date +%Y-%m-%d)
-            git commit -m "chore(ideas): ${TODAY} 주간 유틸리티 아이디어 리포트 추가"
+            git commit -m "chore(ideas): ${TODAY} 주간 유틸리티 아이디어 리포트 갱신"
             git push
+            if [ "$PRIVATE_CHANGED" = "true" ]; then
+              gh workflow run static.yml
+            fi
           fi

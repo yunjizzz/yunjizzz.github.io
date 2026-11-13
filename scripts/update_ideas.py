@@ -22,6 +22,7 @@ from google.genai import types
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 IDEAS_PATH = ROOT / "IDEAS.md"
+PRIVATE_NEW_PATH = ROOT.parent / "haebom-private" / "new" / "index.html"
 KST = datetime.timezone(datetime.timedelta(hours=9))
 
 DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
@@ -82,6 +83,19 @@ def get_existing_tools_and_ideas() -> tuple[list[str], str]:
                 summary_lines.append(stripped)
         existing_ideas_text = "\n".join(summary_lines[:200])
 
+    # 비공개 작업 목록(../haebom-private/new/index.html)이 있으면 중복 방지를 위해 런타임에만 제목 참고
+    if PRIVATE_NEW_PATH.exists():
+        private_html = PRIVATE_NEW_PATH.read_text(encoding="utf-8")
+        private_titles = re.findall(
+            r"\[\s*['\"](?:tool|idea)-[^'\"]+['\"]\s*,\s*['\"]([^'\"]+)['\"]",
+            private_html,
+        )
+        if private_titles:
+            extra = "\n".join(f"- {t}" for t in private_titles[:100])
+            existing_ideas_text = (
+                f"{existing_ideas_text}\n\n[비공개 백로그에 이미 등록된 도구]\n{extra}"
+            ).strip()
+
     return repo_dirs, existing_ideas_text
 
 
@@ -125,6 +139,8 @@ def build_prompt(today_str: str, repo_dirs: list[str], existing_ideas_summary: s
 ## 📅 {today_str} 주간 유틸리티 아이디어 리포트
 
 ### 1. [아이디어 이름] (`/추천-슬러그/`) — ⭐ 추천도: 상 (예상 트래픽: 높음 / 구현 난이도: 하~중)
+- **추천 분류**: `업무` 또는 `일상` 중 택1 (문서/데이터/개발/마케팅/업무 자동화 등은 `업무`, 사진·영상·오디오·생활/계산/개인 프라이버시 등은 `일상`)
+- **한 줄 요약**: 이 도구가 무엇을 하는지, 왜 수요가 있고 어떻게 로컬 처리로 구현하는지 1~2문장(70~120자 내외) 요약
 - **타겟 키워드 & 주요 수요 지역**:
   - **글로벌 (EN)**: `영문 핵심 키워드 1`, `영문 롱테일 키워드 2`, `영문 롱테일 키워드 3` (주요 수요 국가/지역 명시)
   - **한국 (KO)**: `한국어 핵심 키워드 1`, `한국어 롱테일 키워드 2`
