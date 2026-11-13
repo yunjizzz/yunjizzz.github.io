@@ -119,3 +119,8 @@ PDF 도구 — 브라우저에서 PDF 병합, 분할, 이미지 변환, Excel �
 - `pdf-compress/app.js`(공통 동작) + `pdf-compress/style.css`, 디자인은 `/photo-resize/style.css`를 공유. HTML은 `scripts/pdf_compress_template.html`과 `scripts/gen_pdf_compress.py`(문구·FAQ·페이지 정의)를 고친 뒤 `python3 scripts/gen_pdf_compress.py`로 생성 (한국어 `/pdf-compress/`, 영어 `/pdf-compress/en/`, sitemap 구간 포함).
 - 방식: pdf.js(CDN 3.11.174)로 쪽을 이미지로 그린 뒤 JPEG 화질을 이분 탐색, 부족하면 해상도를 줄이고, pdf-lib(CDN 1.17.1)로 다시 묶음. 줄인 PDF는 글자를 선택·복사할 수 없음(화면에 안내). 한 파일 최대 60쪽. 1KB = 1,000바이트.
 - 검색 근거: 관심 검색어 상위가 `pdf resize`, `resize pdf`, `resize image pdf`, `kb resize`, `resize image kb`, `online resize image` 등이라 영어 문구는 resize 중심.
+
+### 비공개 페이지 (`/private/`)
+- 저장소가 공개라서 원문은 GitHub 비공개 저장소 `yunjizzz/haebom-private`(로컬 `~/yunji.dev/haebom-private/`)에 두고, `node scripts/encrypt_private.mjs`로 암호화한 결과만 `private/`에 생성해 커밋한다. 원문을 이 저장소에 넣지 말 것(스크립트가 막음).
+- 방식: PBKDF2-SHA256 600,000회 + AES-256-GCM. 브라우저가 Web Crypto로 풀어 `document.write`로 원래 페이지를 보여줌. "이 기기에서 기억하기"는 풀린 키를 localStorage에 저장, `/private/?lock`으로 지움. 비밀번호는 실행 때 직접 입력(12자 이상), 어디에도 저장하지 않음.
+- .html만 암호화. 이미지 등은 암호화되지 않으므로 올리지 않음. 파일·폴더 이름은 저장소에서 보이므로 중립적인 이름을 쓴다. robots.txt에서 `/private/`는 막아 둠.
