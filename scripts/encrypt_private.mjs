@@ -27,7 +27,7 @@ const opt = (name, def) => { const i = args.indexOf(name); return i >= 0 ? args[
 const SRC = path.resolve(opt('--src', path.join(ROOT, '..', 'haebom-private')));
 const OUT = path.resolve(opt('--out', path.join(ROOT, 'private')));
 const ITER = 600000;
-const MIN_LEN = 12;
+const MIN_LEN = 10;
 
 function ask(q) {   // 입력한 글자를 화면에 표시하지 않음
   return new Promise((resolve) => {
@@ -149,7 +149,7 @@ async function main() {
     const again = await ask('한 번 더: ');
     if (pw !== again) { console.error('두 비밀번호가 다릅니다.'); process.exit(1); }
   }
-  if (pw.length < MIN_LEN) { console.error(`비밀번호는 ${MIN_LEN}자 이상으로 해 주세요. (예: 단어 3~4개를 이어 쓰기)`); process.exit(1); }
+  if (pw.length < MIN_LEN) { console.error(`비밀번호는 ${MIN_LEN}자 이상으로 해 주세요. (예: 단어 2~3개와 숫자를 이어 쓰기)`); process.exit(1); }
 
   const salt = crypto.randomBytes(16);
   const key = crypto.pbkdf2Sync(pw, salt, ITER, 32, 'sha256');

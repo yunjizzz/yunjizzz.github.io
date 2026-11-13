@@ -122,5 +122,5 @@ PDF 도구 — 브라우저에서 PDF 병합, 분할, 이미지 변환, Excel �
 
 ### 비공개 페이지 (`/private/`)
 - 저장소가 공개라서 원문은 GitHub 비공개 저장소 `yunjizzz/haebom-private`(로컬 `~/yunji.dev/haebom-private/`)에 두고, `node scripts/encrypt_private.mjs`로 암호화한 결과만 `private/`에 생성해 커밋한다. 원문을 이 저장소에 넣지 말 것(스크립트가 막음).
-- 방식: PBKDF2-SHA256 600,000회 + AES-256-GCM. 브라우저가 Web Crypto로 풀어 `document.write`로 원래 페이지를 보여줌. "이 기기에서 기억하기"는 풀린 키를 localStorage에 저장, `/private/?lock`으로 지움. 비밀번호는 실행 때 직접 입력(12자 이상), 어디에도 저장하지 않음.
+- 방식: PBKDF2-SHA256 600,000회 + AES-256-GCM. 브라우저가 Web Crypto로 풀어 `document.write`로 원래 페이지를 보여줌. "이 기기에서 기억하기"는 풀린 키를 localStorage에 저장, `/private/?lock`으로 지움. 비밀번호는 실행 때 직접 입력(10자 이상), 어디에도 저장하지 않음.
 - .html만 암호화. 이미지 등은 암호화되지 않으므로 올리지 않음. 파일·폴더 이름은 저장소에서 보이므로 중립적인 이름을 쓴다. robots.txt에서 `/private/`는 막아 둠.
