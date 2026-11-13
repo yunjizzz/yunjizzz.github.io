@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="%%LANG%%">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <script>try{if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310b981'/><path d='M28 52l18 18 26-36' stroke='white' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" type="image/svg+xml" />
+  <link rel="canonical" href="%%URL%%" />
+%%HREFLANGS%%
+  <title>%%TITLE%%</title>
+  <meta name="description" content="%%DESC%%" />
+  <meta name="keywords" content="%%KEYWORDS%%" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="%%TITLE%%" />
+  <meta property="og:description" content="%%DESC%%" />
+  <meta property="og:url" content="%%URL%%" />
+  <meta property="og:image" content="https://haebom.app/haebom.png" />
+  <meta property="og:locale" content="%%OGLOCALE%%" />
+  <meta property="og:site_name" content="%%s_brand%%" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="%%TITLE%%" />
+  <meta name="twitter:description" content="%%DESC%%" />
+  <meta name="twitter:image" content="https://haebom.app/haebom.png" />
+
+  %%JSONLD%%
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y644EYN1VZ');
+  </script>
+
+  <link rel="stylesheet" href="/photo-resize/style.css?v=%%VER%%" />
+</head>
+<body data-kb="%%DATA_KB%%" data-mode="%%DATA_MODE%%" data-preset="%%DATA_PRESET%%">
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="%%s_home_aria%%">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        %%s_brand%%
+      </a>
+      <span class="crumb">%%HEADER_TITLE%%</span>
+      <div class="header-actions">
+        <select class="lang-select" id="lang-select" aria-label="Language">
+%%LANGSELECT%%
+        </select>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="%%s_theme_aria%%">
+          <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero wrap">
+    <span class="eyebrow"><i></i>%%s_eyebrow%%</span>
+    <h1>%%H1%%</h1>
+    <p class="lead">%%LEAD%%</p>
+  </section>
+
+  <main class="tool wrap" id="app">
+    <noscript><p style="padding:16px;background:#fef3c7;border-radius:10px">%%s_noscript%%</p></noscript>
+
+    <div class="pane-left">
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="%%s_dz_aria%%">
+        <input type="file" id="file-input" multiple accept="image/*,.heic,.heif" aria-label="%%s_file_aria%%" />
+        <div class="dz-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+        </div>
+        <div>
+          <p class="dz-title" id="dz-title">%%s_dz_title%%</p>
+          <p class="dz-sub">%%s_dz_sub%%</p>
+          <span class="dz-btn">%%s_dz_btn%%</span>
+          <p class="dz-formats">%%s_dz_formats%%</p>
+        </div>
+      </div>
+      <p id="msg" role="alert"></p>
+
+      <section class="file-list-section" id="file-list-section" aria-label="%%s_list_title%%" style="display:none">
+        <div class="file-list-header">
+          <span class="file-list-title">%%s_list_title%%</span>
+          <span class="file-list-total" id="file-list-total" aria-live="polite"></span>
+        </div>
+        <div class="file-list" id="file-list" role="list"></div>
+      </section>
+
+      <section class="crop-card" id="preview-card" aria-label="%%s_card_aria%%" hidden>
+        <div class="crop-head"><h2 id="card-title">%%s_card_title_crop%%</h2><span id="card-hint">%%s_card_hint_crop%%</span></div>
+        <div class="live" id="live" aria-live="polite" hidden>
+          <img class="live-thumb" id="live-thumb" alt="%%s_live_alt%%" />
+          <div class="live-info">
+            <div class="live-label">%%s_live_label%%</div>
+            <div class="live-size" id="live-size">—</div>
+            <div class="live-bar"><i id="live-bar"></i></div>
+            <div class="live-meta" id="live-meta"></div>
+            <div class="live-status" id="live-status"></div>
+          </div>
+          <a class="download-btn live-save" id="live-save" hidden>%%s_save_one%%</a>
+        </div>
+        <div class="crop-box" id="crop-box">
+          <canvas id="crop-canvas" width="360" height="480" aria-label="%%s_preview%%"></canvas>
+          <svg class="guide crop-only" id="guide" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="50" cy="44" rx="23" ry="30" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/></svg>
+        </div>
+        <div class="crop-tools crop-only">
+          <div class="zoom-row"><span>−</span><input type="range" class="zoom" id="zoom" min="1" max="4" step="0.01" value="1" aria-label="%%s_zoom%%" /><span>+</span></div>
+          <label class="check"><input type="checkbox" id="guide-toggle" checked /> %%s_guide%%</label>
+          <p class="crop-note" id="crop-note"></p>
+        </div>
+
+      </section>
+    </div>
+
+    <aside class="panel" aria-label="%%s_panel_aria%%">
+      <div class="step">
+        <div class="step-head"><span class="step-no">1</span><h2 class="step-title">%%s_step1%%</h2><span class="step-hint">%%s_kb_hint%%</span></div>
+        <div class="grid3" role="radiogroup" aria-label="%%s_kb_aria%%">
+          <label class="opt"><input type="radio" name="kb" value="0" checked /><span>%%s_kb_none%%</span></label>
+          <label class="opt"><input type="radio" name="kb" value="20" /><span>20KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="30" /><span>30KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="50" /><span>50KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="100" /><span>100KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="200" /><span>200KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="300" /><span>300KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="500" /><span>500KB</span></label>
+          <label class="opt"><input type="radio" name="kb" value="1000" /><span>1MB</span></label>
+          <label class="opt span-all"><input type="radio" name="kb" value="custom" /><span>%%s_custom%%</span></label>
+        </div>
+        <div class="inline-fields" id="kb-custom-wrap" hidden>
+          <input class="num-input" id="kb-custom" type="number" min="1" inputmode="numeric" placeholder="%%s_kb_ph%%" aria-label="%%s_kb_custom_aria%%" /> %%s_kb_suffix%%
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-no">2</span><h2 class="step-title">%%s_step2%%</h2><span class="step-hint">%%s_step2_hint%%</span></div>
+        <div class="seg" role="radiogroup" aria-label="%%s_mode_aria%%">
+          <label class="opt"><input type="radio" name="mode" value="crop" checked /><span>%%s_mode_crop%%</span></label>
+          <label class="opt"><input type="radio" name="mode" value="orig" /><span>%%s_mode_orig%%</span></label>
+        </div>
+        <div class="sub-panel" id="panel-orig" hidden>
+          <div class="inline-fields">
+            <label for="max-side">%%s_maxside_label%%</label>
+            <select class="select" id="max-side">
+              <option value="0" selected>%%s_maxside_orig%%</option>
+              <option value="2000">2000px</option>
+              <option value="1600">1600px</option>
+              <option value="1280">1280px</option>
+              <option value="1024">1024px</option>
+              <option value="800">800px</option>
+              <option value="640">640px</option>
+            </select>
+          </div>
+          <p class="note">%%s_note_orig%%</p>
+        </div>
+        <div class="sub-panel" id="panel-crop">
+          <div class="grid2" role="radiogroup" aria-label="%%s_preset_aria%%">
+%%PRESET_RADIOS%%
+            <label class="opt span-all"><input type="radio" name="preset" value="custom" /><span>%%s_preset_custom%%</span></label>
+          </div>
+          <div class="inline-fields" id="custom-size-wrap" hidden>
+            %%s_w%% <input class="num-input" id="custom-w" type="number" min="50" max="6000" inputmode="numeric" value="%%FIRST_W%%" aria-label="%%s_w_aria%%" /> ×
+            %%s_h%% <input class="num-input" id="custom-h" type="number" min="50" max="6000" inputmode="numeric" value="%%FIRST_H%%" aria-label="%%s_h_aria%%" />
+          </div>
+          <p class="note">%%s_note_crop%%</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="step-no">3</span><h2 class="step-title">%%s_step3%%</h2></div>
+        <div class="seg" role="radiogroup" aria-label="%%s_step3%%">
+          <label class="opt"><input type="radio" name="fmt" value="jpeg" checked /><span>JPG<small>%%s_fmt_jpg%%</small></span></label>
+          <label class="opt"><input type="radio" name="fmt" value="webp" /><span>WEBP<small>%%s_fmt_webp%%</small></span></label>
+        </div>
+      </div>
+
+      <div class="summary" id="summary" aria-live="polite"></div>
+
+      <div>
+        <button class="convert-btn" id="convert-btn" type="button" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14l6-6 4 4 6-6"/><path d="M4 20h16"/></svg>
+          <span id="convert-label">%%s_btn_empty%%</span>
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <div class="processing-overlay" id="processing-overlay" aria-live="polite" aria-busy="true">
+    <div class="processing-box">
+      <div class="processing-spinner" aria-hidden="true"></div>
+      <p class="processing-title">%%s_processing%%</p>
+      <div class="processing-bar"><div class="processing-fill" id="processing-fill"></div></div>
+      <p class="processing-file-name" id="processing-file-name"></p>
+    </div>
+  </div>
+
+  <section class="results-section wrap" id="results-section" aria-label="%%s_results_aria%%">
+    <div class="results-header">
+      <h2 class="results-title">%%s_results_title%%</h2>
+      <button class="download-all-btn" id="download-all-btn" type="button" style="display:none">%%s_zip%%</button>
+    </div>
+    <div class="results-list" id="results-list" role="list"></div>
+  </section>
+
+  <div class="content wrap">
+    <section>
+      <span class="kicker">Guide</span>
+      <h2>%%SECTION_TITLE%%</h2>
+      <div class="prose">%%SECTION_HTML%%</div>
+    </section>
+
+    <section>
+      <span class="kicker">%%s_why_kicker%%</span>
+      <h2>%%s_why_h2%%</h2>
+      <div class="cards c3">
+        <div class="info"><h3>🔒 %%s_why1_t%%</h3><p>%%s_why1_p%%</p></div>
+        <div class="info"><h3>✨ %%s_why2_t%%</h3><p>%%s_why2_p%%</p></div>
+        <div class="info"><h3>🆓 %%s_why3_t%%</h3><p>%%s_why3_p%%</p></div>
+      </div>
+    </section>
+
+    <section>
+      <span class="kicker">FAQ</span>
+      <h2>%%s_faq_h2%%</h2>
+      <div class="faq">
+        %%FAQ%%
+      </div>
+    </section>
+  </div>
+
+  <script>window.PR = %%PR_JSON%%;</script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" defer></script>
+  <script src="/photo-resize/app.js?v=%%VER%%" defer></script>
+  <script>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (next === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      else document.documentElement.removeAttribute('data-theme');
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+    document.getElementById('lang-select').addEventListener('change', function () { location.href = this.value; });
+  </script>
+  <script src="/footer.js"></script>
+</body>
+</html>
