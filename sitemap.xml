@@ -46,6 +46,84 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- photo-resize:start -->
+  <url>
+    <loc>https://haebom.app/photo-resize/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/photo-resize/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/photo-resize/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/photo-resize/" />
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/100kb/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/photo-resize/100kb/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/photo-resize/en/100kb/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/photo-resize/100kb/" />
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/passport/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/photo-resize/passport/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/photo-resize/en/passport-photo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/photo-resize/passport/" />
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/id-photo/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/en/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/photo-resize/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/photo-resize/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/photo-resize/" />
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/en/50kb/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/en/100kb/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/photo-resize/100kb/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/photo-resize/en/100kb/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/photo-resize/100kb/" />
+  </url>
+  <url>
+    <loc>https://haebom.app/photo-resize/en/passport-photo/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/photo-resize/passport/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/photo-resize/en/passport-photo/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/photo-resize/passport/" />
+  </url>
+  <!-- photo-resize:end -->
+  <!-- pdf-compress:start -->
+  <url>
+    <loc>https://haebom.app/pdf-compress/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/pdf-compress/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/pdf-compress/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/pdf-compress/" />
+  </url>
+  <url>
+    <loc>https://haebom.app/pdf-compress/en/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://haebom.app/pdf-compress/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://haebom.app/pdf-compress/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://haebom.app/pdf-compress/" />
+  </url>
+  <!-- pdf-compress:end -->
   <!-- PDF Tool - Korean (default) -->
   <url>
     <loc>https://haebom.app/pdf/</loc>

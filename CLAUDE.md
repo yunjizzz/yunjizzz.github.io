@@ -108,3 +108,14 @@ PDF 도구 — 브라우저에서 PDF 병합, 분할, 이미지 변환, Excel �
 - Google Analytics: 모든 페이지에 GA 태그 필수 적용. ID: `G-Y644EYN1VZ`
   - 정적 HTML: `<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y644EYN1VZ"></script>` + gtag 초기화 스크립트를 `<head>`에 삽입
   - Next.js: `next/script`의 `Script` 컴포넌트를 `layout.tsx`의 `<body>` 안에 `strategy="afterInteractive"`로 추가
+
+### 사진 용량 줄이기 (`/photo-resize/`)
+- 공통 `photo-resize/app.js`, `style.css` + 페이지별 HTML. HTML은 직접 고치지 말고 `scripts/photo_resize_template.html`(틀), `scripts/photo_resize_i18n.py`(화면 문구·규격·FAQ·언어별 페이지 정의), `scripts/gen_photo_resize.py`(생성기)를 고친 뒤 `python3 scripts/gen_photo_resize.py`로 다시 생성 (sitemap.xml의 photo-resize 구간과 hreflang도 함께 갱신됨).
+- 언어: ko(`/photo-resize/`), en(`/photo-resize/en/`). 관심 국가 순위가 인도, 방글라데시, 탄자니아, 파키스탄, 나이지리아라서 영어를 두고, 인도네시아어(id)·포르투갈어(pt)는 순위에 없어 뺌(데이터는 `photo_resize_i18n.py`에 남아 있어 `LANGS`에 추가하면 다시 생성됨). 새 언어는 `LANGS`, `S`, `PRESETS`, `FAQ`, `PAGES`와 `footer.js` 문구를 추가.
+- 랜딩 페이지는 검색량이 큰 것만 둠(ko: 100kb·passport·id-photo, en: 50kb·100kb·passport-photo). 같은 내용의 언어별 페이지는 `group`으로 묶여 hreflang과 언어 선택에 쓰임. `body`의 `data-kb/data-mode/data-preset`이 초기 선택값.
+- 1KB = 1,000바이트로 계산. 사진은 서버로 보내지 않음.
+
+### PDF 용량 줄이기 (`/pdf-compress/`)
+- `pdf-compress/app.js`(공통 동작) + `pdf-compress/style.css`, 디자인은 `/photo-resize/style.css`를 공유. HTML은 `scripts/pdf_compress_template.html`과 `scripts/gen_pdf_compress.py`(문구·FAQ·페이지 정의)를 고친 뒤 `python3 scripts/gen_pdf_compress.py`로 생성 (한국어 `/pdf-compress/`, 영어 `/pdf-compress/en/`, sitemap 구간 포함).
+- 방식: pdf.js(CDN 3.11.174)로 쪽을 이미지로 그린 뒤 JPEG 화질을 이분 탐색, 부족하면 해상도를 줄이고, pdf-lib(CDN 1.17.1)로 다시 묶음. 줄인 PDF는 글자를 선택·복사할 수 없음(화면에 안내). 한 파일 최대 60쪽. 1KB = 1,000바이트.
+- 검색 근거: 관심 검색어 상위가 `pdf resize`, `resize pdf`, `resize image pdf`, `kb resize`, `resize image kb`, `online resize image` 등이라 영어 문구는 resize 중심.

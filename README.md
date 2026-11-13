@@ -16,6 +16,7 @@
 │   ├── app.js
 │   ├── data.js
 │   └── styles.css
+├── photo-resize/           ← 사진 용량 줄이기 (scripts/gen_photo_resize.py로 하위 페이지 생성)
 ├── move/                   ← 이사 도우미 (Next.js)
 │   └── src/
 ├── robots.txt
@@ -30,6 +31,8 @@
 | `/pdf/` | PDF 도구 | PDF 병합, 분할, 이미지 변환 (브라우저 내 처리) | Next.js 16, pdf-lib, pdfjs-dist |
 | `/review-check/` | 이 집.. 진짜 맛집일까? | 네이버 리뷰 데이터 기반 맛집 신뢰도 분석 | HTML/CSS/JS |
 | `/move/` | 이사 도우미 | 이사 날짜 기반 체크리스트 자동 생성 & 업체 모음 | Next.js 16, shadcn/ui |
+| `/photo-resize/` | 사진 용량 줄이기 | 목표 KB 이하로 줄이기, 증명사진·여권사진 규격 자르기 (브라우저 내 처리). 한국어·영어, 용량별·규격별 검색 랜딩 페이지 포함 | HTML/CSS/JS |
+| `/pdf-compress/` | PDF 용량 줄이기 | PDF를 목표 KB 이하로 줄이기 (쪽을 이미지로 압축, 브라우저 내 처리). 한국어·영어 | HTML/CSS/JS, pdf.js, pdf-lib |
 | `/well-ending/` | 어느 날, 내가 없는 아침 | 내가 떠난 뒤 가족의 하루를 따라가 보는 인터랙티브 스토리 | HTML/CSS/JS |
 
 ## 개발 서버 실행
