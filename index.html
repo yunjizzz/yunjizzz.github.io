@@ -114,35 +114,6 @@
     }
     a { color: inherit; }
 
-    /* --- 배경: 그리드 + 부드러운 빛 --- */
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .bg::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-      background-size: 56px 56px;
-      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 75%);
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 20%, transparent 75%);
-    }
-    .bg .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.55;
-    }
-    .bg .blob.a { width: 520px; height: 520px; top: -160px; left: 50%; margin-left: -460px; background: rgba(16, 185, 129, 0.22); }
-    .bg .blob.b { width: 440px; height: 440px; top: 40px; right: -120px; background: rgba(6, 182, 212, 0.16); }
-    [data-theme="dark"] .bg .blob { opacity: 0.35; }
-
     /* =====================
        HEADER
     ===================== */
@@ -253,6 +224,12 @@
     /* =====================
        SECTIONS (한 화면 = 한 섹션)
     ===================== */
+    /* 페이지 맨 위에만 깔리는 아주 옅은 빛 (움직이지 않음, 스크롤하면 위로 사라짐) */
+    body::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 640px; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse 55% 100% at 50% 0%, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.06) 50%, transparent 78%);
+    }
+    [data-theme="dark"] body::before { background: radial-gradient(ellipse 55% 100% at 50% 0%, rgba(52, 211, 153, 0.14), rgba(34, 211, 238, 0.05) 50%, transparent 78%); }
     .screen {
       position: relative;
       z-index: 1;
@@ -270,9 +247,9 @@
     /* 등장 애니메이션 (섹션이 보이면 .in 추가) */
     .js .reveal {
       opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 700ms var(--ease), transform 700ms var(--ease);
-      transition-delay: calc(var(--i, 0) * 70ms);
+      transform: translateY(16px);
+      transition: opacity 900ms var(--ease), transform 900ms var(--ease);
+      transition-delay: calc(var(--i, 0) * 90ms);
     }
     .js .screen.in .reveal { opacity: 1; transform: none; }
 
@@ -324,6 +301,103 @@
       word-break: keep-all;
     }
     .hero-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    /* --- 히어로: 왼쪽 글 + 오른쪽 폰 예시 화면 --- */
+    /* 모바일·태블릿: 폰을 글 아래에 조금 작게 */
+    .hero-phone { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
+    .hero-phone .phone { transform: scale(0.82); transform-origin: top center; margin-bottom: calc(548px * -0.18); }
+    .devices { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; font-size: 14px; font-weight: 700; color: var(--text); }
+    .devices span { display: inline-flex; align-items: center; gap: 6px; }
+    .devices svg { color: var(--accent); }
+    .devices em { font-style: normal; font-weight: 500; color: var(--muted); }
+    @media (min-width: 960px) {
+      .hero-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr); gap: 48px; align-items: center; }
+      .hero-copy { text-align: left; }
+      .hero-copy h1 { font-size: clamp(36px, 4.6vw, 64px); }
+      .hero-copy .sub { margin-left: 0; }
+      .hero-copy .hero-cta, .hero-copy .devices { justify-content: flex-start; }
+      .hero-copy .chips { margin: 30px 0 0; max-width: none; justify-content: flex-start; }
+      .hero-phone { margin-top: 0; }
+      .hero-phone .phone { transform: none; margin-bottom: 0; }
+    }
+    .phone {
+      position: relative; width: 268px; height: 548px; border-radius: 44px; padding: 10px;
+      background: #0f1a14; box-shadow: 0 30px 70px rgba(16, 185, 129, 0.22), 0 10px 30px rgba(15, 26, 20, 0.18), inset 0 0 0 1.5px rgba(255, 255, 255, 0.08);
+    }
+    [data-theme="dark"] .phone { background: #1b2a23; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(52, 211, 153, 0.25); }
+    .phone-notch { position: absolute; top: 18px; left: 50%; width: 84px; height: 22px; margin-left: -42px; border-radius: 999px; background: #0f1a14; z-index: 2; }
+    [data-theme="dark"] .phone-notch { background: #0b120f; }
+    .phone-screen { text-align: left; height: 100%; border-radius: 34px; background: var(--bg); overflow: hidden; padding: 14px 14px 14px; display: flex; flex-direction: column; gap: 9px; font-size: 11px; color: var(--text); }
+    .ps-status { display: flex; justify-content: space-between; align-items: center; padding: 0 10px; height: 22px; font-weight: 800; font-size: 11px; }
+    .ps-bat { width: 20px; height: 9px; border-radius: 3px; border: 1.5px solid currentColor; position: relative; }
+    .ps-bat::after { content: ''; position: absolute; inset: 1.5px; right: 5px; border-radius: 1px; background: currentColor; }
+    .ps-head { display: flex; align-items: center; gap: 7px; padding-top: 6px; }
+    .ps-logo { width: 18px; height: 18px; border-radius: 6px; background: var(--accent); position: relative; }
+    .ps-logo::after { content: ''; position: absolute; left: 5px; top: 4px; width: 7px; height: 4px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg); }
+    .ps-head b { font-size: 13px; font-weight: 800; letter-spacing: -0.02em; }
+    .ps-photo { position: relative; height: 112px; border-radius: 14px; overflow: hidden; background: linear-gradient(180deg, #bfe9dc 0%, #e6f7f1 100%); border: 1px solid var(--border); }
+    [data-theme="dark"] .ps-photo { background: linear-gradient(180deg, #1d4a3d 0%, #143228 100%); }
+    .ps-sun { position: absolute; top: 16px; right: 24px; width: 26px; height: 26px; border-radius: 50%; background: #fde68a; }
+    .ps-hill { position: absolute; bottom: -34px; border-radius: 50%; }
+    .ps-hill.a { left: -30px; width: 170px; height: 90px; background: #34d399; }
+    .ps-hill.b { right: -40px; width: 190px; height: 80px; background: #10b981; }
+    .ps-label { font-size: 10.5px; font-weight: 800; color: var(--muted); margin-top: 2px; }
+    .ps-chips, .ps-seg { display: flex; gap: 6px; }
+    .ps-chips span, .ps-seg span { flex: 1; text-align: center; padding: 7px 0; border-radius: 9px; border: 1px solid var(--border); background: var(--card); font-weight: 800; font-size: 11px; }
+    .ps-seg span { color: var(--muted); }
+    .ps-chips span.on, .ps-seg span.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+    [data-theme="dark"] .ps-chips span.on, [data-theme="dark"] .ps-seg span.on { color: #04130c; }
+    .ps-result { margin-top: 2px; padding: 10px 11px; border-radius: 13px; background: var(--accent-soft); border: 1px solid var(--border-strong); display: flex; flex-direction: column; gap: 5px; }
+    .ps-size { display: flex; align-items: baseline; gap: 5px; }
+    .ps-size s { color: var(--muted); font-size: 10.5px; }
+    .ps-size i { font-style: normal; color: var(--muted); font-size: 10px; }
+    .ps-size b { font-size: 21px; font-weight: 900; letter-spacing: -0.03em; color: var(--accent); }
+    .ps-size em { font-style: normal; font-weight: 800; font-size: 9.5px; padding: 2px 6px; border-radius: 999px; background: var(--card); color: var(--accent); }
+    .ps-bar { height: 5px; border-radius: 999px; background: var(--card); overflow: hidden; }
+    .ps-bar i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+    .ps-ok { font-size: 10px; font-weight: 800; color: var(--accent); }
+    .ps-btn { margin-top: auto; text-align: center; padding: 11px 0; border-radius: 12px; background: var(--accent); color: #fff; font-weight: 800; font-size: 12px; box-shadow: 0 6px 14px rgba(16, 185, 129, 0.3); }
+    [data-theme="dark"] .ps-btn { color: #04130c; }
+    @media (min-width: 960px) and (max-height: 760px) { .hero-phone .phone { transform: scale(0.86); transform-origin: center; margin: -38px 0; } }
+
+    /* --- 시연: data-step 0 사진 고르기 → 1 사진 들어옴 → 2 100KB 누름 → 3 결과 → 4 저장 --- */
+    .phone-screen { position: relative; }
+    .ps-photo { position: relative; }
+    .ps-drop { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 2px dashed var(--border-strong); border-radius: 14px; background: var(--card); color: var(--accent); font-weight: 800; font-size: 11px; transition: opacity 400ms ease; }
+    .ps-pic { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity 500ms ease, transform 700ms var(--ease); }
+    .ps-file { font-size: 10px; font-weight: 700; color: var(--muted); opacity: 0; transition: opacity 400ms ease; margin-top: -3px; }
+    .ps-chips span.kb { transition: background 250ms ease, color 250ms ease, border-color 250ms ease; }
+    .ps-result { opacity: 0; transform: translateY(6px); transition: opacity 400ms ease, transform 500ms var(--ease); }
+    .ps-bar i { width: 100%; transition: width 900ms var(--ease); }
+    .ps-ok, .ps-size em { opacity: 0; transition: opacity 300ms ease; }
+    .ps-btn { transition: transform 150ms ease, opacity 300ms ease; opacity: 0.45; }
+    .ps-toast { position: absolute; left: 50%; bottom: 66px; transform: translate(-50%, 8px); padding: 8px 12px; border-radius: 10px; background: #0f1a14; color: #fff; font-size: 10.5px; font-weight: 700; white-space: nowrap; opacity: 0; transition: opacity 300ms ease, transform 300ms ease; }
+    [data-theme="dark"] .ps-toast { background: #ecf3ef; color: #0f1a14; }
+    .ps-tap { position: absolute; left: 50%; top: 60%; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: rgba(15, 26, 20, 0.16); border: 2px solid rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(15, 26, 20, 0.25); opacity: 0; transition: left 450ms var(--ease), top 450ms var(--ease), opacity 250ms ease; pointer-events: none; }
+    .ps-tap.press { animation: tapPress 380ms ease; }
+    @keyframes tapPress { 0% { transform: scale(1); } 45% { transform: scale(0.72); background: rgba(16, 185, 129, 0.35); } 100% { transform: scale(1); } }
+    .ps-app { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 9px; }
+    .ps-app[hidden] { display: none; }
+    .ps-app:not([data-step="0"]) .ps-drop { opacity: 0; }
+    .ps-app:not([data-step="0"]) .ps-pic { opacity: 1; transform: none; }
+    .ps-app:not([data-step="0"]) .ps-file { opacity: 1; }
+    .ps-app[data-step="2"] .ps-chips span.kb, .ps-app[data-step="3"] .ps-chips span.kb, .ps-app[data-step="4"] .ps-chips span.kb { background: var(--accent); border-color: var(--accent); color: #fff; }
+    [data-theme="dark"] .ps-app[data-step="2"] .ps-chips span.kb, [data-theme="dark"] .ps-app[data-step="3"] .ps-chips span.kb, [data-theme="dark"] .ps-app[data-step="4"] .ps-chips span.kb { color: #04130c; }
+    .ps-app[data-step="3"] .ps-result, .ps-app[data-step="4"] .ps-result { opacity: 1; transform: none; }
+    .ps-app.done .ps-bar i { width: 6%; }
+    .ps-app.done .ps-ok, .ps-app.done .ps-size em { opacity: 1; }
+    .ps-app[data-step="3"] .ps-btn, .ps-app[data-step="4"] .ps-btn { opacity: 1; }
+    .ps-app[data-step="4"] .ps-toast { opacity: 1; transform: translate(-50%, 0); }
+    /* 시연이 바뀔 때 화면이 하얗게(다크 모드는 화면 바탕색으로) 덮였다가 걷힘 */
+    .ps-wipe { position: absolute; inset: 0; border-radius: inherit; background: var(--bg); opacity: 0; transition: opacity 320ms ease; pointer-events: none; z-index: 3; }
+    .ps-wipe.on { opacity: 1; }
+    /* PDF 미리보기: 문서 세 장 */
+    .ps-docs { display: flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(180deg, #e6f7f1, #f4fbf8); }
+    [data-theme="dark"] .ps-docs { background: linear-gradient(180deg, #17352c, #11281f); }
+    .ps-page { width: 52px; height: 72px; border-radius: 5px; background: #fff; box-shadow: 0 3px 10px rgba(15, 26, 20, 0.12); position: relative; }
+    .ps-page::before { content: ''; position: absolute; left: 8px; right: 8px; top: 10px; height: 5px; border-radius: 3px; background: #10b981; opacity: 0.8; }
+    .ps-page::after { content: ''; position: absolute; left: 8px; right: 8px; top: 22px; bottom: 12px; background: repeating-linear-gradient(180deg, #d5e6de 0 3px, transparent 3px 8px); }
+    .ps-page:nth-child(2) { transform: translateY(-4px); }
 
     .chips {
       margin: 44px auto 0;
@@ -421,8 +495,16 @@
       transition: opacity 250ms ease;
       pointer-events: none;
     }
-    .card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow-lg); }
+    .card:hover { transform: translateY(-3px); border-color: rgba(16, 185, 129, 0.3); box-shadow: var(--shadow-lg); }
     .card:hover::before { opacity: 1; }
+    .card::after {   /* 호버하면 테두리에 초록→청록 그라데이션 선이 부드럽게 나타남 */
+      content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.75), rgba(6, 182, 212, 0.55));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      opacity: 0; transition: opacity 280ms ease;
+    }
+    .card:hover::after, .card:focus-visible::after { opacity: 1; }
     .card-top { display: flex; align-items: center; justify-content: space-between; position: relative; }
     .card-icon {
       width: 48px; height: 48px;
@@ -438,18 +520,18 @@
     .card p { position: relative; margin-top: 4px; font-size: 13.5px; line-height: 1.55; color: var(--muted); word-break: keep-all; }
     .card-body { flex: 1; }
     .card-go {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      opacity: 0.0;
-      transform: translateX(-6px);
-      transition: opacity 200ms ease, transform 250ms var(--ease);
+      position: absolute;
+      right: 18px; bottom: 18px;
+      width: 30px; height: 30px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--border-strong);
+      color: var(--muted);
+      background: var(--card);
+      transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 300ms var(--ease);
     }
-    .card:hover .card-go, .card:focus-visible .card-go { opacity: 1; transform: none; }
+    .card:hover .card-go, .card:focus-visible .card-go { background: var(--accent); border-color: var(--accent); color: #fff; transform: rotate(45deg); }
+    [data-theme="dark"] .card:hover .card-go { color: #04130c; }
 
     .badge {
       display: inline-flex;
@@ -465,6 +547,8 @@
     .badge.live { background: rgba(16, 185, 129, 0.12); color: #0d9668; }
     .badge.live i { animation: blink 2s ease-in-out infinite; }
     .badge.wip { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
+    .badge.new { background: linear-gradient(100deg, #10b981, #06b6d4); color: #fff; }   /* 히어로 제목과 같은 초록→청록 그라데이션 */
+    .badge.new i { animation: blink 2s ease-in-out infinite; }
     [data-theme="dark"] .badge.live { background: rgba(52, 211, 153, 0.15); color: #34d399; }
     [data-theme="dark"] .badge.wip { background: rgba(248, 113, 113, 0.15); color: #f87171; }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
@@ -619,7 +703,11 @@
     }
     @media (min-width: 641px) {
       .card h3 .badge { display: none; }
+      .card-body { padding-right: 34px; }   /* 오른쪽 아래 원형 아이콘과 글이 겹치지 않게 */
     }
+
+    /* --- 인터랙션 --- */
+
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -629,9 +717,7 @@
   </style>
 </head>
 <body>
-  <div class="bg" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div></div>
-
-  <!-- ===== HEADER ===== -->
+    <!-- ===== HEADER ===== -->
   <header class="header" id="header">
     <div class="header-inner">
       <a class="brand" href="#top" aria-label="해봄 홈">
@@ -667,17 +753,23 @@
   <main>
     <!-- ===== 1. HERO ===== -->
     <section class="screen hero" id="top">
-      <div class="wrap">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
         <div class="reveal" style="--i:0"><span class="eyebrow"><span class="dot"></span>회원가입 없이 바로, 100% 무료</span></div>
         <h1 class="reveal" style="--i:1">일상의 작은 일을<br /><span class="grad">해봄에서 간단하게</span></h1>
         <p class="sub reveal" style="--i:2">PDF 변환부터 글자수 세기, 영상 압축까지.<br />직장인이 매일 쓰는 꿀도구를 한 곳에 모았어요.</p>
         <div class="hero-cta reveal" style="--i:3">
           <a class="btn btn-primary" href="#tools">도구 둘러보기
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
           </a>
           <a class="btn btn-ghost" href="#why">해봄은 이래요</a>
         </div>
-        <div class="chips reveal" style="--i:4" role="list" aria-label="바로가기">
+        <div class="devices reveal" style="--i:4">
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>PC</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>모바일</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 18h2"/></svg>태블릿</span>
+          <em>어디서든 설치 없이 브라우저에서 바로</em>
+        </div>
+        <div class="chips reveal" style="--i:5" role="list" aria-label="바로가기">
           <a class="chip" role="listitem" href="/pdf/"><span class="e">📄</span>PDF 도구</a>
           <a class="chip" role="listitem" href="/text-count/"><span class="e">📝</span>글자수 세기</a>
           <a class="chip" role="listitem" href="/image-convert/"><span class="e">🖼️</span>이미지 변환기</a>
@@ -685,6 +777,58 @@
           <a class="chip" role="listitem" href="/pdf-compress/"><span class="e">🗜️</span>PDF 용량 줄이기</a>
           <a class="chip" role="listitem" href="/compress/"><span class="e">🎬</span>영상 압축</a>
           <a class="chip" role="listitem" href="/move/"><span class="e">📦</span>이사 도우미</a>
+        </div>
+        </div>
+        <div class="hero-phone reveal" style="--i:3">
+          <div class="phone" role="img" aria-label="휴대폰에서 사진 용량 줄이기를 쓰는 시연 화면: 사진을 고르고 100KB를 누르면 4.2MB가 98KB로 줄어들고 저장됩니다">
+            <div class="phone-notch"></div>
+            <div class="phone-screen" id="demo" aria-hidden="true">
+              <div class="ps-status"><span>9:41</span><span class="ps-bat"></span></div>
+
+              <div class="ps-app" data-app="photo" data-step="0" data-from="4200" data-to="98">
+                <div class="ps-head"><span class="ps-logo"></span><b>사진 용량 줄이기</b></div>
+                <div class="ps-photo">
+                  <div class="ps-drop" data-tap="drop"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><span>사진 선택하기</span></div>
+                  <div class="ps-pic"><span class="ps-sun"></span><span class="ps-hill a"></span><span class="ps-hill b"></span></div>
+                </div>
+                <div class="ps-file">IMG_2041.jpg · 4.2MB</div>
+                <div class="ps-label">용량 (이하로)</div>
+                <div class="ps-chips"><span>50KB</span><span class="kb" data-tap="kb">100KB</span><span>200KB</span></div>
+                <div class="ps-label">사진 크기</div>
+                <div class="ps-seg"><span class="on">3.5×4.5cm</span><span>원본 비율</span></div>
+                <div class="ps-result">
+                  <div class="ps-size"><s>4.2MB</s><i>→</i><b class="ps-num">4.2MB</b><em>-98%</em></div>
+                  <div class="ps-bar"><i></i></div>
+                  <div class="ps-ok">✓ 100KB 이하로 맞췄어요</div>
+                </div>
+                <div class="ps-btn" data-tap="save">이 사진 저장</div>
+                <div class="ps-toast">✓ 갤러리에 저장했어요</div>
+              </div>
+
+              <div class="ps-app" data-app="pdf" data-step="0" data-from="1800" data-to="186" hidden>
+                <div class="ps-head"><span class="ps-logo"></span><b>PDF 용량 줄이기</b></div>
+                <div class="ps-photo">
+                  <div class="ps-drop" data-tap="drop"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><span>PDF 선택하기</span></div>
+                  <div class="ps-pic ps-docs"><span class="ps-page"></span><span class="ps-page"></span><span class="ps-page"></span></div>
+                </div>
+                <div class="ps-file">재직증명서.pdf · 3쪽 · 1.8MB</div>
+                <div class="ps-label">용량 (이하로)</div>
+                <div class="ps-chips"><span>100KB</span><span class="kb" data-tap="kb">200KB</span><span>500KB</span></div>
+                <div class="ps-label">색상</div>
+                <div class="ps-seg"><span class="on">색 그대로</span><span>흑백</span></div>
+                <div class="ps-result">
+                  <div class="ps-size"><s>1.8MB</s><i>→</i><b class="ps-num">1.8MB</b><em>-90%</em></div>
+                  <div class="ps-bar"><i></i></div>
+                  <div class="ps-ok">✓ 200KB 이하로 맞췄어요</div>
+                </div>
+                <div class="ps-btn" data-tap="save">PDF 저장</div>
+                <div class="ps-toast">✓ 파일에 저장했어요</div>
+              </div>
+
+              <span class="ps-tap"></span>
+              <div class="ps-wipe"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -705,45 +849,45 @@
         </div>
 
         <div class="grid">
-          <a class="card reveal" style="--i:2" href="/well-ending/" data-category="daily">
+          <a class="card reveal" style="--i:2" href="/photo-resize/" data-category="work">
+            <div class="card-top"><div class="card-icon">📷</div><span class="badge new"><i></i>NEW</span></div>
+            <div class="card-body">
+              <h3>사진 용량 줄이기 <span class="badge new"><i></i>NEW</span></h3>
+              <p>100KB·200KB 등 원하는 용량으로, 증명사진 규격 자르기까지</p>
+            </div>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
+          </a>
+          <a class="card reveal" style="--i:3" href="/pdf-compress/" data-category="work">
+            <div class="card-top"><div class="card-icon">🗜️</div><span class="badge new"><i></i>NEW</span></div>
+            <div class="card-body">
+              <h3>PDF 용량 줄이기 <span class="badge new"><i></i>NEW</span></h3>
+              <p>200KB·500KB 등 원하는 용량으로 PDF를 줄여 드려요</p>
+            </div>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
+          </a>
+          <a class="card reveal" style="--i:4" href="/well-ending/" data-category="daily">
             <div class="card-top"><div class="card-icon">🌅</div><span class="badge live"><i></i>LIVE</span></div>
             <div class="card-body">
               <h3>어느 날, 내가 없는 아침 <span class="badge live"><i></i>LIVE</span></h3>
               <p>내가 떠난 뒤 가족의 하루를 따라가 보는 인터랙티브 스토리</p>
             </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
-          <a class="card reveal" style="--i:3" href="/text-count/" data-category="work">
+          <a class="card reveal" style="--i:5" href="/text-count/" data-category="work">
             <div class="card-top"><div class="card-icon">📝</div><span class="badge live"><i></i>LIVE</span></div>
             <div class="card-body">
               <h3>글자수 세기 <span class="badge live"><i></i>LIVE</span></h3>
               <p>텍스트의 글자수, 단어수, 줄수를 실시간 분석</p>
             </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
-          <a class="card reveal" style="--i:4" href="/image-convert/" data-category="work">
+          <a class="card reveal" style="--i:6" href="/image-convert/" data-category="work">
             <div class="card-top"><div class="card-icon">🖼️</div><span class="badge live"><i></i>LIVE</span></div>
             <div class="card-body">
               <h3>이미지 변환기 <span class="badge live"><i></i>LIVE</span></h3>
               <p>JPG, PNG, WEBP 이미지를 원하는 포맷으로 변환</p>
             </div>
-            <span class="card-go">열기 →</span>
-          </a>
-          <a class="card reveal" style="--i:5" href="/photo-resize/" data-category="work">
-            <div class="card-top"><div class="card-icon">📷</div><span class="badge live"><i></i>NEW</span></div>
-            <div class="card-body">
-              <h3>사진 용량 줄이기 <span class="badge live"><i></i>NEW</span></h3>
-              <p>100KB·200KB 등 원하는 용량으로, 증명사진 규격 자르기까지</p>
-            </div>
-            <span class="card-go">열기 →</span>
-          </a>
-          <a class="card reveal" style="--i:6" href="/pdf-compress/" data-category="work">
-            <div class="card-top"><div class="card-icon">🗜️</div><span class="badge live"><i></i>NEW</span></div>
-            <div class="card-body">
-              <h3>PDF 용량 줄이기 <span class="badge live"><i></i>NEW</span></h3>
-              <p>200KB·500KB 등 원하는 용량으로 PDF를 줄여 드려요</p>
-            </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
           <a class="card reveal" style="--i:7" href="/compress/" data-category="work">
             <div class="card-top"><div class="card-icon">🎬</div><span class="badge live"><i></i>LIVE</span></div>
@@ -751,7 +895,7 @@
               <h3>영상 압축 <span class="badge live"><i></i>LIVE</span></h3>
               <p>브라우저에서 바로 영상 압축, 최대 2GB까지 처리</p>
             </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
           <a class="card reveal" style="--i:8" href="/pdf/" data-category="work">
             <div class="card-top"><div class="card-icon">📄</div><span class="badge live"><i></i>LIVE</span></div>
@@ -759,7 +903,7 @@
               <h3>PDF 도구 <span class="badge live"><i></i>LIVE</span></h3>
               <p>브라우저에서 바로 PDF 병합, 분할, 이미지 변환</p>
             </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
           <a class="card reveal" style="--i:9" href="/move/" data-category="daily">
             <div class="card-top"><div class="card-icon">📦</div><span class="badge wip"><i></i>개선중</span></div>
@@ -767,7 +911,7 @@
               <h3>이사 도우미 <span class="badge wip"><i></i>개선중</span></h3>
               <p>이사 날짜 기반 체크리스트 자동 생성 &amp; 업체 링크 모음</p>
             </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
           <a class="card reveal" style="--i:10" href="/review-check/" data-category="daily">
             <div class="card-top"><div class="card-icon">🍜</div><span class="badge wip"><i></i>개선중</span></div>
@@ -775,7 +919,7 @@
               <h3>이 집.. 진짜 맛집일까? <span class="badge wip"><i></i>개선중</span></h3>
               <p>네이버 리뷰 분석으로 맛집 신뢰도를 판별하는 데모</p>
             </div>
-            <span class="card-go">열기 →</span>
+            <span class="card-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8.5 7H17v8.5"/></svg></span>
           </a>
         </div>
       </div>
@@ -882,6 +1026,65 @@
         card.style.setProperty('--my', (e.clientY - r.top) + 'px');
       });
     });
+
+    // --- 폰 시연: 사진 용량 줄이기 → (흰 화면) → PDF 용량 줄이기 → (흰 화면) → 반복. 화면에 보일 때만, 움직임 줄이기면 첫 시연의 완료 화면만 ---
+    (function () {
+      var screen = document.getElementById('demo');
+      if (!screen) return;
+      var apps = Array.prototype.slice.call(screen.querySelectorAll('.ps-app'));
+      var tap = screen.querySelector('.ps-tap'), wipe = screen.querySelector('.ps-wipe');
+      var idx = 0, timers = [], visible = false, running = false;
+      function fmt(v) { return v >= 1000 ? (v / 1000).toFixed(1) + 'MB' : Math.round(v) + 'KB'; }
+      function show(i) { apps.forEach(function (a, k) { a.hidden = k !== i; }); }
+      function reset(app) { app.dataset.step = '0'; app.classList.remove('done'); app.querySelector('.ps-num').textContent = fmt(+app.dataset.from); tap.style.opacity = '0'; }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        show(0); apps[0].dataset.step = '4'; apps[0].classList.add('done'); apps[0].querySelector('.ps-num').textContent = fmt(+apps[0].dataset.to);
+        apps[0].querySelector('.ps-toast').style.display = 'none'; return;
+      }
+      function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+      function moveTo(app, name) {
+        var t = app.querySelector('[data-tap="' + name + '"]'), r = t.getBoundingClientRect(), d = screen.getBoundingClientRect(), sc = d.width / screen.offsetWidth;
+        tap.style.left = ((r.left - d.left + r.width / 2) / sc) + 'px'; tap.style.top = ((r.top - d.top + r.height / 2) / sc) + 'px'; tap.style.opacity = '1';
+      }
+      function press() { tap.classList.remove('press'); void tap.offsetWidth; tap.classList.add('press'); }
+      function countDown(app) {
+        var el = app.querySelector('.ps-num'), from = +app.dataset.from, to = +app.dataset.to, t0 = performance.now(), dur = 700;
+        (function f(now) {
+          var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+          el.textContent = fmt(from + (to - from) * e);
+          if (k < 1) requestAnimationFrame(f); else app.classList.add('done');
+        })(t0);
+      }
+      function play() {
+        running = true;
+        var app = apps[idx];
+        show(idx); reset(app);
+        at(60, function () { wipe.classList.remove('on'); });               // 흰 화면이 걷히며 시작
+        at(400, function () { moveTo(app, 'drop'); });
+        at(900, press);
+        at(1050, function () { app.dataset.step = '1'; });
+        at(1650, function () { moveTo(app, 'kb'); });
+        at(2150, press);
+        at(2300, function () { app.dataset.step = '2'; });
+        at(2500, function () { app.dataset.step = '3'; countDown(app); });
+        at(3500, function () { moveTo(app, 'save'); });
+        at(4000, press);
+        at(4150, function () { app.dataset.step = '4'; tap.style.opacity = '0'; });
+        at(5600, function () { wipe.classList.add('on'); });                // 하얗게 덮고
+        at(5950, function () {                                              // 다음 시연으로
+          running = false; idx = (idx + 1) % apps.length;
+          if (visible && !document.hidden) play();
+        });
+      }
+      function stop() { timers.forEach(clearTimeout); timers = []; running = false; }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          visible = es[0].isIntersecting;
+          if (visible && !running && !document.hidden) play(); else if (!visible) stop();
+        }, { threshold: 0.3 }).observe(screen);
+      } else { visible = true; play(); }
+      document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (visible && !running) play(); });
+    })();
 
     // --- 카테고리 필터 ---
     (function () {
