@@ -214,7 +214,7 @@ def prepend_report_to_ideas_md(report_md: str, today_str: str) -> bool:
             + existing[insert_pos:].lstrip()
         )
     elif existing.strip():
-        updated = f"{DOC_HEADER}\n{report_md}\n\n---\n\n{existing.strip()}\n"
+        updated = f"{DOC_HEADER}\n{report_md}\n"
     else:
         updated = f"{DOC_HEADER}\n{report_md}\n"
 
