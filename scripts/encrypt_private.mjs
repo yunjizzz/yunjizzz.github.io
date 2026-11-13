@@ -59,8 +59,7 @@ function wrapper({ salt, iv, data }) {
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <style>
-  :root { --bg:#fafdfb; --card:#fff; --border:#e2efe8; --text:#0f1a14; --muted:#5d7469; --accent:#10b981; --accent-hover:#059669; --danger:#dc2626; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#09100d; --card:#121c17; --border:#1f3028; --text:#ecf3ef; --muted:#8aa196; --accent:#34d399; --accent-hover:#10b981; --danger:#f87171; } }
+  :root { color-scheme: light; --bg:#fafdfb; --card:#fff; --border:#e2efe8; --text:#0f1a14; --muted:#5d7469; --accent:#10b981; --accent-hover:#059669; --danger:#dc2626; }
   * { box-sizing: border-box; margin: 0; }
   body { min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; background: var(--bg); color: var(--text); font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", sans-serif; -webkit-font-smoothing: antialiased; }
   form { width: min(100%, 360px); background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 12px 40px rgba(16,185,129,.12); }
