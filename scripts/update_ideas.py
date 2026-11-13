@@ -148,7 +148,10 @@ def generate_weekly_report(today_str: str) -> str:
     repo_dirs, existing_ideas_summary = get_existing_tools_and_ideas()
     prompt = build_prompt(today_str, repo_dirs, existing_ideas_summary)
 
-    client = genai.Client(api_key=api_key)
+    client = genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(api_version="v1beta"),
+    )
     response = client.models.generate_content(
         model=DEFAULT_MODEL,
         contents=prompt,
