@@ -1,0 +1,6 @@
+exclude:
+  - IDEAS.md
+  - CLAUDE.md
+  - GEMINI.md
+  - README.md
+  - scripts/

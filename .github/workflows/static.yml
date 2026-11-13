@@ -5,6 +5,9 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+    paths-ignore:
+      - "IDEAS.md"
+      - "scripts/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,6 +34,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Exclude non-public files from Pages artifact
+        run: rm -rf IDEAS.md CLAUDE.md GEMINI.md README.md _config.yml scripts
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
