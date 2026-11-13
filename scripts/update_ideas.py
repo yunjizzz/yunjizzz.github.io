@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
-"""주간 글로벌·한국 검색 트렌드 기반 해봄(haebom.app) 웹 유틸리티 아이디어 발굴 및 IDEAS.md 자동 갱신 스크립트.
+"""주간 글로벌·한국 검색 수요 & 경쟁도 기반 해봄(haebom.app) 웹 유틸리티 아이디어 발굴 및 IDEAS.md 자동 갱신 스크립트.
 
 실행 방법:
     GEMINI_API_KEY="your-api-key" python3 scripts/update_ideas.py
 
 동작 요약:
-    1. google-genai SDK와 google_search 그라운딩 도구를 사용해 최근 전 세계(글로벌) 및 한국 검색 트렌드를 조사한다.
-    2. 현재 저장소의 기존 유틸리티 및 기존 IDEAS.md에 수록된 아이디어와 중복되지 않는
-       '검색 수요 대비 공급이 부족한' 100% 브라우저 로컬 처리 웹 유틸리티 아이디어들을 개수 제한 없이(기본 5~7개 이상) 발굴한다.
-    3. 한국 시간(KST) 기준 `## 📅 YYYY-MM-DD 주간 유틸리티 아이디어 리포트` 섹션을 생성하여
-       루트 `IDEAS.md` 파일 상단에 누적 추가한다.
+    1. Google Suggest(자동완성) API로 미국·인도·영국·한국의 실제 유틸리티 검색어 신호를 수집한다.
+    2. 1차 Gemini + google_search 그라운딩으로 글로벌·한국 시장의 유료벽/워터마크/업로드 강제 틈새 후보를 발굴한다.
+    3. 2차 Gemini + google_search 그라운딩으로 1페이지 실제 경쟁 사이트의 한계를 검증하고 뻔한 레드오션을 탈락시켜
+       수요 대비 공급이 부족한 5~7개 이상의 100% 브라우저 로컬 처리 유틸리티를 선별한다.
+    4. 한국 시간(KST) 기준 `## 📅 YYYY-MM-DD 주간 유틸리티 아이디어 리포트` 섹션을 생성해 `IDEAS.md` 상단에 기록한다.
 """
 import datetime
+import json
 import os
 import pathlib
 import re
 import sys
+import urllib.parse
+import urllib.request
 
 from google import genai
 from google.genai import types
@@ -40,6 +43,34 @@ BUILTIN_TOOLS = [
     "어느 날, 내가 없는 아침 (/well-ending/): 웰엔딩·엔딩노트 인터랙티브 스토리",
 ]
 
+# 이미 무료·무제한 웹툴이 1페이지에 포화 상태인 레드오션 목록 (절대 추천 금지)
+RED_OCEAN_BLACKLIST = [
+    "단순 UUID / GUID 생성기",
+    "텍스트 대소문자 변환기 (Case Converter)",
+    "텍스트 중복 줄 제거기 / 줄바꿈 정리 / 단어 빈도 카운터",
+    "단순 해시(MD5, SHA256 등) 계산기",
+    "마크다운 ↔ HTML 변환기",
+    "JSON ↔ YAML / XML / CSV 단순 포맷 변환기·포맷터",
+    "Base64 / URL 인코더·디코더 / JWT 디코더",
+    "Lorem Ipsum 생성기 / 정규식(Regex) 테스터 / 색상(HEX↔RGB) 변환기",
+    "단순 QR 코드 생성기 / 단순 비밀번호 생성기·강도 측정기",
+    "기본 단위 변환기 / 단순 BMI·퍼센트 계산기",
+]
+
+# 실제 사용자 검색 수요 파악을 위한 Google Suggest 시드 쿼리
+SUGGEST_SEEDS = [
+    ("en", "us", "online tool to "),
+    ("en", "us", "without watermark "),
+    ("en", "us", "pdf without login "),
+    ("en", "in", "resize photo for "),
+    ("en", "in", "compress pdf to "),
+    ("en", "gb", "free online converter "),
+    ("ko", "kr", "pdf 무료 "),
+    ("ko", "kr", "온라인 무료 "),
+    ("ko", "kr", "사진 크기 "),
+    ("ko", "kr", "계산기 "),
+]
+
 DOC_HEADER = """# 💡 해봄 (haebom.app) 주간 유틸리티 아이디어 리포트
 
 > 매주 월요일 오전 6시(KST) GitHub Actions와 Gemini (`google_search` 그라운딩)가 **전 세계(글로벌) 및 한국 검색 트렌드**를 분석하여, **수요 대비 공급이 부족하고 100% 브라우저 로컬 처리로 구현 가능한 신규 웹 유틸리티 아이디어들**을 상단에 누적 기록합니다.
@@ -48,8 +79,32 @@ DOC_HEADER = """# 💡 해봄 (haebom.app) 주간 유틸리티 아이디어 리�
 """
 
 
+def fetch_google_suggest_signals() -> str:
+    """Google 검색 자동완성 API에서 글로벌·한국 실제 검색어 신호를 수집한다."""
+    collected: list[str] = []
+    for hl, gl, query in SUGGEST_SEEDS:
+        params = urllib.parse.urlencode(
+            {"client": "firefox", "hl": hl, "gl": gl, "q": query}
+        )
+        url = f"https://suggestqueries.google.com/complete/search?{params}"
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (compatible; HaebomIdeasBot/1.0)"},
+            )
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                payload = json.loads(resp.read().decode("utf-8"))
+            suggestions = payload[1][:6] if isinstance(payload, list) and len(payload) > 1 else []
+            if suggestions:
+                collected.append(f"- [{hl}/{gl}] `{query.strip()}` → {', '.join(suggestions)}")
+        except Exception as exc:
+            print(f"[update_ideas] Google Suggest 조회 생략 ({hl}/{gl} {query!r}): {exc}")
+
+    return "\n".join(collected)
+
+
 def get_existing_tools_and_ideas() -> tuple[list[str], str]:
-    """저장소 내 디렉토리 및 기존 IDEAS.md에서 이미 다룬 도구/아이디어 목록을 추출한다."""
+    """저장소 내 디렉토리, 기존 IDEAS.md, 비공개 작업 목록에서 중복 금지 대상을 추출한다."""
     ignore_dirs = {
         ".git",
         ".github",
@@ -69,7 +124,6 @@ def get_existing_tools_and_ideas() -> tuple[list[str], str]:
     existing_ideas_text = ""
     if IDEAS_PATH.exists():
         content = IDEAS_PATH.read_text(encoding="utf-8")
-        # 기존 리포트의 제목/헤더 및 타겟 키워드 줄만 요약 추출해 프롬프트 컨텍스트 절약
         summary_lines = []
         for line in content.splitlines():
             stripped = line.strip()
@@ -78,7 +132,7 @@ def get_existing_tools_and_ideas() -> tuple[list[str], str]:
                 or stripped.startswith("### ")
                 or "타겟 키워드" in stripped
                 or "글로벌" in stripped
-                or "한국어" in stripped
+                or "한국 (KO)" in stripped
             ):
                 summary_lines.append(stripped)
         existing_ideas_text = "\n".join(summary_lines[:200])
@@ -91,7 +145,7 @@ def get_existing_tools_and_ideas() -> tuple[list[str], str]:
             private_html,
         )
         if private_titles:
-            extra = "\n".join(f"- {t}" for t in private_titles[:100])
+            extra = "\n".join(f"- {t}" for t in private_titles[:120])
             existing_ideas_text = (
                 f"{existing_ideas_text}\n\n[비공개 백로그에 이미 등록된 도구]\n{extra}"
             ).strip()
@@ -99,95 +153,164 @@ def get_existing_tools_and_ideas() -> tuple[list[str], str]:
     return repo_dirs, existing_ideas_text
 
 
-def build_prompt(today_str: str, repo_dirs: list[str], existing_ideas_summary: str) -> str:
-    """Gemini 모델에 전달할 프롬프트를 생성한다."""
+def log_grounding_queries(step_name: str, response) -> None:
+    """Gemini가 google_search 그라운딩에서 실제로 실행한 검색 쿼리를 로그로 남긴다."""
+    try:
+        candidates = getattr(response, "candidates", None) or []
+        if not candidates:
+            return
+        meta = getattr(candidates[0], "grounding_metadata", None)
+        queries = getattr(meta, "web_search_queries", None) or []
+        if queries:
+            print(f"[update_ideas] {step_name} Google 검색 쿼리 ({len(queries)}건): {queries}")
+    except Exception:
+        pass
+
+
+def build_discovery_prompt(
+    today_str: str,
+    repo_dirs: list[str],
+    existing_ideas_summary: str,
+    suggest_signals: str,
+) -> str:
+    """1차 후보 발굴 프롬프트: Google 검색으로 유료벽·워터마크·업로드 강제 틈새 후보 10~12개를 찾는다."""
     builtin_str = "\n".join(f"- {item}" for item in BUILTIN_TOOLS)
+    blacklist_str = "\n".join(f"- {item}" for item in RED_OCEAN_BLACKLIST)
     dirs_str = ", ".join(f"/{d}/" for d in repo_dirs)
-    prev_ideas_section = (
-        f"\n[기존 IDEAS.md에 이미 제안된 아이디어 요약 (절대 중복 금지)]\n{existing_ideas_summary}\n"
+    prev_section = (
+        f"\n### 이미 구현/제안되어 중복 금지 대상\n{existing_ideas_summary}\n"
         if existing_ideas_summary
         else ""
     )
+    suggest_section = (
+        f"\n### 실시간 Google Suggest 검색어 신호 (참고용)\n{suggest_signals}\n"
+        if suggest_signals
+        else ""
+    )
 
-    return f"""당신은 글로벌 & 한국 무료 웹 유틸리티 서비스 **'해봄 (https://haebom.app/)'**의 프로덕트 전략가이자 글로벌 SEO 전문가입니다.
+    return f"""당신은 글로벌 & 한국 무료 웹 유틸리티 서비스 **'해봄 (https://haebom.app/)'**의 리서처입니다.
 오늘 날짜는 한국 시간(KST) 기준 **{today_str}**입니다.
 
-`google_search` 도구를 적극 활용하여 **전 세계(영어권, 인도·남아시아, 동남아, 중남미, 유럽 등 글로벌 시장)와 한국 시장**에서 최근 검색 수요가 높지만,
-기존 대형 포털이나 공룡 사이트들이 세밀하게 대응하지 못하거나 유료 결제·서버 업로드·워터마크·무거운 앱 설치를 강요하여 **수요 대비 공급 만족도가 낮은 틈새(Long-tail) 웹 유틸리티 아이디어들을 5~7개 이상 풍부하게** 발굴해 주세요 (개수 상한 없음 — 가치가 높은 아이디어가 더 있다면 얼마든지 추가 가능).
+`google_search` 도구를 **반드시 여러 차례 직접 호출**하여, 전 세계(미국, 인도·남아시아, 동남아, 유럽 등)와 한국에서 검색 수요는 꾸준히 높지만
+기존 검색 1페이지 상위 도구들이 **유료 구독(월 $9~$29), 1일 횟수/용량 제한, 강제 회원가입, 워터마크, 서버 업로드 보안 불안, 혹은 구식 UX** 때문에 사용자 불만(Reddit, 커뮤니티, 후기 등)이 많은 **진짜 틈새 웹 유틸리티 후보 10~12개**를 조사해 주세요.
 
-### 배경 및 전략 포인트
-- 해봄은 이미 `/photo-resize/`, `/pdf-compress/` 등을 한국어(`ko`)와 영어(`en`) 규격별 랜딩 페이지(`50kb`, `100kb`, `passport-photo` 등)로 배포해 글로벌(인도, 방글라데시, 나이지리아, 파키스탄, 미국 등) 및 한국 검색 유입을 동시에 확보하고 있습니다.
-- 특히 인터넷 속도가 느린 지역이나 민감한 개인정보/업무 파일을 다루는 사용자들에게 **"서버 업로드 없이 브라우저 안에서 즉시 처리"**되는 도구는 글로벌 시장에서도 강력한 차별점이 됩니다.
-- 문서/PDF/이미지/오디오/영상/데이터 포맷 변환, 공공·시험·비자·금융 제출 서류 규격 맞춤, 개인정보 마스킹/메타데이터 제거, 개발·업무·생활 계산기 등 다양한 카테고리에서 폭넓게 발굴하세요.
+### 특히 높은 기회 영역 (우선 탐색)
+1. **국가/시험/비자/플랫폼 규격 특화 도구**: 인도 UPSC/SSC/PAN/Passport, 미국 USCIS/비자, 한국 공공·채용·금융 서류 등 특정 치수·용량·서명·DPI·여백 규격이 까다로운 틈새
+2. **기존 강자가 유료화·횟수제한·워터마크를 거는 작업**: PDF 전자서명/주석/양식채우기/OCR/용량·쪽분할 외 고급 기능, 영상/오디오/자막/SVG/폰트/문서 로컬 처리
+3. **민감 정보·프라이버시 로컬 처리 니즈**: 신분증·통장·계약서·의료서류·개인사진을 서버에 올리기 꺼려지는 작업
+4. **생활·직장인·크리에이터 고빈도 실무 도구**: 세금·정산·일정·인쇄용 양식·이커머스 판매자용 이미지/표 작업 등
 
-### 핵심 제약 조건 (반드시 준수)
-1. **100% 브라우저 클라이언트 사이드 처리**:
-   - 해봄의 핵심 철학은 "회원가입 없음, 서버 업로드 없음(브라우저 내 로컬 처리로 속도·개인정보·보안 100% 안심), 워터마크·횟수 제한 없는 100% 무료"입니다.
-   - 반드시 순수 HTML/CSS/JS, Web API(Canvas, Web Audio, WebCodecs, Web Crypto, File API, WebAssembly 등) 또는 클라이언트 JS 라이브러리만으로 서버 없이 동작 가능한 도구여야 합니다.
-2. **글로벌 확장성 + 한국 실용성**:
-   - 전 세계적으로 검색량이 풍부한 영문 롱테일 키워드와 한국어 틈새 키워드를 동시에 공략할 수 있는 주제를 우선 선정하되, 글로벌 단독 대량 트래픽 틈새 도구나 한국 특화 고수요 도구도 자유롭게 포함하세요.
-   - 트래픽 잠재력과 구현 가성비가 가장 높은 순서대로 정렬해 주세요.
-3. **기존 기능 및 과거 아이디어와 중복 절대 금지**:
-   - 현재 해봄에 이미 구현된 아래 도구들과 겹치지 않아야 합니다:
+### 절대 추천 금지 (레드오션 블랙리스트)
+이미 광고 없는 무료 클라이언트 툴이 구글 1페이지에 수십 개씩 깔려있는 아래 뻔한 유틸리티는 절대 포함하지 마세요:
+{blacklist_str}
+
+### 기존 해봄 도구 & 중복 금지 목록
+- 구현 완료:
 {builtin_str}
-   - 현재 저장소 폴더 목록: {dirs_str}
-{prev_ideas_section}
+- 저장소 폴더: {dirs_str}
+{prev_section}
+{suggest_section}
+
+### 출력 요청
+후보 10~12개 각각에 대해 아래 항목을 간결히 정리해 주세요:
+1. 도구 이름 / 추천 슬러그 / 분류(`업무` 또는 `일상`)
+2. 타겟 키워드 (글로벌 EN + 한국 KO)
+3. `google_search`로 확인한 실제 상위 경쟁 사이트 이름들과 그 한계(유료 플랜, 횟수 제한, 워터마크, 서버 업로드 강제 등)
+4. 100% 브라우저 클라이언트 사이드 구현 기술 스택 (Web API / WASM / JS 라이브러리)
+"""
+
+
+def build_verification_prompt(today_str: str, candidates_text: str) -> str:
+    """2차 검증 및 리포트 생성 프롬프트: 실제 1페이지 경쟁도를 재검증해 알짜 5~7개 이상을 엄선한다."""
+    blacklist_str = "\n".join(f"- {item}" for item in RED_OCEAN_BLACKLIST)
+    return f"""당신은 글로벌 & 한국 무료 웹 유틸리티 서비스 **'해봄 (https://haebom.app/)'**의 수석 프로덕트 전략가입니다.
+오늘 날짜는 **{today_str}**입니다.
+
+아래 1차 후보 목록을 검토하되, **`google_search` 도구로 각 후보의 핵심 영문/한국어 키워드를 직접 다시 검색해 검증**하세요.
+
+[1차 후보 목록]
+{candidates_text}
+
+### 엄격한 탈락(필터링) 기준
+다음 중 하나라도 해당하면 **과감히 탈락**시키세요:
+1. 구글 1페이지에 이미 무료·무제한·가입불필요·깔끔한 경쟁 웹툴이 3개 이상 포진한 뻔한 레드오션 (특히 아래 블랙리스트 성격의 도구):
+{blacklist_str}
+2. 100% 브라우저 로컬(클라이언트 사이드) 처리가 현실적으로 불가능하거나 초기 모델 다운로드가 수백 MB 이상이라 웹 유틸 UX가 나쁜 아이디어
+3. 구체적인 수요 근거 없이 추상적이거나 검색 볼륨이 너무 미미한 아이디어
+
+### 합격(선정) 기준 — 트래픽 잠재력 × 공급 부족도 순으로 **5~7개 이상** 최종 선정
+- 실제 검색 결과 상위 사이트들이 **구체적으로 어떤 불편함**(예: `Smallpdf` 일일 2회 제한, `Canva` Pro 유료벽, `Adobe` 로그인 강제, 특정 사이트 워터마크/서버 업로드 강제, 블로그 글만 뜨고 실제 도구가 없음 등)을 겪는지 **검색으로 확인한 구체적 서비스명/현상**을 반드시 근거로 적으세요.
+- 글로벌 시장(인도, 미국, 동남아, 유럽 등)과 한국 시장 모두 또는 어느 한쪽에서 폭발적 실수요가 있는 주제여야 합니다.
 
 ### 출력 형식 (Markdown)
-반드시 아래 마크다운 구조를 지켜서 본문만 출력하세요 (인사말이나 코드블록 래퍼 없이 바로 `## 📅 {today_str} 주간 유틸리티 아이디어 리포트`로 시작하며, 번호를 매겨 5~7개 이상 나열):
+반드시 아래 마크다운 구조를 지켜서 본문만 출력하세요 (인사말이나 코드블록 래퍼 없이 바로 `## 📅 {today_str} 주간 유틸리티 아이디어 리포트`로 시작, 각 불릿은 한 줄로 깔끔하게 작성):
 
 ## 📅 {today_str} 주간 유틸리티 아이디어 리포트
 
 ### 1. [아이디어 이름] (`/추천-슬러그/`) — ⭐ 추천도: 상 (예상 트래픽: 높음 / 구현 난이도: 하~중)
-- **추천 분류**: `업무` 또는 `일상` 중 택1 (문서/데이터/개발/마케팅/업무 자동화 등은 `업무`, 사진·영상·오디오·생활/계산/개인 프라이버시 등은 `일상`)
-- **한 줄 요약**: 이 도구가 무엇을 하는지, 왜 수요가 있고 어떻게 로컬 처리로 구현하는지 1~2문장(70~120자 내외) 요약
+- **추천 분류**: `업무` 또는 `일상` 중 택1
+- **한 줄 요약**: 이 도구가 무엇을 해결하고 어떻게 브라우저 로컬로 처리하는지 1~2문장(70~120자 내외) 요약
 - **타겟 키워드 & 주요 수요 지역**:
   - **글로벌 (EN)**: `영문 핵심 키워드 1`, `영문 롱테일 키워드 2`, `영문 롱테일 키워드 3` (주요 수요 국가/지역 명시)
   - **한국 (KO)**: `한국어 핵심 키워드 1`, `한국어 롱테일 키워드 2`
 - **수요 대비 공급 분석**:
-  - 왜 전 세계 및 한국 사용자들이 이 기능을 자주 검색하는지(구체적인 제출 규격, 실무/일상 페인포인트)와 기존 검색 상위 사이트들(서버 업로드 대기시간, 유료 제한, 워터마크, 개인정보 유출 우려, 세밀한 옵션 부재 등)의 한계를 분석
+  - 검색 수요 배경과 `google_search`로 확인한 실제 상위 검색 결과(경쟁 사이트 이름·유료벽·워터마크·서버 업로드 강제·도구 부재 등)의 구체적 한계
 - **해봄 구현 포인트**:
   - **클라이언트 기술 스택**: 브라우저 내 로컬 처리를 위한 구체적인 Web API / JS 라이브러리
   - **다국어 SEO & 핵심 UX**: 해봄 디자인 시스템 및 다국어(`ko`/`en` 하위 프리셋 랜딩 페이지) 확장 전략
 
 ### 2. [아이디어 이름] (`/추천-슬러그/`) — ⭐ 추천도: ...
-(위와 동일한 형식으로 발굴한 아이디어들을 개수 제한 없이 5~7개 이상 계속 작성)
+(위와 동일한 형식으로 검증을 통과한 알짜 아이디어 5~7개 이상 작성)
 """
 
 
 def generate_weekly_report(today_str: str) -> str:
-    """Gemini API + Google Search Grounding을 호출해 주간 리포트 마크다운을 생성한다."""
+    """Google Suggest + 2단계 Gemini Google Search Grounding으로 주간 리포트를 생성한다."""
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         sys.exit("[update_ideas] 오류: GEMINI_API_KEY 환경변수가 설정되어 있지 않습니다.")
 
     repo_dirs, existing_ideas_summary = get_existing_tools_and_ideas()
-    prompt = build_prompt(today_str, repo_dirs, existing_ideas_summary)
+    suggest_signals = fetch_google_suggest_signals()
 
     client = genai.Client(
         api_key=api_key,
         http_options=types.HttpOptions(api_version="v1beta"),
     )
-    response = client.models.generate_content(
-        model=DEFAULT_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            tools=[types.Tool(google_search=types.GoogleSearch())],
-            temperature=0.7,
-        ),
+    search_tool = [types.Tool(google_search=types.GoogleSearch())]
+
+    # 1단계: 실제 검색 신호 + Google Search 기반 틈새 후보 발굴
+    discovery_prompt = build_discovery_prompt(
+        today_str, repo_dirs, existing_ideas_summary, suggest_signals
     )
+    discovery_resp = client.models.generate_content(
+        model=DEFAULT_MODEL,
+        contents=discovery_prompt,
+        config=types.GenerateContentConfig(tools=search_tool, temperature=0.6),
+    )
+    log_grounding_queries("1단계 발굴", discovery_resp)
+    candidates_text = (discovery_resp.text or "").strip()
+    if not candidates_text:
+        sys.exit("[update_ideas] 오류: 1단계 후보 발굴에서 빈 응답을 받았습니다.")
 
-    text = (response.text or "").strip()
+    # 2단계: SERP 경쟁도 재검증 및 레드오션 필터링 후 최종 리포트 작성
+    verify_prompt = build_verification_prompt(today_str, candidates_text)
+    verify_resp = client.models.generate_content(
+        model=DEFAULT_MODEL,
+        contents=verify_prompt,
+        config=types.GenerateContentConfig(tools=search_tool, temperature=0.4),
+    )
+    log_grounding_queries("2단계 검증", verify_resp)
+
+    text = (verify_resp.text or "").strip()
     if not text:
-        sys.exit("[update_ideas] 오류: 모델로부터 빈 응답을 받았습니다.")
+        sys.exit("[update_ideas] 오류: 2단계 검증에서 빈 응답을 받았습니다.")
 
-    # 혹시 모델이 ```markdown ... ``` 코드블록으로 감쌌다면 제거
     text = re.sub(r"^```(?:markdown|md)?\s*\n", "", text)
     text = re.sub(r"\n```\s*$", "", text).strip()
 
     expected_heading = f"## 📅 {today_str} 주간 유틸리티 아이디어 리포트"
     if not text.startswith("## 📅"):
-        # 앞부분에 불필요한 서문이 섞여 있다면 `## 📅`부터 잘라내거나 헤더를 보정
         idx = text.find("## 📅")
         if idx != -1:
             text = text[idx:].strip()
@@ -209,7 +332,6 @@ def prepend_report_to_ideas_md(report_md: str, today_str: str) -> bool:
 
     existing = IDEAS_PATH.read_text(encoding="utf-8")
 
-    # 동일 날짜 리포트가 이미 있는 경우 덮어쓰기 또는 중복 방지
     if heading_prefix in existing:
         print(f"[update_ideas] 이미 {today_str} 날짜의 리포트가 존재하여 해당 섹션을 최신 내용으로 갱신합니다.")
         pattern = re.compile(
@@ -220,7 +342,6 @@ def prepend_report_to_ideas_md(report_md: str, today_str: str) -> bool:
         IDEAS_PATH.write_text(updated.rstrip() + "\n", encoding="utf-8")
         return True
 
-    # 첫 번째 `## 📅` 섹션 앞(또는 `---` 구분선 뒤)에 최신 리포트를 상단 삽입
     first_report_match = re.search(r"^## 📅 ", existing, flags=re.MULTILINE)
     if first_report_match:
         insert_pos = first_report_match.start()
