@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /private/
+Disallow: /resume/resume.pdf
+Disallow: /resume/profile.jpg
+Disallow: /resume/og.jpg
 
 Sitemap: https://haebom.app/sitemap.xml
